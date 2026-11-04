@@ -1,27 +1,40 @@
-# Design System Generator
+# Design System Studio
 
-One file you open in a browser. No install. No account.
+One HTML file. Open it in a browser. No install.
 
-It walks you through colors and fonts for a simple app screen, then gives you CSS to paste into your project.
+It is a small studio for building a **color palette** and a **type system**, with a live preview of an app screen, components, and a type specimen. Inspired by the workflow in *Refactoring UI* (fixed shade ramps, tinted neutrals, a short type scale) — not a copy of the book files.
 
 ## Open it
 
-1. Copy `index.html` to your Desktop (or anywhere).
+1. Copy `index.html` anywhere.
 2. Double-click it (Chrome, Edge, or Firefox).
 
-## What to do inside
+## Palette
 
-1. Click **Start**.
-2. Keep clicking **Continue** through the steps.
-3. On the last step, click **Download CSS**.
-4. Open your app’s `styles.css`, paste the downloaded text at the **top**, save, reload your app.
+Every scale (primary, neutrals, accent, danger, warning, success) is **yours to set**:
 
-Steps 3 and 4 are optional — the defaults are already set.
+- Hue (0–360), not a preset personality
+- Base saturation and lightness for shade **500** (the button color)
+- Lightest (**50**) and darkest (**900**)
+- Hue rotation and end-saturation so light/dark shades stay vivid
+- Click any swatch to override that shade’s HSL
+- Optional: tint neutrals with the primary hue
+- Optional: import a `palette-XX.json` from the Refactoring UI Color Palettes ZIP (stays on your computer)
 
-## Book palette files (optional)
+The generator fills the eight shades between 50, 500, and 900. Moving hue / sat / lightness rebuilds the ramp.
 
-If you bought *Refactoring UI*, you can load a `palette-XX.json` file on step 2. Nothing is uploaded; it stays on your computer.
+## Type
 
-## Note
+Pick a display face, a UI/body face, and a mono face (Google Fonts, loaded in the browser). Choose a short size scale, base size, weights, and headline tracking.
 
-This tool is not from the Refactoring UI authors. The short “Good habit” notes are plain-language reminders inspired by common ideas from the book.
+## Preview
+
+- **App preview** — nav, stats, form card, semantic alerts
+- **Color board** — all 10-shade ramps with hex and HSL
+- **Type specimen** — the scale in the chosen faces
+- **Components** — buttons, form, alerts
+- Dark preview toggle
+
+## Export
+
+Download `tokens.css` (or copy CSS / JSON from the Export tab) and paste it at the top of your stylesheet.
