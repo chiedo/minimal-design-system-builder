@@ -474,7 +474,7 @@
       .preview-frame {
         max-width: 56rem;
         margin: 0 auto;
-        border-radius: 16px;
+        border-radius: var(--radius-shell, 16px);
         overflow: hidden;
         border: 1px solid var(--ui-line);
         background: var(--preview-bg, #f0f4f8);
@@ -606,7 +606,7 @@
       .preview-root button.ghost,
       .preview-root button.danger {
         border: 0;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-button, 6px);
         padding: 0.5rem 0.9rem;
         font-weight: 650;
         font-size: var(--text-sm);
@@ -685,7 +685,7 @@
       .type-page {
         background: var(--preview-surface);
         color: var(--preview-text);
-        border-radius: 16px;
+        border-radius: var(--radius-shell, 16px);
         padding: 1.5rem 1.6rem 2rem;
         border: 1px solid var(--ui-line);
         max-width: 52rem;
@@ -929,7 +929,7 @@
         align-items: center;
         justify-content: center;
         gap: 0.4em;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-button, 6px);
         font-family: var(--font-ui);
         font-weight: 650;
         line-height: 1.15;
@@ -1077,13 +1077,17 @@
         background: transparent;
         color: var(--preview-text);
         padding: 0.4rem 0.5rem;
-        border-radius: 6px;
+        border-radius: var(--radius-sm);
         font-family: var(--font-ui);
         font-size: var(--size-ui);
       }
 
       .dropdown button:hover {
         background: var(--preview-primary-soft);
+      }
+
+      .dropdown .btn-ds {
+        border-radius: var(--radius-button, 6px);
       }
 
       .empty {
@@ -1537,8 +1541,8 @@
           buttons: defaultButtons(),
           space: {
             unit: 8,
-            radiusSm: 6,
-            radiusLg: 12,
+            roundness: 100,
+            radiusButton: 6,
             shadowStrength: 1,
             borderSm: 1,
             borderMd: 2,
@@ -1566,7 +1570,7 @@
             type: { ...base.type, ...(parsed.type || {}) },
             typeRoles: { ...base.typeRoles, ...(parsed.typeRoles || {}) },
             buttons: { ...base.buttons, ...(parsed.buttons || {}), sm: { ...base.buttons.sm, ...(parsed.buttons?.sm || {}) }, md: { ...base.buttons.md, ...(parsed.buttons?.md || {}) }, lg: { ...base.buttons.lg, ...(parsed.buttons?.lg || {}) } },
-            space: { ...base.space, ...(parsed.space || {}) },
+            space: migratedSpace(base.space, parsed.space),
           };
         } catch {
           return defaultState();
@@ -1644,6 +1648,49 @@
           out[k] = mult[i] * u;
         });
         return out;
+      }
+
+      function surfaceRadii(roundness) {
+        const t = clamp(Number(roundness) || 0, 0, 200) / 100;
+        return {
+          shell: Math.round(16 * t),
+          lg: Math.round(12 * t),
+          sm: Math.round(6 * t),
+        };
+      }
+
+      function buttonRadiusPx(value) {
+        return clamp(Math.round(Number(value) || 0), 0, 24);
+      }
+
+      function radiusReadout(roundness) {
+        const radii = surfaceRadii(roundness);
+        return `Nav ${radii.shell}px · boxes ${radii.lg}px · fields ${radii.sm}px`;
+      }
+
+      function migratedSpace(baseSpace, parsedSpace) {
+        const next = { ...baseSpace, ...(parsedSpace || {}) };
+        const saved = parsedSpace || {};
+        if (!Object.prototype.hasOwnProperty.call(saved, "roundness")) delete next.roundness;
+        if (!Object.prototype.hasOwnProperty.call(saved, "radiusButton")) delete next.radiusButton;
+        return normalizeSpace(next);
+      }
+
+      function normalizeSpace(space) {
+        const next = { ...space };
+        if (next.roundness == null || Number.isNaN(Number(next.roundness))) {
+          const lg = next.radiusLg != null ? Number(next.radiusLg) : 12;
+          next.roundness = clamp(Math.round((lg / 12) * 100), 0, 200);
+        } else {
+          next.roundness = clamp(Math.round(Number(next.roundness)), 0, 200);
+        }
+        if (next.radiusButton == null || Number.isNaN(Number(next.radiusButton))) {
+          next.radiusButton = next.radiusSm != null ? Number(next.radiusSm) : 6;
+        }
+        next.radiusButton = buttonRadiusPx(next.radiusButton);
+        delete next.radiusSm;
+        delete next.radiusLg;
+        return next;
       }
 
       function shadowScale() {
@@ -1774,8 +1821,11 @@
         lines.push(`  --max-w-md: ${sp[40] || 512}px;`);
         lines.push(`  --max-w-lg: ${sp[48] || 640}px;`);
         lines.push(`  --max-w-xl: ${sp[56] || 768}px;`);
-        lines.push(`  --radius-sm: ${state.space.radiusSm}px;`);
-        lines.push(`  --radius-lg: ${state.space.radiusLg}px;`);
+        const radii = surfaceRadii(state.space.roundness);
+        lines.push(`  --radius-shell: ${radii.shell}px;`);
+        lines.push(`  --radius-lg: ${radii.lg}px;`);
+        lines.push(`  --radius-sm: ${radii.sm}px;`);
+        lines.push(`  --radius-button: ${buttonRadiusPx(state.space.radiusButton)}px;`);
         lines.push(`  --radius-full: 999px;`);
         lines.push(`  --border-sm: ${state.space.borderSm}px;`);
         lines.push(`  --border-md: ${state.space.borderMd}px;`);
@@ -1825,7 +1875,19 @@
         for (const size of BUTTON_SIZES) {
           buttons[size] = { ...state.buttons[size], height: btnHeight(size) };
         }
-        return JSON.stringify({ colors, typeRoles, buttons, space: state.space, controlSize: state.buttons.controlSize }, null, 2);
+        const radii = surfaceRadii(state.space.roundness);
+        return JSON.stringify({
+          colors,
+          typeRoles,
+          buttons,
+          space: {
+            ...state.space,
+            radiusShell: radii.shell,
+            radiusLg: radii.lg,
+            radiusSm: radii.sm,
+          },
+          controlSize: state.buttons.controlSize,
+        }, null, 2);
       }
 
       function applyPreviewVars(root, tokens) {
@@ -1880,8 +1942,11 @@
           set(`--btn-${size}-height`, `${btnHeight(size)}px`);
         }
         set("--control-height", `var(--btn-${state.buttons.controlSize}-height)`);
-        set("--radius-sm", `${state.space.radiusSm}px`);
-        set("--radius-lg", `${state.space.radiusLg}px`);
+        const radii = surfaceRadii(state.space.roundness);
+        set("--radius-shell", `${radii.shell}px`);
+        set("--radius-lg", `${radii.lg}px`);
+        set("--radius-sm", `${radii.sm}px`);
+        set("--radius-button", `${buttonRadiusPx(state.space.radiusButton)}px`);
         set("--border-sm", `${state.space.borderSm}px`);
         set("--border-md", `${state.space.borderMd}px`);
         set("--border-lg", `${state.space.borderLg}px`);
@@ -2181,7 +2246,7 @@
         const b = state.buttons[size];
         const ts = typeSizes();
         els.inspector.innerHTML = `
-          <p class="hint">Three sizes. Padding should tighten as type shrinks — don’t scale py/px linearly with font size. Inputs use the same height as the control size.</p>
+          <p class="hint">Three sizes. Padding should tighten as type shrinks — don’t scale py/px linearly with font size. Inputs use the same height as the control size. Every size shares one corner radius, separate from roundness — set it on the Space tab.</p>
           <div class="size-picks">
             ${BUTTON_SIZES.map((s) => `<button type="button" data-select-btn="${s}" aria-pressed="${size === s}">${s.toUpperCase()}<div class="hint" style="margin:0.2rem 0 0">${btnHeight(s)}px tall</div></button>`).join("")}
           </div>
@@ -2233,7 +2298,7 @@
         const s = state.space;
         const sp = spacing();
         els.inspector.innerHTML = `
-          <p class="hint">Keep a short list of spacing, radius, shadow, border, opacity, and icon sizes. Values in the scale stay at least ~25% apart.</p>
+          <p class="hint">Keep a short list of spacing, roundness, shadow, border, opacity, and icon sizes. Values in the spacing scale stay at least ~25% apart.</p>
           <div class="field">
             <div class="field-label">Spacing grid</div>
             <select data-space-field="unit">
@@ -2243,18 +2308,20 @@
           </div>
           <p class="hint">Scale: ${[1, 2, 3, 4, 5, 6, 8, 12, 16, 24, 32].map((k) => `${sp[k]}`).join(" · ")}px … ${sp[56]}px</p>
           <div class="field">
-            <div class="field-label">Small radius <span>${s.radiusSm}px</span></div>
+            <div class="field-label">Roundness <span>${s.roundness}%</span></div>
             <div class="slider-row">
-              <input type="range" min="0" max="16" data-space-field="radiusSm" value="${s.radiusSm}" />
-              <input type="number" min="0" max="16" data-space-field="radiusSm" value="${s.radiusSm}" />
+              <input type="range" min="0" max="200" data-space-field="roundness" value="${s.roundness}" />
+              <input type="number" min="0" max="200" data-space-field="roundness" value="${s.roundness}" />
             </div>
+            <p class="hint" data-radius-readout style="margin:0.35rem 0 0">${radiusReadout(s.roundness)}</p>
           </div>
           <div class="field">
-            <div class="field-label">Large radius <span>${s.radiusLg}px</span></div>
+            <div class="field-label">Button radius <span>${s.radiusButton}px</span></div>
             <div class="slider-row">
-              <input type="range" min="0" max="28" data-space-field="radiusLg" value="${s.radiusLg}" />
-              <input type="number" min="0" max="28" data-space-field="radiusLg" value="${s.radiusLg}" />
+              <input type="range" min="0" max="24" data-space-field="radiusButton" value="${s.radiusButton}" />
+              <input type="number" min="0" max="24" data-space-field="radiusButton" value="${s.radiusButton}" />
             </div>
+            <p class="hint" style="margin:0.35rem 0 0">Boxes, borders, fields, and the nav header follow roundness. Buttons keep this corner.</p>
           </div>
           <div class="field">
             <div class="field-label">Shadow strength <span>${s.shadowStrength}</span></div>
@@ -2440,6 +2507,7 @@
               </div>
             </div>
           </div>`;
+        applyPreviewVars(els.stageBody, tokens);
         applyPreviewVars(document.getElementById("previewRoot"), tokens);
       }
 
@@ -2693,9 +2761,13 @@
           const span = inp.closest(".field")?.querySelector(".field-label span");
           const key = inp.dataset.spaceField;
           if (span && state.space[key] != null) {
-            span.textContent = key === "shadowStrength" ? String(state.space[key]) : `${state.space[key]}px`;
+            if (key === "shadowStrength") span.textContent = String(state.space[key]);
+            else if (key === "roundness") span.textContent = `${state.space[key]}%`;
+            else span.textContent = `${state.space[key]}px`;
           }
         });
+        const readout = els.inspector.querySelector("[data-radius-readout]");
+        if (readout) readout.textContent = radiusReadout(state.space.roundness);
       }
 
       function syncTypeInspectorChrome() {
@@ -2854,7 +2926,13 @@
           return;
         }
         if (t.dataset.spaceField) {
-          state.space[t.dataset.spaceField] = Number(t.value);
+          const key = t.dataset.spaceField;
+          let value = Number(t.value);
+          if (!Number.isFinite(value)) value = key === "roundness" ? 100 : 0;
+          if (key === "roundness") value = clamp(Math.round(value), 0, 200);
+          else if (key === "radiusButton") value = buttonRadiusPx(value);
+          state.space[key] = value;
+          if (key === "roundness" || key === "radiusButton") t.value = String(value);
           syncPairedInputs(t);
           livePaint();
         }
