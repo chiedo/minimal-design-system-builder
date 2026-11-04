@@ -755,19 +755,31 @@
         margin-bottom: 0.9rem;
       }
 
+      .role-item {
+        border: 1px solid var(--ui-line);
+        border-radius: 10px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .role-item.is-open {
+        border-color: var(--ui-ink);
+        box-shadow: 0 0 0 1px var(--ui-ink);
+      }
+
       .role-btn {
         text-align: left;
-        border: 1px solid var(--ui-line);
-        background: #fff;
-        border-radius: 10px;
-        padding: 0.45rem 0.6rem;
+        border: 0;
+        background: transparent;
+        border-radius: 0;
+        padding: 0.5rem 0.65rem;
         cursor: pointer;
         width: 100%;
       }
 
       .role-btn[aria-pressed="true"] {
-        border-color: var(--ui-ink);
-        box-shadow: 0 0 0 1px var(--ui-ink);
+        border-color: transparent;
+        box-shadow: none;
       }
 
       .role-btn .role-id {
@@ -779,8 +791,16 @@
       }
 
       .role-btn .role-sample {
-        margin-top: 0.1rem;
-        line-height: 1.25;
+        margin-top: 0.15rem;
+        line-height: 1.2;
+        overflow: hidden;
+        max-height: 2.6rem;
+      }
+
+      .role-editor {
+        padding: 0.7rem 0.7rem 0.85rem;
+        border-top: 1px solid var(--ui-line);
+        background: var(--ui-fill);
       }
 
       .size-picks {
@@ -2027,14 +2047,68 @@
         `;
       }
 
+      function roleEditorHTML(spec, role, ts) {
+        return `
+          <div class="role-editor">
+            <div class="field">
+              <div class="field-label">${esc(spec.label)} · font</div>
+              <select data-role-field="family">${optionList(allFontList(), role.family)}</select>
+            </div>
+            <div class="field">
+              <div class="field-label">Weight</div>
+              <select data-role-field="weight">
+                ${[400, 500, 600, 700, 800].map((w) => `<option value="${w}" ${Number(role.weight) === w ? "selected" : ""}>${w}</option>`).join("")}
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Size step <span>${ts[role.size]}px</span></div>
+              <select data-role-field="size">
+                ${SIZE_KEYS.map((k) => `<option value="${k}" ${role.size === k ? "selected" : ""}>${k} · ${ts[k]}px</option>`).join("")}
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Line height <span>${role.leading}</span></div>
+              <div class="slider-row">
+                <input type="range" min="1" max="1.8" step="0.05" data-role-field="leading" value="${role.leading}" />
+                <input type="number" min="1" max="1.8" step="0.05" data-role-field="leading" value="${role.leading}" />
+              </div>
+            </div>
+            <div class="field">
+              <div class="field-label">Tracking <span>${role.track}em</span></div>
+              <div class="slider-row">
+                <input type="range" min="-0.06" max="0.08" step="0.005" data-role-field="track" value="${role.track}" />
+                <input type="number" step="0.005" data-role-field="track" value="${role.track}" />
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <div class="field-label">Ink</div>
+              <select data-role-field="color">
+                ${["text", "muted", "primary", "accent"].map((c) => `<option value="${c}" ${role.color === c ? "selected" : ""}>${c}</option>`).join("")}
+              </select>
+            </div>
+          </div>`;
+      }
+
+      function roleListHTML() {
+        const ts = typeSizes();
+        const open = state.selectedTypeRole;
+        return TYPE_ROLES.map((r) => {
+          const rr = state.typeRoles[r.id];
+          const isOpen = open === r.id;
+          return `<div class="role-item ${isOpen ? "is-open" : ""}" data-role-item="${r.id}">
+            <button type="button" class="role-btn" data-select-role="${r.id}" aria-pressed="${isOpen}" aria-expanded="${isOpen}">
+              <div class="role-id">${esc(r.label)} · ${ts[rr.size]}px</div>
+              <div class="role-sample" style="font-family:${esc(fontStack(rr.family))}; font-weight:${rr.weight}; letter-spacing:${rr.track}em; font-size:${Math.min(ts[rr.size], 28)}px">${esc(r.sample)}</div>
+            </button>
+            ${isOpen ? roleEditorHTML(r, rr, ts) : ""}
+          </div>`;
+        }).join("");
+      }
+
       function renderTypeInspector() {
         const t = state.type;
-        const ts = typeSizes();
-        const id = state.selectedTypeRole;
-        const role = state.typeRoles[id];
-        const spec = TYPE_ROLES.find((r) => r.id === id);
         els.inspector.innerHTML = `
-          <p class="hint">Set a display face, a UI face, and then tune each heading / body role. Sizes come from the scale — don’t invent 17px.</p>
+          <p class="hint">Click a role to edit it right underneath. The type specimen and app preview update as you drag.</p>
           <div class="field">
             <div class="field-label">Display font (headlines)</div>
             <select data-type-field="display">${optionList(DISPLAY_FONTS, t.display)}</select>
@@ -2066,52 +2140,8 @@
             <button type="button" class="btn" id="applyDisplayHeadings">H1–H4 ← display</button>
             <button type="button" class="btn" id="applyUiRoles">Body/UI ← UI font</button>
           </div>
-          <div class="section-title">Roles · h1–h6, body, UI</div>
-          <div class="role-list">
-            ${TYPE_ROLES.map((r) => {
-              const rr = state.typeRoles[r.id];
-              return `<button type="button" class="role-btn" data-select-role="${r.id}" aria-pressed="${id === r.id}">
-                <div class="role-id">${esc(r.label)} · ${ts[rr.size]}px</div>
-                <div class="role-sample" style="font-family:${esc(fontStack(rr.family))}; font-weight:${rr.weight}; letter-spacing:${rr.track}em">${esc(r.sample)}</div>
-              </button>`;
-            }).join("")}
-          </div>
-          <div class="field">
-            <div class="field-label">${esc(spec.label)} · font</div>
-            <select data-role-field="family">${optionList(allFontList(), role.family)}</select>
-          </div>
-          <div class="field">
-            <div class="field-label">Weight</div>
-            <select data-role-field="weight">
-              ${[400, 500, 600, 700, 800].map((w) => `<option value="${w}" ${Number(role.weight) === w ? "selected" : ""}>${w}</option>`).join("")}
-            </select>
-          </div>
-          <div class="field">
-            <div class="field-label">Size step <span>${ts[role.size]}px</span></div>
-            <select data-role-field="size">
-              ${SIZE_KEYS.map((k) => `<option value="${k}" ${role.size === k ? "selected" : ""}>${k} · ${ts[k]}px</option>`).join("")}
-            </select>
-          </div>
-          <div class="field">
-            <div class="field-label">Line height <span>${role.leading}</span></div>
-            <div class="slider-row">
-              <input type="range" min="1" max="1.8" step="0.05" data-role-field="leading" value="${role.leading}" />
-              <input type="number" min="1" max="1.8" step="0.05" data-role-field="leading" value="${role.leading}" />
-            </div>
-          </div>
-          <div class="field">
-            <div class="field-label">Tracking <span>${role.track}em</span></div>
-            <div class="slider-row">
-              <input type="range" min="-0.06" max="0.08" step="0.005" data-role-field="track" value="${role.track}" />
-              <input type="number" step="0.005" data-role-field="track" value="${role.track}" />
-            </div>
-          </div>
-          <div class="field">
-            <div class="field-label">Ink</div>
-            <select data-role-field="color">
-              ${["text", "muted", "primary", "accent"].map((c) => `<option value="${c}" ${role.color === c ? "selected" : ""}>${c}</option>`).join("")}
-            </select>
-          </div>
+          <div class="section-title">Roles · click to edit</div>
+          <div class="role-list" id="roleList">${roleListHTML()}</div>
         `;
       }
 
@@ -2389,8 +2419,8 @@
             ${TYPE_ROLES.map((spec) => {
               const role = state.typeRoles[spec.id];
               const tag = ["h1", "h2", "h3", "h4", "h5", "h6"].includes(spec.id) ? spec.id : "p";
-              return `<div class="type-role-row">
-                <div class="t-caption">${spec.id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}</div>
+              return `<div class="type-role-row" data-role-row="${spec.id}">
+                <div class="t-caption" data-role-meta="${spec.id}">${spec.id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}</div>
                 <${tag} class="t-${spec.id}" style="margin:0">${esc(spec.sample)}</${tag}>
               </div>`;
             }).join("")}
@@ -2593,14 +2623,77 @@
         }
       }
 
+      function syncTypeInspectorChrome() {
+        if (state.inspectorTab !== "type") return;
+        const ts = typeSizes();
+        els.inspector.querySelectorAll("[data-role-item]").forEach((item) => {
+          const id = item.dataset.roleItem;
+          const role = state.typeRoles[id];
+          const spec = TYPE_ROLES.find((r) => r.id === id);
+          if (!role || !spec) return;
+          const label = item.querySelector(".role-id");
+          const sample = item.querySelector(".role-sample");
+          if (label) label.textContent = `${spec.label} · ${ts[role.size]}px`;
+          if (sample) {
+            sample.style.fontFamily = fontStack(role.family);
+            sample.style.fontWeight = String(role.weight);
+            sample.style.letterSpacing = `${role.track}em`;
+            sample.style.fontSize = `${Math.min(ts[role.size], 28)}px`;
+          }
+        });
+        const role = state.typeRoles[state.selectedTypeRole];
+        if (!role) return;
+        const labels = {
+          size: `${ts[role.size]}px`,
+          leading: String(role.leading),
+          track: `${role.track}em`,
+        };
+        els.inspector.querySelectorAll(".role-editor .field").forEach((field) => {
+          const inp = field.querySelector("[data-role-field]");
+          const span = field.querySelector(".field-label span");
+          if (inp && span && labels[inp.dataset.roleField] != null) span.textContent = labels[inp.dataset.roleField];
+        });
+        const baseLabel = els.inspector.querySelector('[data-type-field="baseSize"]')?.closest(".field")?.querySelector(".field-label span");
+        if (baseLabel) baseLabel.textContent = `${state.type.baseSize}px`;
+      }
+
+      function updateLiveStage(tokens) {
+        const root = document.getElementById("previewRoot");
+        if (!root) return;
+        applyPreviewVars(root, tokens);
+        const pair = root.querySelector(".pair");
+        if (pair) {
+          pair.textContent = `${state.type.display} + ${state.type.ui} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px`;
+        }
+        root.querySelectorAll("[data-role-meta]").forEach((el) => {
+          const id = el.dataset.roleMeta;
+          const role = state.typeRoles[id];
+          if (!role) return;
+          el.innerHTML = `${id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}`;
+        });
+        root.querySelectorAll(".swatch").forEach((btn) => {
+          const shades = tokens.scales[btn.dataset.scale];
+          const s = shades?.find((x) => String(x.step) === btn.dataset.step);
+          if (!s) return;
+          const chip = btn.querySelector(".chip");
+          const meta = btn.querySelector(".meta");
+          if (chip) chip.style.background = s.hex;
+          if (meta) meta.innerHTML = `<b>${s.step}</b>${s.hex}<br>hsl(${s.h}, ${s.s}%, ${s.l}%)`;
+        });
+      }
+
       function livePaint() {
+        const tokens = tokenMap();
+        ensureRoleFonts();
         syncColorInspectorChrome();
+        syncTypeInspectorChrome();
         if (state.inspectorTab === "export") {
           const box = document.getElementById("exportBox");
           const format = document.getElementById("exportFormat")?.value || "css";
           if (box) box.value = format === "json" ? jsonText() : cssText();
         }
-        renderStage();
+        if (document.getElementById("previewRoot")) updateLiveStage(tokens);
+        else renderStage();
         saveState();
       }
 
@@ -2687,15 +2780,24 @@
           fullColorRefresh();
           return;
         }
-        if (t.dataset.typeField || t.dataset.roleField || t.dataset.btnField || t.dataset.btnControl || t.dataset.spaceField) {
-          if (t.dataset.typeField) setTypeField(t.dataset.typeField, t.value);
-          if (t.dataset.roleField) setRoleField(t.dataset.roleField, t.value);
+        if (t.dataset.roleField) {
+          setRoleField(t.dataset.roleField, t.value);
+          livePaint();
+          return;
+        }
+        if (t.dataset.typeField) {
+          setTypeField(t.dataset.typeField, t.value);
+          if (["display", "ui", "mono", "scale"].includes(t.dataset.typeField)) fullColorRefresh();
+          else livePaint();
+          return;
+        }
+        if (t.dataset.btnField || t.dataset.btnControl || t.dataset.spaceField) {
           if (t.dataset.btnField) {
             const key = t.dataset.btnField;
             state.buttons[state.selectedButtonSize][key] = key === "text" ? t.value : Number(t.value);
           }
           if (t.dataset.btnControl) state.buttons.controlSize = t.value;
-          fullColorRefresh();
+          livePaint();
         }
       });
 
@@ -2723,8 +2825,15 @@
         }
         const roleBtn = e.target.closest("[data-select-role]");
         if (roleBtn) {
-          state.selectedTypeRole = roleBtn.dataset.selectRole;
-          fullColorRefresh();
+          const next = roleBtn.dataset.selectRole;
+          state.selectedTypeRole = state.selectedTypeRole === next ? "" : next;
+          const list = document.getElementById("roleList");
+          if (list) list.innerHTML = roleListHTML();
+          else renderTypeInspector();
+          livePaint();
+          if (state.selectedTypeRole) {
+            document.querySelector(`[data-role-item="${state.selectedTypeRole}"]`)?.scrollIntoView({ block: "nearest" });
+          }
           return;
         }
         const btnSize = e.target.closest("[data-select-btn]");
