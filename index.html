@@ -51,7 +51,8 @@
       .topbar {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        flex-wrap: wrap;
+        gap: 0.7rem 1rem;
         padding: 0.7rem 1rem;
         background: var(--ui-panel);
         border-bottom: 1px solid var(--ui-line);
@@ -725,7 +726,7 @@
       }
 
       .components {
-        max-width: 52rem;
+        max-width: 64rem;
         margin: 0 auto;
         display: grid;
         gap: 1rem;
@@ -735,13 +736,405 @@
         background: var(--preview-surface);
         color: var(--preview-text);
         border: 1px solid var(--preview-border);
-        border-radius: 14px;
+        border-radius: var(--radius-lg);
         padding: 1rem 1.1rem;
+        box-shadow: var(--shadow-1);
       }
 
-      .comp-block h3 {
+      .comp-block > h3 {
         margin: 0 0 0.7rem;
-        font-size: 0.85rem;
+        font-family: var(--font-h6);
+        font-size: var(--size-h6);
+        font-weight: var(--weight-h6);
+        letter-spacing: var(--track-h6);
+      }
+
+      .role-list {
+        display: grid;
+        gap: 0.35rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .role-item {
+        border: 1px solid var(--ui-line);
+        border-radius: 10px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .role-item.is-open {
+        border-color: var(--ui-ink);
+        box-shadow: 0 0 0 1px var(--ui-ink);
+      }
+
+      .role-btn {
+        text-align: left;
+        border: 0;
+        background: transparent;
+        border-radius: 0;
+        padding: 0.5rem 0.65rem;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      .role-btn[aria-pressed="true"] {
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .role-btn .role-id {
+        font-size: 0.68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--ui-muted);
+      }
+
+      .role-btn .role-sample {
+        margin-top: 0.15rem;
+        line-height: 1.2;
+        overflow: hidden;
+        max-height: 2.6rem;
+      }
+
+      .role-editor {
+        padding: 0.7rem 0.7rem 0.85rem;
+        border-top: 1px solid var(--ui-line);
+        background: var(--ui-fill);
+      }
+
+      .size-picks {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.35rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .size-picks button {
+        border: 1px solid var(--ui-line);
+        background: #fff;
+        border-radius: 8px;
+        padding: 0.55rem 0.4rem;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .size-picks button[aria-pressed="true"] {
+        border-color: var(--ui-ink);
+        box-shadow: 0 0 0 1px var(--ui-ink);
+      }
+
+      .preview-root {
+        --focus-ring: 0 0 0 var(--focus-width, 3px) var(--preview-focus);
+      }
+
+      .preview-root h1, .preview-root .t-h1, #previewRoot h1, #previewRoot .t-h1 { font-family: var(--font-h1); font-size: var(--size-h1); font-weight: var(--weight-h1); line-height: var(--leading-h1); letter-spacing: var(--track-h1); color: var(--ink-h1); }
+      .preview-root h2, .preview-root .t-h2, #previewRoot h2, #previewRoot .t-h2 { font-family: var(--font-h2); font-size: var(--size-h2); font-weight: var(--weight-h2); line-height: var(--leading-h2); letter-spacing: var(--track-h2); color: var(--ink-h2); }
+      .preview-root h3, .preview-root .t-h3, #previewRoot h3, #previewRoot .t-h3 { font-family: var(--font-h3); font-size: var(--size-h3); font-weight: var(--weight-h3); line-height: var(--leading-h3); letter-spacing: var(--track-h3); color: var(--ink-h3); }
+      .preview-root h4, .preview-root .t-h4, #previewRoot h4, #previewRoot .t-h4 { font-family: var(--font-h4); font-size: var(--size-h4); font-weight: var(--weight-h4); line-height: var(--leading-h4); letter-spacing: var(--track-h4); color: var(--ink-h4); }
+      .preview-root h5, .preview-root .t-h5, #previewRoot h5, #previewRoot .t-h5 { font-family: var(--font-h5); font-size: var(--size-h5); font-weight: var(--weight-h5); line-height: var(--leading-h5); letter-spacing: var(--track-h5); color: var(--ink-h5); }
+      .preview-root h6, .preview-root .t-h6, #previewRoot h6, #previewRoot .t-h6 { font-family: var(--font-h6); font-size: var(--size-h6); font-weight: var(--weight-h6); line-height: var(--leading-h6); letter-spacing: var(--track-h6); color: var(--ink-h6); }
+      .preview-root .t-body, .preview-root td, .preview-root li, #previewRoot .t-body, #previewRoot td, #previewRoot li { font-family: var(--font-body); font-size: var(--size-body); font-weight: var(--weight-body); line-height: var(--leading-body-role); letter-spacing: var(--track-body); color: var(--ink-body); }
+      .preview-root p:not([class]), #previewRoot p:not([class]) { font-family: var(--font-body); font-size: var(--size-body); font-weight: var(--weight-body); line-height: var(--leading-body-role); letter-spacing: var(--track-body); color: var(--ink-body); }
+      .preview-root .t-ui, #previewRoot .t-ui { font-family: var(--font-ui); font-size: var(--size-ui); font-weight: var(--weight-ui); line-height: var(--leading-ui); letter-spacing: var(--track-ui); color: var(--ink-ui); }
+      .preview-root label, .preview-root .btn-ds, #previewRoot label, #previewRoot .btn-ds { font-family: var(--font-ui); }
+      .preview-root label, #previewRoot label { font-size: var(--size-ui); font-weight: var(--weight-ui); }
+      .preview-root .t-caption, #previewRoot .t-caption { font-family: var(--font-caption); font-size: var(--size-caption); font-weight: var(--weight-caption); line-height: var(--leading-caption); letter-spacing: var(--track-caption); color: var(--ink-caption); }
+      .preview-root .t-mono, .preview-root code, #previewRoot .t-mono, #previewRoot code { font-family: var(--font-mono); font-size: var(--size-mono); font-weight: var(--weight-mono); line-height: var(--leading-mono); letter-spacing: var(--track-mono); color: var(--ink-mono); }
+
+      .preview-root h1, .preview-root h2, .preview-root h3, .preview-root h4, .preview-root h5, .preview-root h6,
+      #previewRoot h1, #previewRoot h2, #previewRoot h3, #previewRoot h4, #previewRoot h5, #previewRoot h6 {
+        margin: 0 0 0.35em;
+      }
+
+      .type-meta {
+        color: var(--preview-muted);
+        font-size: 0.72rem;
+        font-family: ui-monospace, Menlo, monospace;
+        line-height: 1.35;
+        word-break: break-word;
+      }
+
+      .preview-shell {
+        display: grid;
+        grid-template-columns: 13.5rem 1fr;
+        min-height: 42rem;
+      }
+
+      .preview-side {
+        background: var(--preview-surface);
+        border-right: var(--border-sm) solid var(--preview-border);
+        padding: 1.1rem 0.95rem;
+      }
+
+      .preview-side .brand-mark {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.1rem;
+        font-family: var(--font-h6);
+        font-weight: var(--weight-h6);
+      }
+
+      .preview-side a {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--preview-muted);
+        text-decoration: none;
+        padding: 0.4rem 0.5rem;
+        border-radius: var(--radius-sm);
+        font-family: var(--font-ui);
+        font-size: var(--size-ui);
+        font-weight: var(--weight-ui);
+      }
+
+      .preview-side a.is-current {
+        background: var(--preview-primary-soft);
+        color: var(--preview-primary-ink);
+      }
+
+      .preview-main {
+        padding: 1.35rem 1.4rem 2rem;
+        max-width: var(--max-w-xl);
+      }
+
+      .ds-icon {
+        width: var(--icon-md);
+        height: var(--icon-md);
+        flex: 0 0 auto;
+      }
+
+      .ds-icon.xs { width: var(--icon-xs); height: var(--icon-xs); }
+      .ds-icon.sm { width: var(--icon-sm); height: var(--icon-sm); }
+      .ds-icon.md { width: var(--icon-md); height: var(--icon-md); }
+      .ds-icon.lg { width: var(--icon-lg); height: var(--icon-lg); }
+      .ds-icon.xl { width: var(--icon-xl); height: var(--icon-xl); }
+
+      .btn-ds.sm .ds-icon {
+        width: var(--btn-sm-icon);
+        height: var(--btn-sm-icon);
+      }
+      .btn-ds.md .ds-icon {
+        width: var(--btn-md-icon);
+        height: var(--btn-md-icon);
+      }
+      .btn-ds.lg .ds-icon {
+        width: var(--btn-lg-icon);
+        height: var(--btn-lg-icon);
+      }
+
+      .btn-ds {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4em;
+        border-radius: var(--radius-sm);
+        font-family: var(--font-ui);
+        font-weight: 650;
+        line-height: 1.15;
+        cursor: default;
+        border: var(--border-sm) solid transparent;
+        white-space: nowrap;
+      }
+
+      .btn-ds:focus {
+        outline: none;
+        box-shadow: var(--focus-ring);
+      }
+
+      .btn-ds.sm {
+        font-size: var(--btn-sm-text);
+        padding: var(--btn-sm-py) var(--btn-sm-px);
+        min-height: var(--btn-sm-height);
+      }
+      .btn-ds.md {
+        font-size: var(--btn-md-text);
+        padding: var(--btn-md-py) var(--btn-md-px);
+        min-height: var(--btn-md-height);
+      }
+      .btn-ds.lg {
+        font-size: var(--btn-lg-text);
+        padding: var(--btn-lg-py) var(--btn-lg-px);
+        min-height: var(--btn-lg-height);
+      }
+
+      .btn-ds.primary {
+        background: var(--preview-primary);
+        color: var(--preview-on-primary);
+      }
+      .btn-ds.secondary {
+        background: var(--preview-surface);
+        color: var(--preview-text);
+        border-color: var(--preview-border);
+      }
+      .btn-ds.tertiary {
+        background: transparent;
+        color: var(--preview-primary);
+        padding-left: 0.35rem;
+        padding-right: 0.35rem;
+      }
+      .btn-ds.danger {
+        background: var(--preview-danger);
+        color: #fff;
+      }
+
+      .control {
+        border: var(--border-sm) solid var(--preview-border);
+        background: var(--preview-surface);
+        color: var(--preview-text);
+        border-radius: var(--radius-sm);
+        padding: 0 0.7rem;
+        font-family: var(--font-ui);
+        font-size: var(--btn-md-text);
+        min-height: var(--control-height);
+        width: 100%;
+      }
+
+      .control.sm { font-size: var(--btn-sm-text); min-height: var(--btn-sm-height); }
+      .control.md { font-size: var(--btn-md-text); min-height: var(--btn-md-height); }
+      .control.lg { font-size: var(--btn-lg-text); min-height: var(--btn-lg-height); }
+
+      .control:focus {
+        outline: none;
+        border-color: var(--preview-primary);
+        box-shadow: var(--focus-ring);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        border-radius: var(--radius-full);
+        padding: 0.15rem 0.5rem;
+        font-family: var(--font-caption);
+        font-size: var(--size-caption);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .badge.accent { background: var(--preview-accent-soft); color: var(--preview-accent-ink); }
+      .badge.ok { background: var(--preview-success-soft); color: var(--preview-success-ink); }
+      .badge.warn { background: var(--preview-warning-soft); color: var(--preview-warning-ink); }
+      .badge.bad { background: var(--preview-danger-soft); color: var(--preview-danger-ink); }
+      .badge.info { background: var(--preview-primary-soft); color: var(--preview-primary-ink); }
+
+      .avatar {
+        width: var(--icon-xl);
+        height: var(--icon-xl);
+        border-radius: var(--radius-full);
+        display: grid;
+        place-items: center;
+        font-family: var(--font-ui);
+        font-size: var(--size-caption);
+        font-weight: 700;
+        background: var(--preview-primary-soft);
+        color: var(--preview-primary-ink);
+        border: var(--border-md) solid var(--preview-surface);
+      }
+
+      .avatar-row { display: flex; }
+      .avatar-row .avatar + .avatar { margin-left: -0.45rem; }
+
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--font-body);
+        font-size: var(--size-ui);
+      }
+
+      .data-table th {
+        text-align: left;
+        font-family: var(--font-caption);
+        font-size: var(--size-caption);
+        color: var(--preview-muted);
+        font-weight: 700;
+        padding: 0.45rem 0.5rem;
+        border-bottom: var(--border-sm) solid var(--preview-border);
+      }
+
+      .data-table td {
+        padding: 0.55rem 0.5rem;
+        border-bottom: var(--border-sm) solid var(--preview-border);
+        font-size: var(--size-ui);
+      }
+
+      .dropdown {
+        display: inline-block;
+        background: var(--preview-surface);
+        border: var(--border-sm) solid var(--preview-border);
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-3);
+        min-width: 12rem;
+        padding: 0.3rem;
+      }
+
+      .dropdown button {
+        display: flex;
+        width: 100%;
+        text-align: left;
+        border: 0;
+        background: transparent;
+        color: var(--preview-text);
+        padding: 0.4rem 0.5rem;
+        border-radius: 6px;
+        font-family: var(--font-ui);
+        font-size: var(--size-ui);
+      }
+
+      .dropdown button:hover {
+        background: var(--preview-primary-soft);
+      }
+
+      .empty {
+        text-align: center;
+        padding: 1.6rem 1rem;
+        border: var(--border-md) dashed var(--preview-border);
+        border-radius: var(--radius-lg);
+      }
+
+      .shadow-row, .icon-row, .btn-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        align-items: center;
+      }
+
+      .icon-scale-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        min-width: 2.4rem;
+      }
+
+      .shadow-card {
+        width: 4.2rem;
+        height: 3rem;
+        border-radius: var(--radius-sm);
+        background: var(--preview-surface);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 0.85rem;
+        margin: 1rem 0;
+      }
+
+      .type-role-row {
+        display: grid;
+        grid-template-columns: 7.5rem 1fr;
+        gap: 0.8rem;
+        padding: 0.85rem 0;
+        border-top: var(--border-sm) solid var(--preview-border);
+        align-items: baseline;
+      }
+
+      @media (max-width: 960px) {
+        .preview-shell, .two-col {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 960px) {
@@ -766,12 +1159,13 @@
       <header class="topbar">
         <div class="brand">
           <strong>Design System Studio</strong>
-          <span>Build a palette and type scale, then preview it</span>
+          <span>Palette, type roles, buttons, and a live UI</span>
         </div>
         <nav class="topbar-tabs" id="inspectorTabs">
           <button type="button" data-tab="color" aria-selected="true">Palette</button>
           <button type="button" data-tab="type">Type</button>
-          <button type="button" data-tab="space">Spacing</button>
+          <button type="button" data-tab="buttons">Buttons</button>
+          <button type="button" data-tab="space">Space</button>
           <button type="button" data-tab="export">Export</button>
         </nav>
         <div class="top-actions">
@@ -805,7 +1199,7 @@
     </div>
 
     <script>
-      const STORAGE_KEY = "rui-studio-v4";
+      const STORAGE_KEY = "rui-studio-v5";
       const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
       const SCALE_ROLES = {
@@ -856,18 +1250,60 @@
 
       const TYPE_SCALES = {
         rui: {
-          name: "Fixed steps (12–48)",
-          sizes: { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, "2xl": 24, "3xl": 30, "4xl": 36, "5xl": 48 },
+          name: "Fixed steps (12–72)",
+          sizes: { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, "2xl": 24, "3xl": 30, "4xl": 36, "5xl": 48, "6xl": 60, "7xl": 72 },
         },
         compact: {
           name: "Compact UI",
-          sizes: { xs: 11, sm: 12, base: 14, lg: 16, xl: 18, "2xl": 20, "3xl": 24, "4xl": 30, "5xl": 36 },
+          sizes: { xs: 11, sm: 12, base: 14, lg: 16, xl: 18, "2xl": 20, "3xl": 24, "4xl": 30, "5xl": 36, "6xl": 48, "7xl": 60 },
         },
         editorial: {
           name: "Editorial",
-          sizes: { xs: 12, sm: 14, base: 18, lg: 20, xl: 24, "2xl": 30, "3xl": 36, "4xl": 48, "5xl": 60 },
+          sizes: { xs: 12, sm: 14, base: 18, lg: 20, xl: 24, "2xl": 30, "3xl": 36, "4xl": 48, "5xl": 60, "6xl": 72, "7xl": 84 },
         },
       };
+
+      const TYPE_ROLES = [
+        { id: "h1", label: "H1 · page title", sample: "Supersuit v0 is in beta." },
+        { id: "h2", label: "H2 · section", sample: "Join the waitlist" },
+        { id: "h3", label: "H3 · card title", sample: "Activation this week" },
+        { id: "h4", label: "H4 · subsection", sample: "Billing details" },
+        { id: "h5", label: "H5 · kicker", sample: "Release" },
+        { id: "h6", label: "H6 · small heading", sample: "Plan" },
+        { id: "body", label: "Body / article", sample: "Almost everything in an interface is type." },
+        { id: "ui", label: "UI / controls", sample: "Join the waitlist" },
+        { id: "caption", label: "Caption / meta", sample: "Signups" },
+        { id: "mono", label: "Mono / code", sample: "npm install @northwind/kit" },
+      ];
+
+      const HEADING_ROLES = ["h1", "h2", "h3", "h4"];
+      const UI_ROLES = ["h5", "h6", "body", "ui", "caption"];
+      const SIZE_KEYS = ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl"];
+      const BUTTON_SIZES = ["sm", "md", "lg"];
+
+      function defaultTypeRoles() {
+        return {
+          h1: { family: "Fraunces", weight: 600, size: "4xl", leading: 1.15, track: -0.02, color: "text" },
+          h2: { family: "Fraunces", weight: 600, size: "3xl", leading: 1.2, track: -0.02, color: "text" },
+          h3: { family: "Fraunces", weight: 600, size: "2xl", leading: 1.25, track: -0.015, color: "text" },
+          h4: { family: "Inter", weight: 600, size: "xl", leading: 1.3, track: -0.01, color: "text" },
+          h5: { family: "Inter", weight: 700, size: "sm", leading: 1.3, track: 0.04, color: "primary" },
+          h6: { family: "Inter", weight: 600, size: "base", leading: 1.3, track: 0, color: "text" },
+          body: { family: "Inter", weight: 400, size: "base", leading: 1.5, track: 0, color: "text" },
+          ui: { family: "Inter", weight: 500, size: "sm", leading: 1.35, track: 0, color: "text" },
+          caption: { family: "Inter", weight: 600, size: "xs", leading: 1.35, track: 0.02, color: "muted" },
+          mono: { family: "IBM Plex Mono", weight: 400, size: "sm", leading: 1.5, track: 0, color: "text" },
+        };
+      }
+
+      function defaultButtons() {
+        return {
+          controlSize: "md",
+          sm: { text: "xs", py: 6, px: 10, icon: 12 },
+          md: { text: "sm", py: 8, px: 14, icon: 16 },
+          lg: { text: "base", py: 12, px: 20, icon: 20 },
+        };
+      }
 
       const loadedFonts = new Set();
 
@@ -1055,6 +1491,8 @@
           stage: "app",
           selectedScale: "primary",
           selectedShade: 500,
+          selectedTypeRole: "h1",
+          selectedButtonSize: "md",
           darkPreview: false,
           linkNeutrals: true,
           advancedOpen: false,
@@ -1095,10 +1533,22 @@
             leading: 1.5,
             trackDisplay: -0.02,
           },
+          typeRoles: defaultTypeRoles(),
+          buttons: defaultButtons(),
           space: {
             unit: 8,
             radiusSm: 6,
             radiusLg: 12,
+            shadowStrength: 1,
+            borderSm: 1,
+            borderMd: 2,
+            borderLg: 4,
+            focusWidth: 3,
+            iconXs: 12,
+            iconSm: 16,
+            iconMd: 20,
+            iconLg: 24,
+            iconXl: 32,
           },
         };
       }
@@ -1114,6 +1564,8 @@
             ...parsed,
             scales: { ...base.scales, ...(parsed.scales || {}) },
             type: { ...base.type, ...(parsed.type || {}) },
+            typeRoles: { ...base.typeRoles, ...(parsed.typeRoles || {}) },
+            buttons: { ...base.buttons, ...(parsed.buttons || {}), sm: { ...base.buttons.sm, ...(parsed.buttons?.sm || {}) }, md: { ...base.buttons.md, ...(parsed.buttons?.md || {}) }, lg: { ...base.buttons.lg, ...(parsed.buttons?.lg || {}) } },
             space: { ...base.space, ...(parsed.space || {}) },
           };
         } catch {
@@ -1146,14 +1598,33 @@
         return `"${id}", system-ui, sans-serif`;
       }
 
+      function allFontList() {
+        const seen = new Set();
+        const out = [];
+        for (const f of [...DISPLAY_FONTS, ...UI_FONTS, ...MONO_FONTS]) {
+          if (seen.has(f.id)) continue;
+          seen.add(f.id);
+          out.push(f);
+        }
+        return out;
+      }
+
+      function fontRecord(id) {
+        return allFontList().find((f) => f.id === id);
+      }
+
       function ensureFont(id, list) {
-        const rec = list.find((f) => f.id === id);
+        const rec = (list && list.find((f) => f.id === id)) || fontRecord(id);
         if (!rec || !rec.google || loadedFonts.has(rec.google)) return;
         loadedFonts.add(rec.google);
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = `https://fonts.googleapis.com/css2?family=${rec.google}&display=swap`;
         document.head.appendChild(link);
+      }
+
+      function ensureRoleFonts() {
+        for (const role of Object.values(state.typeRoles)) ensureFont(role.family);
       }
 
       function typeSizes() {
@@ -1166,13 +1637,38 @@
 
       function spacing() {
         const u = Number(state.space.unit) || 8;
-        const keys = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12];
-        const mult = [0, 0.5, 1, 1.5, 2, 3, 4, 6, 8, 12];
+        const keys = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56];
+        const mult = [0, 0.5, 1, 1.5, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64, 80, 96];
         const out = {};
         keys.forEach((k, i) => {
           out[k] = mult[i] * u;
         });
         return out;
+      }
+
+      function shadowScale() {
+        const k = Number(state.space.shadowStrength) || 1;
+        const a = (x) => +(x * k).toFixed(3);
+        return {
+          1: `0 1px 3px hsl(0 0% 0% / ${a(0.12)}), 0 1px 2px hsl(0 0% 0% / ${a(0.24)})`,
+          2: `0 3px 6px hsl(0 0% 0% / ${a(0.15)}), 0 2px 4px hsl(0 0% 0% / ${a(0.12)})`,
+          3: `0 10px 20px hsl(0 0% 0% / ${a(0.15)}), 0 3px 6px hsl(0 0% 0% / ${a(0.1)})`,
+          4: `0 15px 25px hsl(0 0% 0% / ${a(0.15)}), 0 5px 10px hsl(0 0% 0% / ${a(0.1)})`,
+          5: `0 20px 40px hsl(0 0% 0% / ${a(0.2)})`,
+        };
+      }
+
+      function btnHeight(size) {
+        const b = state.buttons[size];
+        const font = typeSizes()[b.text] || 14;
+        return Math.round(Number(b.py) * 2 + font * 1.2);
+      }
+
+      function inkFor(roleColor, preview) {
+        if (roleColor === "muted") return preview.muted;
+        if (roleColor === "primary") return preview.primary;
+        if (roleColor === "accent") return preview.accent;
+        return preview.text;
       }
 
       function pickOnColor(bg) {
@@ -1190,11 +1686,15 @@
         const a = Object.fromEntries(scales.accent.map((s) => [s.step, s]));
         const ts = typeSizes();
         const sp = spacing();
+        const shadows = shadowScale();
         const brand = p[600].hex;
         return {
           scales,
           ts,
           sp,
+          shadows,
+          n,
+          p,
           preview: {
             bg: dark ? n[900].hex : n[50].hex,
             surface: dark ? n[800].hex : "#FFFFFF",
@@ -1207,6 +1707,7 @@
             onPrimary: pickOnColor(p[500].hex),
             primarySoft: p[100].hex,
             primaryInk: p[800].hex,
+            focus: p[300].hex,
             danger: d[500].hex,
             dangerSoft: d[100].hex,
             dangerInk: d[800].hex,
@@ -1215,47 +1716,116 @@
             successSoft: g[100].hex,
             successInk: g[800].hex,
             accent: a[500].hex,
+            accentSoft: a[100].hex,
+            accentInk: a[800].hex,
           },
         };
       }
 
       function cssText() {
-        const { scales, ts, sp } = tokenMap();
+        const { scales, ts, sp, shadows } = tokenMap();
         const lines = [":root {"];
         for (const [id, shades] of Object.entries(scales)) {
           for (const s of shades) lines.push(`  --color-${id}-${s.step}: ${s.hex};`);
           lines.push("");
         }
+        lines.push(`  --color-bg: var(--color-neutral-50);`);
+        lines.push(`  --color-surface: #ffffff;`);
+        lines.push(`  --color-text: var(--color-neutral-900);`);
+        lines.push(`  --color-text-muted: var(--color-neutral-600);`);
+        lines.push(`  --color-border: var(--color-neutral-200);`);
+        lines.push(`  --color-focus: var(--color-primary-300);`);
+        lines.push("");
         lines.push(`  --font-display: ${fontStack(state.type.display)};`);
         lines.push(`  --font-ui: ${fontStack(state.type.ui)};`);
         lines.push(`  --font-mono: ${fontStack(state.type.mono)};`);
-        lines.push(`  --weight-display: ${state.type.weightDisplay};`);
-        lines.push(`  --weight-ui: ${state.type.weightUi};`);
-        lines.push(`  --track-display: ${state.type.trackDisplay}em;`);
+        lines.push(`  --weight-regular: 400;`);
+        lines.push(`  --weight-medium: 500;`);
+        lines.push(`  --weight-semibold: 600;`);
+        lines.push(`  --weight-bold: 700;`);
+        lines.push(`  --leading-none: 1;`);
+        lines.push(`  --leading-tight: 1.2;`);
+        lines.push(`  --leading-snug: 1.35;`);
         lines.push(`  --leading-body: ${state.type.leading};`);
+        lines.push(`  --leading-relaxed: 1.7;`);
         for (const [k, v] of Object.entries(ts)) lines.push(`  --text-${k}: ${v}px;`);
         lines.push("");
+        for (const spec of TYPE_ROLES) {
+          const role = state.typeRoles[spec.id];
+          lines.push(`  --font-${spec.id}: ${fontStack(role.family)};`);
+          lines.push(`  --weight-${spec.id}: ${role.weight};`);
+          lines.push(`  --size-${spec.id}: ${ts[role.size]}px;`);
+          lines.push(`  --leading-${spec.id}: ${role.leading};`);
+          lines.push(`  --track-${spec.id}: ${role.track}em;`);
+        }
+        lines.push("");
+        for (const size of BUTTON_SIZES) {
+          const b = state.buttons[size];
+          lines.push(`  --btn-${size}-text: ${ts[b.text]}px;`);
+          lines.push(`  --btn-${size}-py: ${b.py}px;`);
+          lines.push(`  --btn-${size}-px: ${b.px}px;`);
+          lines.push(`  --btn-${size}-icon: ${b.icon}px;`);
+          lines.push(`  --btn-${size}-height: ${btnHeight(size)}px;`);
+        }
+        lines.push(`  --control-height: var(--btn-${state.buttons.controlSize}-height);`);
+        lines.push("");
         for (const [k, v] of Object.entries(sp)) lines.push(`  --space-${k}: ${v}px;`);
+        lines.push(`  --max-w-sm: ${sp[32] || 384}px;`);
+        lines.push(`  --max-w-md: ${sp[40] || 512}px;`);
+        lines.push(`  --max-w-lg: ${sp[48] || 640}px;`);
+        lines.push(`  --max-w-xl: ${sp[56] || 768}px;`);
         lines.push(`  --radius-sm: ${state.space.radiusSm}px;`);
         lines.push(`  --radius-lg: ${state.space.radiusLg}px;`);
         lines.push(`  --radius-full: 999px;`);
-        lines.push(`  --shadow-sm: 0 1px 2px hsl(0 0% 0% / 6%), 0 1px 3px hsl(0 0% 0% / 8%);`);
-        lines.push(`  --shadow-md: 0 4px 6px hsl(0 0% 0% / 8%), 0 2px 4px hsl(0 0% 0% / 6%);`);
+        lines.push(`  --border-sm: ${state.space.borderSm}px;`);
+        lines.push(`  --border-md: ${state.space.borderMd}px;`);
+        lines.push(`  --border-lg: ${state.space.borderLg}px;`);
+        lines.push(`  --focus-width: ${state.space.focusWidth}px;`);
+        lines.push(`  --icon-xs: ${state.space.iconXs}px;`);
+        lines.push(`  --icon-sm: ${state.space.iconSm}px;`);
+        lines.push(`  --icon-md: ${state.space.iconMd}px;`);
+        lines.push(`  --icon-lg: ${state.space.iconLg}px;`);
+        lines.push(`  --icon-xl: ${state.space.iconXl}px;`);
+        lines.push(`  --opacity-100: 1;`);
+        lines.push(`  --opacity-75: 0.75;`);
+        lines.push(`  --opacity-50: 0.5;`);
+        lines.push(`  --opacity-25: 0.25;`);
+        lines.push(`  --opacity-10: 0.1;`);
+        for (const [k, v] of Object.entries(shadows)) lines.push(`  --shadow-${k}: ${v};`);
+        lines.push(`  --focus-ring: 0 0 0 var(--focus-width) var(--color-focus);`);
+        lines.push("}");
+        lines.push("");
+        lines.push('[data-theme="dark"] {');
+        lines.push(`  --color-bg: var(--color-neutral-900);`);
+        lines.push(`  --color-surface: var(--color-neutral-800);`);
+        lines.push(`  --color-text: var(--color-neutral-50);`);
+        lines.push(`  --color-text-muted: var(--color-neutral-400);`);
+        lines.push(`  --color-border: var(--color-neutral-700);`);
+        lines.push(`  --color-focus: var(--color-primary-400);`);
         lines.push("}");
         return lines.join("\n");
       }
 
       function jsonText() {
-        const scales = allScales();
-        const obj = {};
+        const { scales, ts } = tokenMap();
+        const colors = {};
         for (const [id, shades] of Object.entries(scales)) {
           const key = state.scales[id].name.toLowerCase().replace(/\s+/g, "-");
           for (const s of shades) {
             const step = String(s.step).padStart(3, "0");
-            obj[`${key}-${step}`] = s.hex;
+            colors[`${key}-${step}`] = s.hex;
           }
         }
-        return JSON.stringify(obj, null, 2);
+        const typeRoles = {};
+        for (const spec of TYPE_ROLES) {
+          const role = state.typeRoles[spec.id];
+          typeRoles[spec.id] = { ...role, sizePx: ts[role.size] };
+        }
+        const buttons = {};
+        for (const size of BUTTON_SIZES) {
+          buttons[size] = { ...state.buttons[size], height: btnHeight(size) };
+        }
+        return JSON.stringify({ colors, typeRoles, buttons, space: state.space, controlSize: state.buttons.controlSize }, null, 2);
       }
 
       function applyPreviewVars(root, tokens) {
@@ -1273,6 +1843,7 @@
         set("--preview-on-primary", p.onPrimary);
         set("--preview-primary-soft", p.primarySoft);
         set("--preview-primary-ink", p.primaryInk);
+        set("--preview-focus", p.focus);
         set("--preview-danger", p.danger);
         set("--preview-danger-soft", p.dangerSoft);
         set("--preview-danger-ink", p.dangerInk);
@@ -1280,6 +1851,9 @@
         set("--preview-warning-ink", p.warningInk);
         set("--preview-success-soft", p.successSoft);
         set("--preview-success-ink", p.successInk);
+        set("--preview-accent", p.accent);
+        set("--preview-accent-soft", p.accentSoft);
+        set("--preview-accent-ink", p.accentInk);
         set("--font-display", fontStack(state.type.display));
         set("--font-ui", fontStack(state.type.ui));
         set("--weight-display", state.type.weightDisplay);
@@ -1287,8 +1861,38 @@
         set("--track-display", `${state.type.trackDisplay}em`);
         set("--leading-body", state.type.leading);
         for (const [k, v] of Object.entries(tokens.ts)) set(`--text-${k}`, `${v}px`);
+        for (const spec of TYPE_ROLES) {
+          const role = state.typeRoles[spec.id];
+          set(`--font-${spec.id}`, fontStack(role.family));
+          set(`--weight-${spec.id}`, role.weight);
+          set(`--size-${spec.id}`, `${tokens.ts[role.size]}px`);
+          set(`--leading-${spec.id}`, role.leading);
+          set(`--track-${spec.id}`, `${role.track}em`);
+          set(`--ink-${spec.id}`, inkFor(role.color, p));
+        }
+        set("--leading-body-role", state.typeRoles.body.leading);
+        for (const size of BUTTON_SIZES) {
+          const b = state.buttons[size];
+          set(`--btn-${size}-text`, `${tokens.ts[b.text]}px`);
+          set(`--btn-${size}-py`, `${b.py}px`);
+          set(`--btn-${size}-px`, `${b.px}px`);
+          set(`--btn-${size}-icon`, `${b.icon}px`);
+          set(`--btn-${size}-height`, `${btnHeight(size)}px`);
+        }
+        set("--control-height", `var(--btn-${state.buttons.controlSize}-height)`);
         set("--radius-sm", `${state.space.radiusSm}px`);
         set("--radius-lg", `${state.space.radiusLg}px`);
+        set("--border-sm", `${state.space.borderSm}px`);
+        set("--border-md", `${state.space.borderMd}px`);
+        set("--border-lg", `${state.space.borderLg}px`);
+        set("--focus-width", `${state.space.focusWidth}px`);
+        set("--icon-xs", `${state.space.iconXs}px`);
+        set("--icon-sm", `${state.space.iconSm}px`);
+        set("--icon-md", `${state.space.iconMd}px`);
+        set("--icon-lg", `${state.space.iconLg}px`);
+        set("--icon-xl", `${state.space.iconXl}px`);
+        set("--max-w-xl", `${tokens.sp[56] || 768}px`);
+        for (const [k, v] of Object.entries(tokens.shadows)) set(`--shadow-${k}`, v);
       }
 
       function esc(s) {
@@ -1309,8 +1913,23 @@
         const tab = state.inspectorTab;
         if (tab === "color") renderColorInspector();
         else if (tab === "type") renderTypeInspector();
+        else if (tab === "buttons") renderButtonInspector();
         else if (tab === "space") renderSpaceInspector();
         else renderExportInspector();
+      }
+
+      function iconSvg(kind, sizeClass) {
+        const paths = {
+          plus: '<path d="M12 5v14M5 12h14"/>',
+          check: '<path d="M5 12l5 5L20 7"/>',
+          user: '<circle cx="12" cy="8" r="3"/><path d="M5 19c1.5-3 4-5 7-5s5.5 2 7 5"/>',
+          search: '<circle cx="11" cy="11" r="6"/><path d="M20 20l-3.5-3.5"/>',
+          chevron: '<path d="M6 9l6 6 6-6"/>',
+          alert: '<path d="M12 8v5M12 16h.01"/><path d="M10.3 4.9L2.8 18a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 4.9a2 2 0 0 0-3.4 0z"/>',
+          home: '<path d="M4 11l8-7 8 7v8a2 2 0 0 1-2 2h-4v-6H10v6H6a2 2 0 0 1-2-2z"/>',
+          grid: '<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/>',
+        };
+        return `<svg class="ds-icon ${sizeClass || "md"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">${paths[kind] || paths.plus}</svg>`;
       }
 
       function miniRamp(id) {
@@ -1459,42 +2078,75 @@
         `;
       }
 
+      function roleEditorHTML(spec, role, ts) {
+        return `
+          <div class="role-editor">
+            <div class="field">
+              <div class="field-label">${esc(spec.label)} · font</div>
+              <select data-role-field="family">${optionList(allFontList(), role.family)}</select>
+            </div>
+            <div class="field">
+              <div class="field-label">Weight</div>
+              <select data-role-field="weight">
+                ${[400, 500, 600, 700, 800].map((w) => `<option value="${w}" ${Number(role.weight) === w ? "selected" : ""}>${w}</option>`).join("")}
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Size step <span>${ts[role.size]}px</span></div>
+              <select data-role-field="size">
+                ${SIZE_KEYS.map((k) => `<option value="${k}" ${role.size === k ? "selected" : ""}>${k} · ${ts[k]}px</option>`).join("")}
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Line height <span>${role.leading}</span></div>
+              <div class="slider-row">
+                <input type="range" min="1" max="1.8" step="0.05" data-role-field="leading" value="${role.leading}" />
+                <input type="number" min="1" max="1.8" step="0.05" data-role-field="leading" value="${role.leading}" />
+              </div>
+            </div>
+            <div class="field">
+              <div class="field-label">Tracking <span>${role.track}em</span></div>
+              <div class="slider-row">
+                <input type="range" min="-0.06" max="0.08" step="0.005" data-role-field="track" value="${role.track}" />
+                <input type="number" step="0.005" data-role-field="track" value="${role.track}" />
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <div class="field-label">Ink</div>
+              <select data-role-field="color">
+                ${["text", "muted", "primary", "accent"].map((c) => `<option value="${c}" ${role.color === c ? "selected" : ""}>${c}</option>`).join("")}
+              </select>
+            </div>
+          </div>`;
+      }
+
+      function roleListHTML() {
+        const ts = typeSizes();
+        const open = state.selectedTypeRole;
+        return TYPE_ROLES.map((r) => {
+          const rr = state.typeRoles[r.id];
+          const isOpen = open === r.id;
+          return `<div class="role-item ${isOpen ? "is-open" : ""}" data-role-item="${r.id}">
+            <button type="button" class="role-btn" data-select-role="${r.id}" aria-pressed="${isOpen}" aria-expanded="${isOpen}">
+              <div class="role-id">${esc(r.label)} · ${ts[rr.size]}px</div>
+              <div class="role-sample" style="font-family:${esc(fontStack(rr.family))}; font-weight:${rr.weight}; letter-spacing:${rr.track}em; font-size:${Math.min(ts[rr.size], 28)}px">${esc(r.sample)}</div>
+            </button>
+            ${isOpen ? roleEditorHTML(r, rr, ts) : ""}
+          </div>`;
+        }).join("");
+      }
+
       function renderTypeInspector() {
         const t = state.type;
         els.inspector.innerHTML = `
-          <p class="hint">Two families is enough: one for display/headlines, one for UI and body. Prefer faces with several weights.</p>
-          <div class="type-specimen-mini" style="font-family:${esc(fontStack(t.display))}; font-weight:${t.weightDisplay}">
-            ${esc(t.display)} — The people’s first supersuit
-          </div>
+          <p class="hint">Click a role to edit it right underneath. The type specimen and app preview update as you drag.</p>
           <div class="field">
-            <div class="field-label">Display / headlines</div>
+            <div class="field-label">Display font (headlines)</div>
             <select data-type-field="display">${optionList(DISPLAY_FONTS, t.display)}</select>
           </div>
           <div class="field">
-            <div class="field-label">Display weight</div>
-            <select data-type-field="weightDisplay">
-              ${[500, 600, 700, 800].map((w) => `<option value="${w}" ${Number(t.weightDisplay) === w ? "selected" : ""}>${w}</option>`).join("")}
-            </select>
-          </div>
-          <div class="field">
-            <div class="field-label">Headline tracking</div>
-            <div class="slider-row">
-              <input type="range" min="-0.06" max="0.04" step="0.005" data-type-field="trackDisplay" value="${t.trackDisplay}" />
-              <input type="number" step="0.005" data-type-field="trackDisplay" value="${t.trackDisplay}" />
-            </div>
-          </div>
-          <div class="type-specimen-mini" style="font-family:${esc(fontStack(t.ui))}; font-weight:${t.weightUi}">
-            ${esc(t.ui)} — Body copy and controls stay readable at small sizes.
-          </div>
-          <div class="field">
-            <div class="field-label">UI / body</div>
+            <div class="field-label">UI / body font</div>
             <select data-type-field="ui">${optionList(UI_FONTS, t.ui)}</select>
-          </div>
-          <div class="field">
-            <div class="field-label">Body weight</div>
-            <select data-type-field="weightUi">
-              ${[400, 500, 600].map((w) => `<option value="${w}" ${Number(t.weightUi) === w ? "selected" : ""}>${w}</option>`).join("")}
-            </select>
           </div>
           <div class="field">
             <div class="field-label">Mono</div>
@@ -1509,26 +2161,79 @@
             </select>
           </div>
           <div class="field">
-            <div class="field-label">Base size (body) <span>${t.baseSize}px</span></div>
+            <div class="field-label">Base size <span>${t.baseSize}px</span></div>
             <div class="slider-row">
               <input type="range" min="14" max="20" step="1" data-type-field="baseSize" value="${t.baseSize}" />
               <input type="number" min="14" max="20" data-type-field="baseSize" value="${t.baseSize}" />
             </div>
           </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin:0 0 0.85rem">
+            <button type="button" class="btn" id="applyDisplayHeadings">H1–H4 ← display</button>
+            <button type="button" class="btn" id="applyUiRoles">Body/UI ← UI font</button>
+          </div>
+          <div class="section-title">Roles · click to edit</div>
+          <div class="role-list" id="roleList">${roleListHTML()}</div>
+        `;
+      }
+
+      function renderButtonInspector() {
+        const size = state.selectedButtonSize;
+        const b = state.buttons[size];
+        const ts = typeSizes();
+        els.inspector.innerHTML = `
+          <p class="hint">Three sizes. Padding should tighten as type shrinks — don’t scale py/px linearly with font size. Inputs use the same height as the control size.</p>
+          <div class="size-picks">
+            ${BUTTON_SIZES.map((s) => `<button type="button" data-select-btn="${s}" aria-pressed="${size === s}">${s.toUpperCase()}<div class="hint" style="margin:0.2rem 0 0">${btnHeight(s)}px tall</div></button>`).join("")}
+          </div>
           <div class="field">
-            <div class="field-label">Body line height <span>${t.leading}</span></div>
+            <div class="field-label">${size.toUpperCase()} type step <span>${ts[b.text]}px</span></div>
+            <select data-btn-field="text">
+              ${SIZE_KEYS.slice(0, 6).map((k) => `<option value="${k}" ${b.text === k ? "selected" : ""}>${k} · ${ts[k]}px</option>`).join("")}
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Vertical padding <span>${b.py}px</span></div>
             <div class="slider-row">
-              <input type="range" min="1.25" max="1.8" step="0.05" data-type-field="leading" value="${t.leading}" />
-              <input type="number" min="1.25" max="1.8" step="0.05" data-type-field="leading" value="${t.leading}" />
+              <input type="range" min="2" max="20" data-btn-field="py" value="${b.py}" />
+              <input type="number" min="2" max="20" data-btn-field="py" value="${b.py}" />
             </div>
           </div>
+          <div class="field">
+            <div class="field-label">Horizontal padding <span>${b.px}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="6" max="36" data-btn-field="px" value="${b.px}" />
+              <input type="number" min="6" max="36" data-btn-field="px" value="${b.px}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Icon size <span>${b.icon}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="10" max="28" data-btn-field="icon" value="${b.icon}" />
+              <input type="number" min="10" max="28" data-btn-field="icon" value="${b.icon}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Input / control height follows</div>
+            <select data-btn-control="controlSize">
+              ${BUTTON_SIZES.map((s) => `<option value="${s}" ${state.buttons.controlSize === s ? "selected" : ""}>${s} (${btnHeight(s)}px)</option>`).join("")}
+            </select>
+          </div>
+          <p class="hint">Hierarchy is separate from size: solid primary, outline secondary, link tertiary, solid danger. Most screens get one primary.</p>
+          <div class="section-title">Live sizes</div>
+          <div id="btnInspectorPreview"></div>
         `;
+        const mount = document.getElementById("btnInspectorPreview");
+        mount.innerHTML = BUTTON_SIZES.map((s) => `<div style="margin:0 0 0.45rem"><button type="button" class="btn-ds ${s} primary">${iconSvg("plus")} Primary ${s}</button> <button type="button" class="btn-ds ${s} secondary">Secondary</button></div>`).join("");
+        const tokens = tokenMap();
+        applyPreviewVars(mount, tokens);
+        mount.style.fontFamily = fontStack(state.type.ui);
       }
 
       function renderSpaceInspector() {
         const s = state.space;
+        const sp = spacing();
         els.inspector.innerHTML = `
-          <p class="hint">Snap padding and gaps to a small set of values so spacing looks even.</p>
+          <p class="hint">Keep a short list of spacing, radius, shadow, border, opacity, and icon sizes. Values in the scale stay at least ~25% apart.</p>
           <div class="field">
             <div class="field-label">Spacing grid</div>
             <select data-space-field="unit">
@@ -1536,21 +2241,51 @@
               <option value="4" ${Number(s.unit) === 4 ? "selected" : ""}>4px (compact UI)</option>
             </select>
           </div>
+          <p class="hint">Scale: ${[1, 2, 3, 4, 5, 6, 8, 12, 16, 24, 32].map((k) => `${sp[k]}`).join(" · ")}px … ${sp[56]}px</p>
           <div class="field">
-            <div class="field-label">Small radius (buttons, inputs) <span>${s.radiusSm}px</span></div>
+            <div class="field-label">Small radius <span>${s.radiusSm}px</span></div>
             <div class="slider-row">
               <input type="range" min="0" max="16" data-space-field="radiusSm" value="${s.radiusSm}" />
               <input type="number" min="0" max="16" data-space-field="radiusSm" value="${s.radiusSm}" />
             </div>
           </div>
           <div class="field">
-            <div class="field-label">Large radius (cards) <span>${s.radiusLg}px</span></div>
+            <div class="field-label">Large radius <span>${s.radiusLg}px</span></div>
             <div class="slider-row">
               <input type="range" min="0" max="28" data-space-field="radiusLg" value="${s.radiusLg}" />
               <input type="number" min="0" max="28" data-space-field="radiusLg" value="${s.radiusLg}" />
             </div>
           </div>
-          <p class="hint">0 feels formal. 6–8 is neutral. 16+ feels playful. Don’t mix a lot of different radii.</p>
+          <div class="field">
+            <div class="field-label">Shadow strength <span>${s.shadowStrength}</span></div>
+            <div class="slider-row">
+              <input type="range" min="0.4" max="1.6" step="0.1" data-space-field="shadowStrength" value="${s.shadowStrength}" />
+              <input type="number" min="0.4" max="1.6" step="0.1" data-space-field="shadowStrength" value="${s.shadowStrength}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Border sm / md / lg</div>
+            <div class="slider-row" style="grid-template-columns: 1fr 1fr 1fr">
+              <input type="number" min="1" max="4" data-space-field="borderSm" value="${s.borderSm}" title="sm" />
+              <input type="number" min="1" max="6" data-space-field="borderMd" value="${s.borderMd}" title="md" />
+              <input type="number" min="2" max="8" data-space-field="borderLg" value="${s.borderLg}" title="lg" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Focus ring width <span>${s.focusWidth}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="2" max="6" data-space-field="focusWidth" value="${s.focusWidth}" />
+              <input type="number" min="2" max="6" data-space-field="focusWidth" value="${s.focusWidth}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Icon md <span>${s.iconMd}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="12" max="32" data-space-field="iconMd" value="${s.iconMd}" />
+              <input type="number" min="12" max="32" data-space-field="iconMd" value="${s.iconMd}" />
+            </div>
+          </div>
+          <p class="hint">Icons: ${s.iconXs} / ${s.iconSm} / ${s.iconMd} / ${s.iconLg} / ${s.iconXl}px. Opacity tokens: 100, 75, 50, 25, 10. Max widths follow the large end of the spacing scale.</p>
         `;
       }
 
@@ -1578,6 +2313,7 @@
         ensureFont(state.type.display, DISPLAY_FONTS);
         ensureFont(state.type.ui, UI_FONTS);
         ensureFont(state.type.mono, MONO_FONTS);
+        ensureRoleFonts();
         const tokens = tokenMap();
         const stage = state.stage;
         if (stage === "palette") renderPaletteBoard(tokens);
@@ -1611,6 +2347,7 @@
       }
 
       function renderAppStage(tokens) {
+        const cs = state.buttons.controlSize;
         els.stageBody.innerHTML = `
           <div class="preview-frame">
             <div class="preview-root" id="previewRoot">
@@ -1620,36 +2357,85 @@
                   <a href="#" onclick="return false">Billing</a>
                   <a href="#" onclick="return false">Docs</a>
                 </nav>
-                <span>Northwind</span>
-              </header>
-              <div class="preview-body">
-                <p class="kicker">Release</p>
-                <h1 class="preview-title">Supersuit v0 is in beta.</h1>
-                <p class="preview-lead">A live check that your palette, type, and spacing work on a real screen — not just a row of swatches.</p>
-                <div class="stats">
-                  <div class="stat"><div class="label">Signups</div><div class="value">1,284</div></div>
-                  <div class="stat"><div class="label">Activation</div><div class="value">62%</div></div>
-                  <div class="stat"><div class="label">Churn</div><div class="value">2.1%</div></div>
+                <div class="avatar-row" style="align-items:center; gap:0.5rem">
+                  <span class="badge accent">New</span>
+                  <span class="avatar">A</span>
                 </div>
-                <article class="card">
-                  <h3>Join the waitlist</h3>
-                  <p>We’ll email you when levitation and accelerated movement ship. One primary action per card.</p>
-                  <div class="form-grid">
-                    <label>Work email<input type="text" value="ada@example.com" readonly /></label>
-                    <label>Plan
-                      <select><option>Studio</option><option>Team</option></select>
-                    </label>
+              </header>
+              <div class="preview-shell">
+                <aside class="preview-side">
+                  <div class="brand-mark">${iconSvg("grid", "sm")} Northwind</div>
+                  <a href="#" class="is-current" onclick="return false">${iconSvg("home", "sm")} Overview</a>
+                  <a href="#" onclick="return false">${iconSvg("user", "sm")} Members</a>
+                  <a href="#" onclick="return false">${iconSvg("search", "sm")} Search</a>
+                </aside>
+                <div class="preview-main">
+                  <h5>Release</h5>
+                  <h1>Supersuit v0 is in beta.</h1>
+                  <p>A live check that palette, type roles, button sizes, and spacing work on a real screen — not just a row of swatches.</p>
+                  <div class="stats">
+                    <div class="stat"><div class="t-caption">Signups</div><h3 style="margin:0">1,284</h3></div>
+                    <div class="stat"><div class="t-caption">Activation</div><h3 style="margin:0">62%</h3></div>
+                    <div class="stat"><div class="t-caption">Churn</div><h3 style="margin:0">2.1%</h3></div>
                   </div>
-                  <div class="actions" style="margin-top:0.85rem">
-                    <button type="button" class="cta">Join the waitlist</button>
-                    <button type="button" class="ghost">Not now</button>
+                  <div class="two-col">
+                    <article class="card">
+                      <h2>Join the waitlist</h2>
+                      <p>We’ll email you when levitation ships. One primary action per card. Inputs share the ${cs} control height.</p>
+                      <div class="form-grid">
+                        <label>Work email<input class="control ${cs}" type="text" value="ada@example.com" /></label>
+                        <label>Plan
+                          <select class="control ${cs}"><option>Studio</option><option>Team</option></select>
+                        </label>
+                      </div>
+                      <div class="actions" style="margin-top:0.85rem">
+                        <button type="button" class="btn-ds ${cs} primary">${iconSvg("plus")} Join waitlist</button>
+                        <button type="button" class="btn-ds ${cs} secondary">Not now</button>
+                        <button type="button" class="btn-ds ${cs} tertiary">Learn more</button>
+                      </div>
+                    </article>
+                    <article class="card">
+                      <h3>Activity</h3>
+                      <table class="data-table">
+                        <thead><tr><th>Person</th><th>Status</th></tr></thead>
+                        <tbody>
+                          <tr><td>Ada Lovelace</td><td><span class="badge ok">Active</span></td></tr>
+                          <tr><td>Alan Turing</td><td><span class="badge warn">Pending</span></td></tr>
+                          <tr><td>Grace Hopper</td><td><span class="badge info">Invited</span></td></tr>
+                        </tbody>
+                      </table>
+                      <div class="dropdown" style="margin-top:0.75rem">
+                        <button type="button">${iconSvg("user", "sm")} Profile</button>
+                        <button type="button">${iconSvg("grid", "sm")} Workspace</button>
+                        <button type="button" class="btn-ds tertiary" style="color:var(--preview-danger)">Delete</button>
+                      </div>
+                    </article>
                   </div>
-                </article>
-                <div class="alerts">
-                  <div class="alert info">Primary 100 background, 800 text — a tinted alert.</div>
-                  <div class="alert ok">Success scale used sparingly for confirmation.</div>
-                  <div class="alert warn">Warning scale for something that needs attention.</div>
-                  <div class="alert bad">Danger scale for a destructive or failed state.</div>
+                  <h2>How the suit works</h2>
+                  <h3>Installation</h3>
+                  <p>Start with a feature, not a layout. Paste the exported tokens at the top of your stylesheet, then pick sizes from the scale instead of inventing 17px.</p>
+                  <h4>Configuration</h4>
+                  <p class="t-caption">Meta line using the caption role — weight and color, not a new size.</p>
+                  <p><code>@northwind/kit@0.9.0</code></p>
+                  <div class="alerts">
+                    <div class="alert info">${iconSvg("check", "sm")} Primary 100 / 800 tinted alert.</div>
+                    <div class="alert ok">Saved — success scale used sparingly.</div>
+                    <div class="alert warn">Billing fails in 3 days.</div>
+                    <div class="alert bad">Could not deploy. Danger is for failed states, not every delete.</div>
+                  </div>
+                  <div class="empty" style="margin-top:1rem">
+                    ${iconSvg("search", "lg")}
+                    <h3>No deployments yet</h3>
+                    <p>Empty states still use the type roles and a single primary button.</p>
+                    <button type="button" class="btn-ds md primary">Create deployment</button>
+                  </div>
+                  <h6 style="margin-top:1.2rem">Button sizes on this page</h6>
+                  <div class="btn-grid">
+                    <button type="button" class="btn-ds sm primary">Small</button>
+                    <button type="button" class="btn-ds md primary">Medium</button>
+                    <button type="button" class="btn-ds lg primary">Large</button>
+                    <button type="button" class="btn-ds md danger">Delete</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1658,65 +2444,93 @@
       }
 
       function renderTypeStage(tokens) {
-        const samples = [
-          ["5xl", "Display"],
-          ["4xl", "Page title"],
-          ["3xl", "Section title"],
-          ["2xl", "Card title"],
-          ["xl", "Subtitle"],
-          ["lg", "Lead paragraph"],
-          ["base", "Body / UI"],
-          ["sm", "Labels & meta"],
-          ["xs", "Caption / overline"],
-        ];
         els.stageBody.innerHTML = `
-          <div class="type-page" id="previewRoot">
-            <p class="pair">${esc(state.type.display)} + ${esc(state.type.ui)} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px</p>
-            ${samples
-              .map(([k, label], i) => {
-                const cls = i < 5 ? "sample-display" : "sample-ui";
-                const text =
-                  i < 5
-                    ? "The quick bronze fox"
-                    : "Almost everything in an interface is type. Keep the list of sizes short so you are not inventing 17px.";
-                return `<div class="type-row"><div class="sz">${k}<br>${tokens.ts[k]}px<br>${label}</div><div class="${cls}" style="font-size:var(--text-${k})">${text}</div></div>`;
-              })
-              .join("")}
+          <div class="type-page preview-root" id="previewRoot">
+            <p class="pair type-meta">${esc(state.type.display)} + ${esc(state.type.ui)} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px</p>
+            ${TYPE_ROLES.map((spec) => {
+              const role = state.typeRoles[spec.id];
+              const tag = ["h1", "h2", "h3", "h4", "h5", "h6"].includes(spec.id) ? spec.id : "p";
+              return `<div class="type-role-row" data-role-row="${spec.id}">
+                <div class="type-meta" data-role-meta="${spec.id}">${spec.id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}</div>
+                <${tag} class="t-${spec.id}" style="margin:0">${esc(spec.sample)}</${tag}>
+              </div>`;
+            }).join("")}
+            <div class="type-role-row">
+              <div class="type-meta">article</div>
+              <div>
+                <h2>Size isn’t everything</h2>
+                <p>Don’t over-rely on font size for hierarchy. Weight and color do more of the work. Body copy stays on the body role; captions stay muted.</p>
+                <h3>A nested heading</h3>
+                <p class="t-caption">Caption role under a section — still the same family, smaller step.</p>
+              </div>
+            </div>
           </div>`;
         applyPreviewVars(document.getElementById("previewRoot"), tokens);
       }
 
       function renderComponentStage(tokens) {
         els.stageBody.innerHTML = `
-          <div class="components" id="previewRoot">
+          <div class="components preview-root" id="previewRoot">
             <div class="comp-block">
-              <h3>Buttons</h3>
-              <div class="actions">
-                <button type="button" class="cta">Primary</button>
-                <button type="button" class="ghost">Secondary</button>
-                <button type="button" class="danger">Delete</button>
-              </div>
+              <h3>Buttons · size × hierarchy</h3>
+              ${BUTTON_SIZES.map((s) => `
+                <div class="btn-grid" style="margin-bottom:0.55rem">
+                  <button type="button" class="btn-ds ${s} primary">${iconSvg("plus")} Primary ${s}</button>
+                  <button type="button" class="btn-ds ${s} secondary">Secondary</button>
+                  <button type="button" class="btn-ds ${s} tertiary">Tertiary</button>
+                  <button type="button" class="btn-ds ${s} danger">Danger</button>
+                </div>`).join("")}
             </div>
             <div class="comp-block">
-              <h3>Form</h3>
+              <h3>Inputs match button height</h3>
               <div class="form-grid">
-                <label>Project name<input type="text" value="Northwind" readonly /></label>
-                <label>Environment<select><option>Production</option></select></label>
+                <label>Small<input class="control sm" type="text" value="sm control" /></label>
+                <label>Medium<input class="control md" type="text" value="md control" /></label>
+                <label>Large<input class="control lg" type="text" value="lg control · tab here for focus ring" /></label>
               </div>
             </div>
             <div class="comp-block">
-              <h3>Alerts</h3>
-              <div class="alerts">
-                <div class="alert info">Info using primary 100 / 800</div>
-                <div class="alert ok">Success using the green scale</div>
-                <div class="alert warn">Warning using the yellow scale</div>
-                <div class="alert bad">Error using the red scale</div>
+              <h3>Badges, avatars, icons</h3>
+              <div class="btn-grid">
+                <span class="badge accent">New</span>
+                <span class="badge ok">Active</span>
+                <span class="badge warn">Pending</span>
+                <span class="badge bad">Failed</span>
+                <span class="badge info">Info</span>
+                <span class="avatar-row"><span class="avatar">A</span><span class="avatar">B</span><span class="avatar">C</span></span>
+              </div>
+              <p class="type-meta" style="margin:0.75rem 0 0.35rem">Icon scale · Space tokens (xs–xl). Button plus-icons use each size’s icon token instead.</p>
+              <div class="icon-row">${["xs", "sm", "md", "lg", "xl"].map((s) => {
+                const field = { xs: "iconXs", sm: "iconSm", md: "iconMd", lg: "iconLg", xl: "iconXl" }[s];
+                return `<span class="icon-scale-item">${iconSvg("check", s)}<span class="type-meta" data-icon-label="${s}">${s} · ${state.space[field]}px</span></span>`;
+              }).join("")}</div>
+            </div>
+            <div class="comp-block">
+              <h3>Elevation 1–5</h3>
+              <div class="shadow-row">
+                ${[1, 2, 3, 4, 5].map((n) => `<div class="shadow-card" style="box-shadow:var(--shadow-${n})"></div>`).join("")}
               </div>
             </div>
             <div class="comp-block">
-              <h3>Accent vs primary</h3>
-              <p style="margin:0; color:var(--preview-muted)">Primary should dominate. Accent (${esc(state.scales.accent.name)}) is for rare emphasis.</p>
-              <p style="margin:0.7rem 0 0; font-weight:700; color:${tokens.preview.accent}">New · using accent 500</p>
+              <h3>Opacity</h3>
+              <div class="btn-grid">
+                ${[100, 75, 50, 25, 10].map((n) => `<span class="badge info" style="opacity:${n / 100}">${n}%</span>`).join("")}
+              </div>
+            </div>
+            <div class="comp-block">
+              <h3>Table + dropdown + empty</h3>
+              <table class="data-table">
+                <thead><tr><th>Name</th><th>Plan</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td>Ada</td><td>Studio</td><td><button type="button" class="btn-ds sm secondary">Edit</button></td></tr>
+                  <tr><td>Alan</td><td>Team</td><td><button type="button" class="btn-ds sm tertiary">View</button></td></tr>
+                </tbody>
+              </table>
+              <div class="empty" style="margin-top:0.8rem">
+                <h3>Nothing here</h3>
+                <p>Dashed empty state using large radius and body type.</p>
+                <button type="button" class="btn-ds sm primary">Add row</button>
+              </div>
             </div>
           </div>`;
         applyPreviewVars(document.getElementById("previewRoot"), tokens);
@@ -1745,6 +2559,29 @@
         const current = shades.find((s) => s.step === state.selectedShade) || shades[5];
         const next = { h: current.h, s: current.s, l: current.l, [field]: Number(value) };
         def.overrides = { ...def.overrides, [state.selectedShade]: next };
+      }
+
+      function setTypeField(key, value) {
+        const prev = state.type[key];
+        state.type[key] = ["display", "ui", "mono", "scale"].includes(key) ? value : Number(value);
+        if (key === "display") {
+          for (const id of HEADING_ROLES) {
+            if (state.typeRoles[id].family === prev) state.typeRoles[id].family = value;
+          }
+        }
+        if (key === "ui") {
+          for (const id of UI_ROLES) {
+            if (state.typeRoles[id].family === prev) state.typeRoles[id].family = value;
+          }
+        }
+        if (key === "mono" && state.typeRoles.mono.family === prev) state.typeRoles.mono.family = value;
+        if (key === "leading") state.typeRoles.body.leading = Number(value);
+      }
+
+      function setRoleField(field, value) {
+        const role = state.typeRoles[state.selectedTypeRole];
+        if (!role) return;
+        role[field] = ["family", "size", "color"].includes(field) ? value : Number(value);
       }
 
       function syncPairedInputs(source) {
@@ -1821,14 +2658,153 @@
         }
       }
 
+      function syncButtonInspectorChrome() {
+        if (state.inspectorTab !== "buttons") return;
+        const size = state.selectedButtonSize;
+        const b = state.buttons[size];
+        const ts = typeSizes();
+        const labels = {
+          py: `${b.py}px`,
+          px: `${b.px}px`,
+          icon: `${b.icon}px`,
+          text: `${ts[b.text]}px`,
+        };
+        els.inspector.querySelectorAll(".field").forEach((field) => {
+          const inp = field.querySelector("[data-btn-field]");
+          const span = field.querySelector(".field-label span");
+          if (inp && span && labels[inp.dataset.btnField] != null) span.textContent = labels[inp.dataset.btnField];
+        });
+        els.inspector.querySelectorAll("[data-select-btn]").forEach((btn) => {
+          const hint = btn.querySelector(".hint");
+          if (hint) hint.textContent = `${btnHeight(btn.dataset.selectBtn)}px tall`;
+        });
+        const control = els.inspector.querySelector("[data-btn-control]");
+        if (control) {
+          [...control.options].forEach((opt) => {
+            opt.textContent = `${opt.value} (${btnHeight(opt.value)}px)`;
+          });
+        }
+      }
+
+      function syncSpaceInspectorChrome() {
+        if (state.inspectorTab !== "space") return;
+        els.inspector.querySelectorAll("[data-space-field]").forEach((inp) => {
+          if (inp.tagName === "SELECT") return;
+          const span = inp.closest(".field")?.querySelector(".field-label span");
+          const key = inp.dataset.spaceField;
+          if (span && state.space[key] != null) {
+            span.textContent = key === "shadowStrength" ? String(state.space[key]) : `${state.space[key]}px`;
+          }
+        });
+      }
+
+      function syncTypeInspectorChrome() {
+        if (state.inspectorTab !== "type") return;
+        const ts = typeSizes();
+        els.inspector.querySelectorAll("[data-role-item]").forEach((item) => {
+          const id = item.dataset.roleItem;
+          const role = state.typeRoles[id];
+          const spec = TYPE_ROLES.find((r) => r.id === id);
+          if (!role || !spec) return;
+          const label = item.querySelector(".role-id");
+          const sample = item.querySelector(".role-sample");
+          if (label) label.textContent = `${spec.label} · ${ts[role.size]}px`;
+          if (sample) {
+            sample.style.fontFamily = fontStack(role.family);
+            sample.style.fontWeight = String(role.weight);
+            sample.style.letterSpacing = `${role.track}em`;
+            sample.style.fontSize = `${Math.min(ts[role.size], 28)}px`;
+          }
+        });
+        const role = state.typeRoles[state.selectedTypeRole];
+        if (!role) return;
+        const labels = {
+          size: `${ts[role.size]}px`,
+          leading: String(role.leading),
+          track: `${role.track}em`,
+        };
+        els.inspector.querySelectorAll(".role-editor .field").forEach((field) => {
+          const inp = field.querySelector("[data-role-field]");
+          const span = field.querySelector(".field-label span");
+          if (inp && span && labels[inp.dataset.roleField] != null) span.textContent = labels[inp.dataset.roleField];
+        });
+        const baseLabel = els.inspector.querySelector('[data-type-field="baseSize"]')?.closest(".field")?.querySelector(".field-label span");
+        if (baseLabel) baseLabel.textContent = `${state.type.baseSize}px`;
+      }
+
+      function updateLiveStage(tokens) {
+        applyPreviewVars(els.stageBody, tokens);
+        const root = document.getElementById("previewRoot");
+        if (!root) {
+          renderStage();
+          return;
+        }
+        root.classList.add("preview-root");
+        applyPreviewVars(root, tokens);
+        const pair = root.querySelector(".pair");
+        if (pair) {
+          pair.textContent = `${state.type.display} + ${state.type.ui} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px`;
+        }
+        root.querySelectorAll("[data-role-meta]").forEach((el) => {
+          const id = el.dataset.roleMeta;
+          const role = state.typeRoles[id];
+          if (!role) return;
+          el.innerHTML = `${id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}`;
+        });
+        root.querySelectorAll("[data-role-row]").forEach((row) => {
+          const id = row.dataset.roleRow;
+          const role = state.typeRoles[id];
+          const sample = row.querySelector(`.t-${id}`);
+          if (!role || !sample) return;
+          sample.style.fontFamily = fontStack(role.family);
+          sample.style.fontSize = `${tokens.ts[role.size]}px`;
+          sample.style.fontWeight = String(role.weight);
+          sample.style.lineHeight = String(role.leading);
+          sample.style.letterSpacing = `${role.track}em`;
+          sample.style.color = inkFor(role.color, tokens.preview);
+        });
+        root.querySelectorAll(".swatch").forEach((btn) => {
+          const shades = tokens.scales[btn.dataset.scale];
+          const s = shades?.find((x) => String(x.step) === btn.dataset.step);
+          if (!s) return;
+          const chip = btn.querySelector(".chip");
+          const meta = btn.querySelector(".meta");
+          if (chip) chip.style.background = s.hex;
+          if (meta) meta.innerHTML = `<b>${s.step}</b>${s.hex}<br>hsl(${s.h}, ${s.s}%, ${s.l}%)`;
+        });
+        for (const size of BUTTON_SIZES) {
+          const px = `${state.buttons[size].icon}px`;
+          document.querySelectorAll(`.btn-ds.${size} .ds-icon`).forEach((el) => {
+            el.style.width = px;
+            el.style.height = px;
+          });
+        }
+        const iconKeys = { xs: "iconXs", sm: "iconSm", md: "iconMd", lg: "iconLg", xl: "iconXl" };
+        document.querySelectorAll("[data-icon-label]").forEach((el) => {
+          const key = el.dataset.iconLabel;
+          const field = iconKeys[key];
+          if (field) el.textContent = `${key} · ${state.space[field]}px`;
+        });
+        const btnPrev = document.getElementById("btnInspectorPreview");
+        if (btnPrev) applyPreviewVars(btnPrev, tokens);
+      }
+
       function livePaint() {
+        const tokens = tokenMap();
+        ensureFont(state.type.display, DISPLAY_FONTS);
+        ensureFont(state.type.ui, UI_FONTS);
+        ensureFont(state.type.mono, MONO_FONTS);
+        ensureRoleFonts();
         syncColorInspectorChrome();
+        syncTypeInspectorChrome();
+        syncButtonInspectorChrome();
+        syncSpaceInspectorChrome();
         if (state.inspectorTab === "export") {
           const box = document.getElementById("exportBox");
           const format = document.getElementById("exportFormat")?.value || "css";
           if (box) box.value = format === "json" ? jsonText() : cssText();
         }
-        renderStage();
+        updateLiveStage(tokens);
         saveState();
       }
 
@@ -1853,9 +2829,27 @@
           return;
         }
         if (t.dataset.typeField) {
-          const key = t.dataset.typeField;
-          state.type[key] = key === "display" || key === "ui" || key === "mono" || key === "scale" ? t.value : Number(t.value);
+          setTypeField(t.dataset.typeField, t.value);
           syncPairedInputs(t);
+          livePaint();
+          return;
+        }
+        if (t.dataset.roleField) {
+          setRoleField(t.dataset.roleField, t.value);
+          syncPairedInputs(t);
+          livePaint();
+          return;
+        }
+        if (t.dataset.btnField) {
+          const size = state.selectedButtonSize;
+          const key = t.dataset.btnField;
+          state.buttons[size][key] = key === "text" ? t.value : Number(t.value);
+          syncPairedInputs(t);
+          livePaint();
+          return;
+        }
+        if (t.dataset.btnControl) {
+          state.buttons.controlSize = t.value;
           livePaint();
           return;
         }
@@ -1897,12 +2891,24 @@
           fullColorRefresh();
           return;
         }
-        if (t.dataset.typeField || t.dataset.spaceField) {
-          if (t.dataset.typeField) {
-            const key = t.dataset.typeField;
-            state.type[key] = ["display", "ui", "mono", "scale"].includes(key) ? t.value : Number(t.value);
+        if (t.dataset.roleField) {
+          setRoleField(t.dataset.roleField, t.value);
+          livePaint();
+          return;
+        }
+        if (t.dataset.typeField) {
+          setTypeField(t.dataset.typeField, t.value);
+          if (["display", "ui", "mono", "scale"].includes(t.dataset.typeField)) fullColorRefresh();
+          else livePaint();
+          return;
+        }
+        if (t.dataset.btnField || t.dataset.btnControl || t.dataset.spaceField) {
+          if (t.dataset.btnField) {
+            const key = t.dataset.btnField;
+            state.buttons[state.selectedButtonSize][key] = key === "text" ? t.value : Number(t.value);
           }
-          fullColorRefresh();
+          if (t.dataset.btnControl) state.buttons.controlSize = t.value;
+          livePaint();
         }
       });
 
@@ -1926,6 +2932,35 @@
           state.selectedShade = Number(shadeBtn.dataset.pickShade);
           fullColorRefresh();
           document.getElementById("shadeEditor")?.scrollIntoView({ block: "nearest" });
+          return;
+        }
+        const roleBtn = e.target.closest("[data-select-role]");
+        if (roleBtn) {
+          const next = roleBtn.dataset.selectRole;
+          state.selectedTypeRole = state.selectedTypeRole === next ? "" : next;
+          const list = document.getElementById("roleList");
+          if (list) list.innerHTML = roleListHTML();
+          else renderTypeInspector();
+          livePaint();
+          if (state.selectedTypeRole) {
+            document.querySelector(`[data-role-item="${state.selectedTypeRole}"]`)?.scrollIntoView({ block: "nearest" });
+          }
+          return;
+        }
+        const btnSize = e.target.closest("[data-select-btn]");
+        if (btnSize) {
+          state.selectedButtonSize = btnSize.dataset.selectBtn;
+          fullColorRefresh();
+          return;
+        }
+        if (e.target.id === "applyDisplayHeadings") {
+          for (const id of HEADING_ROLES) state.typeRoles[id].family = state.type.display;
+          fullColorRefresh();
+          return;
+        }
+        if (e.target.id === "applyUiRoles") {
+          for (const id of UI_ROLES) state.typeRoles[id].family = state.type.ui;
+          fullColorRefresh();
           return;
         }
         if (e.target.id === "resetRamp") {
@@ -2091,6 +3126,7 @@
       initTabs();
       renderInspector();
       renderStage();
+      livePaint();
     </script>
   </body>
 </html>
