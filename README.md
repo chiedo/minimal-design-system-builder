@@ -2,7 +2,7 @@
 
 One HTML file. Open it in a browser. No install.
 
-It is a small studio for building a **color palette** and a **type system**, with a live preview of an app screen, components, and a type specimen. Inspired by the workflow in *Refactoring UI* (fixed shade ramps, tinted neutrals, a short type scale) — not a copy of the book files.
+A studio for building a **color palette**, **type roles** (h1–h6, body, UI, caption, mono), **button sizes**, and the rest of a small UI system, with a live app preview. Inspired by the workflow in *Refactoring UI* — not a copy of the book files.
 
 ## Open it
 
@@ -11,30 +11,28 @@ It is a small studio for building a **color palette** and a **type system**, wit
 
 ## Palette
 
-Every scale (primary, neutrals, accent, danger, warning, success) is **yours to set**:
-
-- Hue (0–360), not a preset personality
-- Base saturation and lightness for shade **500** (the button color)
-- Lightest (**50**) and darkest (**900**)
-- Hue rotation and end-saturation so light/dark shades stay vivid
-- Click any swatch to override that shade’s HSL
-- Optional: tint neutrals with the primary hue
-- Optional: import a `palette-XX.json` from the Refactoring UI Color Palettes ZIP (stays on your computer)
-
-The generator fills the eight shades between 50, 500, and 900. Moving hue / sat / lightness rebuilds the ramp.
+Every scale (primary, neutrals, accent, danger, warning, success) is yours to set: hue, saturation, lightness, 50/500/900 edges, optional hue rotation, and per-shade HSL overrides. Optional import of a `palette-XX.json` from the Refactoring UI Color Palettes ZIP (stays on your computer).
 
 ## Type
 
-Pick a display face, a UI/body face, and a mono face (Google Fonts, loaded in the browser). Choose a short size scale, base size, weights, and headline tracking.
+Display, UI, and mono families, plus a **role for each heading and text style**. Click H1–H6, body, UI, caption, or mono and set font, weight, size step, line height, tracking, and ink. The type specimen shows those roles as real headings.
+
+## Buttons
+
+Small / medium / large. Each size has its own type step, vertical padding, horizontal padding, and icon size. Padding is meant to tighten as type shrinks. Inputs share the selected control height. Hierarchy is separate: primary (solid), secondary (outline), tertiary (link), danger.
+
+## Space
+
+Spacing scale through the large layout sizes, two radii, five shadow elevations, border widths, focus ring, icon sizes, opacity tokens, and max-widths.
 
 ## Preview
 
-- **App preview** — nav, stats, form card, semantic alerts
-- **Color board** — all 10-shade ramps with hex and HSL
-- **Type specimen** — the scale in the chosen faces
-- **Components** — buttons, form, alerts
-- Dark preview toggle
+- **App preview** — sidebar, headings, stats, form, table, dropdown, alerts, empty state, all three button sizes
+- **Color board** — 10-shade ramps with hex and HSL
+- **Type specimen** — every role, then a nested article
+- **Components** — button matrix, matching inputs, badges, avatars, icons, shadows, opacity
+- Dark preview toggle (also exported as `[data-theme="dark"]`)
 
 ## Export
 
-Download `tokens.css` (or copy CSS / JSON from the Export tab) and paste it at the top of your stylesheet.
+Download `tokens.css` (or copy CSS / JSON). Paste the CSS at the top of your stylesheet.
