@@ -828,21 +828,31 @@
         --focus-ring: 0 0 0 var(--focus-width, 3px) var(--preview-focus);
       }
 
-      .preview-root h1, .preview-root .t-h1 { font-family: var(--font-h1); font-size: var(--size-h1); font-weight: var(--weight-h1); line-height: var(--leading-h1); letter-spacing: var(--track-h1); color: var(--ink-h1); }
-      .preview-root h2, .preview-root .t-h2 { font-family: var(--font-h2); font-size: var(--size-h2); font-weight: var(--weight-h2); line-height: var(--leading-h2); letter-spacing: var(--track-h2); color: var(--ink-h2); }
-      .preview-root h3, .preview-root .t-h3 { font-family: var(--font-h3); font-size: var(--size-h3); font-weight: var(--weight-h3); line-height: var(--leading-h3); letter-spacing: var(--track-h3); color: var(--ink-h3); }
-      .preview-root h4, .preview-root .t-h4 { font-family: var(--font-h4); font-size: var(--size-h4); font-weight: var(--weight-h4); line-height: var(--leading-h4); letter-spacing: var(--track-h4); color: var(--ink-h4); }
-      .preview-root h5, .preview-root .t-h5 { font-family: var(--font-h5); font-size: var(--size-h5); font-weight: var(--weight-h5); line-height: var(--leading-h5); letter-spacing: var(--track-h5); color: var(--ink-h5); }
-      .preview-root h6, .preview-root .t-h6 { font-family: var(--font-h6); font-size: var(--size-h6); font-weight: var(--weight-h6); line-height: var(--leading-h6); letter-spacing: var(--track-h6); color: var(--ink-h6); }
-      .preview-root .t-body, .preview-root p, .preview-root td, .preview-root li { font-family: var(--font-body); font-size: var(--size-body); font-weight: var(--weight-body); line-height: var(--leading-body-role); letter-spacing: var(--track-body); color: var(--ink-body); }
-      .preview-root .t-ui { font-family: var(--font-ui); font-size: var(--size-ui); font-weight: var(--weight-ui); line-height: var(--leading-ui); letter-spacing: var(--track-ui); color: var(--ink-ui); }
-      .preview-root label, .preview-root .btn-ds { font-family: var(--font-ui); }
-      .preview-root label { font-size: var(--size-ui); font-weight: var(--weight-ui); }
-      .preview-root .t-caption { font-family: var(--font-caption); font-size: var(--size-caption); font-weight: var(--weight-caption); line-height: var(--leading-caption); letter-spacing: var(--track-caption); color: var(--ink-caption); }
-      .preview-root .t-mono, .preview-root code { font-family: var(--font-mono); font-size: var(--size-mono); font-weight: var(--weight-mono); line-height: var(--leading-mono); letter-spacing: var(--track-mono); color: var(--ink-mono); }
+      .preview-root h1, .preview-root .t-h1, #previewRoot h1, #previewRoot .t-h1 { font-family: var(--font-h1); font-size: var(--size-h1); font-weight: var(--weight-h1); line-height: var(--leading-h1); letter-spacing: var(--track-h1); color: var(--ink-h1); }
+      .preview-root h2, .preview-root .t-h2, #previewRoot h2, #previewRoot .t-h2 { font-family: var(--font-h2); font-size: var(--size-h2); font-weight: var(--weight-h2); line-height: var(--leading-h2); letter-spacing: var(--track-h2); color: var(--ink-h2); }
+      .preview-root h3, .preview-root .t-h3, #previewRoot h3, #previewRoot .t-h3 { font-family: var(--font-h3); font-size: var(--size-h3); font-weight: var(--weight-h3); line-height: var(--leading-h3); letter-spacing: var(--track-h3); color: var(--ink-h3); }
+      .preview-root h4, .preview-root .t-h4, #previewRoot h4, #previewRoot .t-h4 { font-family: var(--font-h4); font-size: var(--size-h4); font-weight: var(--weight-h4); line-height: var(--leading-h4); letter-spacing: var(--track-h4); color: var(--ink-h4); }
+      .preview-root h5, .preview-root .t-h5, #previewRoot h5, #previewRoot .t-h5 { font-family: var(--font-h5); font-size: var(--size-h5); font-weight: var(--weight-h5); line-height: var(--leading-h5); letter-spacing: var(--track-h5); color: var(--ink-h5); }
+      .preview-root h6, .preview-root .t-h6, #previewRoot h6, #previewRoot .t-h6 { font-family: var(--font-h6); font-size: var(--size-h6); font-weight: var(--weight-h6); line-height: var(--leading-h6); letter-spacing: var(--track-h6); color: var(--ink-h6); }
+      .preview-root .t-body, .preview-root td, .preview-root li, #previewRoot .t-body, #previewRoot td, #previewRoot li { font-family: var(--font-body); font-size: var(--size-body); font-weight: var(--weight-body); line-height: var(--leading-body-role); letter-spacing: var(--track-body); color: var(--ink-body); }
+      .preview-root p:not([class]), #previewRoot p:not([class]) { font-family: var(--font-body); font-size: var(--size-body); font-weight: var(--weight-body); line-height: var(--leading-body-role); letter-spacing: var(--track-body); color: var(--ink-body); }
+      .preview-root .t-ui, #previewRoot .t-ui { font-family: var(--font-ui); font-size: var(--size-ui); font-weight: var(--weight-ui); line-height: var(--leading-ui); letter-spacing: var(--track-ui); color: var(--ink-ui); }
+      .preview-root label, .preview-root .btn-ds, #previewRoot label, #previewRoot .btn-ds { font-family: var(--font-ui); }
+      .preview-root label, #previewRoot label { font-size: var(--size-ui); font-weight: var(--weight-ui); }
+      .preview-root .t-caption, #previewRoot .t-caption { font-family: var(--font-caption); font-size: var(--size-caption); font-weight: var(--weight-caption); line-height: var(--leading-caption); letter-spacing: var(--track-caption); color: var(--ink-caption); }
+      .preview-root .t-mono, .preview-root code, #previewRoot .t-mono, #previewRoot code { font-family: var(--font-mono); font-size: var(--size-mono); font-weight: var(--weight-mono); line-height: var(--leading-mono); letter-spacing: var(--track-mono); color: var(--ink-mono); }
 
-      .preview-root h1, .preview-root h2, .preview-root h3, .preview-root h4, .preview-root h5, .preview-root h6 {
+      .preview-root h1, .preview-root h2, .preview-root h3, .preview-root h4, .preview-root h5, .preview-root h6,
+      #previewRoot h1, #previewRoot h2, #previewRoot h3, #previewRoot h4, #previewRoot h5, #previewRoot h6 {
         margin: 0 0 0.35em;
+      }
+
+      .type-meta {
+        color: var(--preview-muted);
+        font-size: 0.72rem;
+        font-family: ui-monospace, Menlo, monospace;
+        line-height: 1.35;
+        word-break: break-word;
       }
 
       .preview-shell {
@@ -2414,18 +2424,18 @@
 
       function renderTypeStage(tokens) {
         els.stageBody.innerHTML = `
-          <div class="type-page" id="previewRoot">
-            <p class="pair t-caption">${esc(state.type.display)} + ${esc(state.type.ui)} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px</p>
+          <div class="type-page preview-root" id="previewRoot">
+            <p class="pair type-meta">${esc(state.type.display)} + ${esc(state.type.ui)} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px</p>
             ${TYPE_ROLES.map((spec) => {
               const role = state.typeRoles[spec.id];
               const tag = ["h1", "h2", "h3", "h4", "h5", "h6"].includes(spec.id) ? spec.id : "p";
               return `<div class="type-role-row" data-role-row="${spec.id}">
-                <div class="t-caption" data-role-meta="${spec.id}">${spec.id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}</div>
+                <div class="type-meta" data-role-meta="${spec.id}">${spec.id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}</div>
                 <${tag} class="t-${spec.id}" style="margin:0">${esc(spec.sample)}</${tag}>
               </div>`;
             }).join("")}
             <div class="type-role-row">
-              <div class="t-caption">article</div>
+              <div class="type-meta">article</div>
               <div>
                 <h2>Size isn’t everything</h2>
                 <p>Don’t over-rely on font size for hierarchy. Weight and color do more of the work. Body copy stays on the body role; captions stay muted.</p>
@@ -2439,7 +2449,7 @@
 
       function renderComponentStage(tokens) {
         els.stageBody.innerHTML = `
-          <div class="components" id="previewRoot">
+          <div class="components preview-root" id="previewRoot">
             <div class="comp-block">
               <h3>Buttons · size × hierarchy</h3>
               ${BUTTON_SIZES.map((s) => `
@@ -2658,8 +2668,13 @@
       }
 
       function updateLiveStage(tokens) {
+        applyPreviewVars(els.stageBody, tokens);
         const root = document.getElementById("previewRoot");
-        if (!root) return;
+        if (!root) {
+          renderStage();
+          return;
+        }
+        root.classList.add("preview-root");
         applyPreviewVars(root, tokens);
         const pair = root.querySelector(".pair");
         if (pair) {
@@ -2670,6 +2685,18 @@
           const role = state.typeRoles[id];
           if (!role) return;
           el.innerHTML = `${id}<br>${tokens.ts[role.size]}px ${role.family}<br>w${role.weight} · lh${role.leading}`;
+        });
+        root.querySelectorAll("[data-role-row]").forEach((row) => {
+          const id = row.dataset.roleRow;
+          const role = state.typeRoles[id];
+          const sample = row.querySelector(`.t-${id}`);
+          if (!role || !sample) return;
+          sample.style.fontFamily = fontStack(role.family);
+          sample.style.fontSize = `${tokens.ts[role.size]}px`;
+          sample.style.fontWeight = String(role.weight);
+          sample.style.lineHeight = String(role.leading);
+          sample.style.letterSpacing = `${role.track}em`;
+          sample.style.color = inkFor(role.color, tokens.preview);
         });
         root.querySelectorAll(".swatch").forEach((btn) => {
           const shades = tokens.scales[btn.dataset.scale];
@@ -2684,6 +2711,9 @@
 
       function livePaint() {
         const tokens = tokenMap();
+        ensureFont(state.type.display, DISPLAY_FONTS);
+        ensureFont(state.type.ui, UI_FONTS);
+        ensureFont(state.type.mono, MONO_FONTS);
         ensureRoleFonts();
         syncColorInspectorChrome();
         syncTypeInspectorChrome();
@@ -2692,8 +2722,7 @@
           const format = document.getElementById("exportFormat")?.value || "css";
           if (box) box.value = format === "json" ? jsonText() : cssText();
         }
-        if (document.getElementById("previewRoot")) updateLiveStage(tokens);
-        else renderStage();
+        updateLiveStage(tokens);
         saveState();
       }
 
