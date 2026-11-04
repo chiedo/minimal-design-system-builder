@@ -911,6 +911,19 @@
       .ds-icon.lg { width: var(--icon-lg); height: var(--icon-lg); }
       .ds-icon.xl { width: var(--icon-xl); height: var(--icon-xl); }
 
+      .btn-ds.sm .ds-icon {
+        width: var(--btn-sm-icon);
+        height: var(--btn-sm-icon);
+      }
+      .btn-ds.md .ds-icon {
+        width: var(--btn-md-icon);
+        height: var(--btn-md-icon);
+      }
+      .btn-ds.lg .ds-icon {
+        width: var(--btn-lg-icon);
+        height: var(--btn-lg-icon);
+      }
+
       .btn-ds {
         display: inline-flex;
         align-items: center;
@@ -1085,6 +1098,14 @@
         flex-wrap: wrap;
         gap: 0.55rem;
         align-items: center;
+      }
+
+      .icon-scale-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        min-width: 2.4rem;
       }
 
       .shadow-card {
@@ -2202,7 +2223,7 @@
           <div id="btnInspectorPreview"></div>
         `;
         const mount = document.getElementById("btnInspectorPreview");
-        mount.innerHTML = BUTTON_SIZES.map((s) => `<div style="margin:0 0 0.45rem"><button type="button" class="btn-ds ${s} primary">Primary ${s}</button> <button type="button" class="btn-ds ${s} secondary">Secondary</button></div>`).join("");
+        mount.innerHTML = BUTTON_SIZES.map((s) => `<div style="margin:0 0 0.45rem"><button type="button" class="btn-ds ${s} primary">${iconSvg("plus")} Primary ${s}</button> <button type="button" class="btn-ds ${s} secondary">Secondary</button></div>`).join("");
         const tokens = tokenMap();
         applyPreviewVars(mount, tokens);
         mount.style.fontFamily = fontStack(state.type.ui);
@@ -2368,7 +2389,7 @@
                         </label>
                       </div>
                       <div class="actions" style="margin-top:0.85rem">
-                        <button type="button" class="btn-ds ${cs} primary">${iconSvg("plus", "sm")} Join waitlist</button>
+                        <button type="button" class="btn-ds ${cs} primary">${iconSvg("plus")} Join waitlist</button>
                         <button type="button" class="btn-ds ${cs} secondary">Not now</button>
                         <button type="button" class="btn-ds ${cs} tertiary">Learn more</button>
                       </div>
@@ -2454,7 +2475,7 @@
               <h3>Buttons · size × hierarchy</h3>
               ${BUTTON_SIZES.map((s) => `
                 <div class="btn-grid" style="margin-bottom:0.55rem">
-                  <button type="button" class="btn-ds ${s} primary">${iconSvg("plus", "sm")} Primary ${s}</button>
+                  <button type="button" class="btn-ds ${s} primary">${iconSvg("plus")} Primary ${s}</button>
                   <button type="button" class="btn-ds ${s} secondary">Secondary</button>
                   <button type="button" class="btn-ds ${s} tertiary">Tertiary</button>
                   <button type="button" class="btn-ds ${s} danger">Danger</button>
@@ -2478,7 +2499,11 @@
                 <span class="badge info">Info</span>
                 <span class="avatar-row"><span class="avatar">A</span><span class="avatar">B</span><span class="avatar">C</span></span>
               </div>
-              <div class="icon-row" style="margin-top:0.7rem">${["xs", "sm", "md", "lg", "xl"].map((s) => iconSvg("check", s)).join("")}</div>
+              <p class="type-meta" style="margin:0.75rem 0 0.35rem">Icon scale · Space tokens (xs–xl). Button plus-icons use each size’s icon token instead.</p>
+              <div class="icon-row">${["xs", "sm", "md", "lg", "xl"].map((s) => {
+                const field = { xs: "iconXs", sm: "iconSm", md: "iconMd", lg: "iconLg", xl: "iconXl" }[s];
+                return `<span class="icon-scale-item">${iconSvg("check", s)}<span class="type-meta" data-icon-label="${s}">${s} · ${state.space[field]}px</span></span>`;
+              }).join("")}</div>
             </div>
             <div class="comp-block">
               <h3>Elevation 1–5</h3>
@@ -2633,6 +2658,46 @@
         }
       }
 
+      function syncButtonInspectorChrome() {
+        if (state.inspectorTab !== "buttons") return;
+        const size = state.selectedButtonSize;
+        const b = state.buttons[size];
+        const ts = typeSizes();
+        const labels = {
+          py: `${b.py}px`,
+          px: `${b.px}px`,
+          icon: `${b.icon}px`,
+          text: `${ts[b.text]}px`,
+        };
+        els.inspector.querySelectorAll(".field").forEach((field) => {
+          const inp = field.querySelector("[data-btn-field]");
+          const span = field.querySelector(".field-label span");
+          if (inp && span && labels[inp.dataset.btnField] != null) span.textContent = labels[inp.dataset.btnField];
+        });
+        els.inspector.querySelectorAll("[data-select-btn]").forEach((btn) => {
+          const hint = btn.querySelector(".hint");
+          if (hint) hint.textContent = `${btnHeight(btn.dataset.selectBtn)}px tall`;
+        });
+        const control = els.inspector.querySelector("[data-btn-control]");
+        if (control) {
+          [...control.options].forEach((opt) => {
+            opt.textContent = `${opt.value} (${btnHeight(opt.value)}px)`;
+          });
+        }
+      }
+
+      function syncSpaceInspectorChrome() {
+        if (state.inspectorTab !== "space") return;
+        els.inspector.querySelectorAll("[data-space-field]").forEach((inp) => {
+          if (inp.tagName === "SELECT") return;
+          const span = inp.closest(".field")?.querySelector(".field-label span");
+          const key = inp.dataset.spaceField;
+          if (span && state.space[key] != null) {
+            span.textContent = key === "shadowStrength" ? String(state.space[key]) : `${state.space[key]}px`;
+          }
+        });
+      }
+
       function syncTypeInspectorChrome() {
         if (state.inspectorTab !== "type") return;
         const ts = typeSizes();
@@ -2707,6 +2772,21 @@
           if (chip) chip.style.background = s.hex;
           if (meta) meta.innerHTML = `<b>${s.step}</b>${s.hex}<br>hsl(${s.h}, ${s.s}%, ${s.l}%)`;
         });
+        for (const size of BUTTON_SIZES) {
+          const px = `${state.buttons[size].icon}px`;
+          document.querySelectorAll(`.btn-ds.${size} .ds-icon`).forEach((el) => {
+            el.style.width = px;
+            el.style.height = px;
+          });
+        }
+        const iconKeys = { xs: "iconXs", sm: "iconSm", md: "iconMd", lg: "iconLg", xl: "iconXl" };
+        document.querySelectorAll("[data-icon-label]").forEach((el) => {
+          const key = el.dataset.iconLabel;
+          const field = iconKeys[key];
+          if (field) el.textContent = `${key} · ${state.space[field]}px`;
+        });
+        const btnPrev = document.getElementById("btnInspectorPreview");
+        if (btnPrev) applyPreviewVars(btnPrev, tokens);
       }
 
       function livePaint() {
@@ -2717,6 +2797,8 @@
         ensureRoleFonts();
         syncColorInspectorChrome();
         syncTypeInspectorChrome();
+        syncButtonInspectorChrome();
+        syncSpaceInspectorChrome();
         if (state.inspectorTab === "export") {
           const box = document.getElementById("exportBox");
           const format = document.getElementById("exportFormat")?.value || "css";
@@ -3044,6 +3126,7 @@
       initTabs();
       renderInspector();
       renderStage();
+      livePaint();
     </script>
   </body>
 </html>
