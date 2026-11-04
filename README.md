@@ -23,7 +23,7 @@ Small / medium / large. Each size has its own type step, vertical padding, horiz
 
 ## Space
 
-Spacing scale through the large layout sizes, two radii, five shadow elevations, border widths, focus ring, icon sizes, opacity tokens, and max-widths.
+Spacing scale through the large layout sizes, a roundness control for boxes, borders, and the nav header, a separate button radius, five shadow elevations, border widths, focus ring, icon sizes, opacity tokens, and max-widths.
 
 ## Preview
 
