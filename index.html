@@ -3,272 +3,504 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RUI Studio — pick colors & fonts for your app</title>
+    <title>Design System Studio — palette, type, preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <style>
+      :root {
+        --ui-bg: #eceff3;
+        --ui-panel: #ffffff;
+        --ui-ink: #102a43;
+        --ui-muted: #627d98;
+        --ui-line: #d9e2ec;
+        --ui-fill: #f0f4f8;
+        --ui-accent: #243b53;
+      }
+
       * {
         box-sizing: border-box;
       }
 
+      html,
       body {
         margin: 0;
-        font-family: system-ui, -apple-system, sans-serif;
-        font-size: 15px;
-        line-height: 1.5;
-        color: #111;
-        background: #e8e8e8;
-        height: 100vh;
-        overflow: hidden;
+        height: 100%;
+      }
+
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: var(--ui-ink);
+        background: var(--ui-bg);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
       }
 
       .app {
+        height: 100%;
         display: grid;
-        grid-template-columns: min(26rem, 42vw) 1fr;
-        height: 100vh;
+        grid-template-rows: auto 1fr;
       }
 
-      .panel {
-        background: #fafafa;
-        border-right: 1px solid #ccc;
-        overflow: auto;
-        padding: 1.25rem 1.25rem 2rem;
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.7rem 1rem;
+        background: var(--ui-panel);
+        border-bottom: 1px solid var(--ui-line);
+      }
+
+      .brand {
         display: flex;
         flex-direction: column;
+        min-width: 12rem;
       }
 
-      .panel h1 {
-        font-size: 1.15rem;
-        margin: 0 0 0.35rem;
+      .brand strong {
+        font-size: 0.95rem;
+        letter-spacing: -0.02em;
       }
 
-      .progress {
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: #555;
-        margin-bottom: 0.5rem;
+      .brand span {
+        color: var(--ui-muted);
+        font-size: 0.75rem;
       }
 
-      .step-title {
-        font-size: 1.05rem;
-        font-weight: 700;
-        margin: 0 0 0.5rem;
-      }
-
-      .step-body {
-        color: #333;
-        font-size: 0.92rem;
-        margin: 0 0 1rem;
-      }
-
-      .book-tip {
-        background: #fff;
-        border-left: 4px solid #c48855;
-        padding: 0.65rem 0.75rem;
-        margin: 0 0 1rem;
-        font-size: 0.85rem;
-        color: #444;
-      }
-
-      .book-tip strong {
-        display: block;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #888;
-        margin-bottom: 0.25rem;
-      }
-
-      .do-next {
-        background: #fff8f0;
-        border: 1px solid #e8d4bc;
+      .topbar-tabs,
+      .stage-tabs {
+        display: flex;
+        gap: 0.25rem;
+        background: var(--ui-fill);
+        padding: 0.2rem;
         border-radius: 10px;
-        padding: 0.6rem 0.75rem;
-        margin: 0 0 1rem;
-        font-size: 0.88rem;
       }
 
-      .do-next strong {
-        color: #8a4b12;
+      .topbar-tabs button,
+      .stage-tabs button {
+        border: 0;
+        background: transparent;
+        color: var(--ui-muted);
+        padding: 0.4rem 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.82rem;
       }
 
-      .skip-note {
-        font-size: 0.85rem;
-        color: #555;
-        margin: 0 0 0.75rem;
+      .topbar-tabs button[aria-selected="true"],
+      .stage-tabs button[aria-selected="true"] {
+        background: var(--ui-panel);
+        color: var(--ui-ink);
+        box-shadow: 0 0 0 1px var(--ui-line);
       }
 
-      .wizard-step {
-        display: none;
-        flex: 1;
+      .top-actions {
+        margin-left: auto;
+        display: flex;
+        gap: 0.4rem;
+        align-items: center;
       }
 
-      .wizard-step[data-active="true"] {
-        display: block;
+      .top-actions button,
+      .btn {
+        border: 1px solid var(--ui-line);
+        background: var(--ui-panel);
+        border-radius: 8px;
+        padding: 0.4rem 0.7rem;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.8rem;
       }
 
-      .choice-grid {
+      .btn.primary,
+      .top-actions .primary {
+        background: var(--ui-accent);
+        color: #fff;
+        border-color: var(--ui-accent);
+      }
+
+      .workspace {
         display: grid;
-        gap: 0.55rem;
+        grid-template-columns: minmax(22rem, 28rem) 1fr;
+        min-height: 0;
+      }
+
+      .inspector {
+        background: var(--ui-panel);
+        border-right: 1px solid var(--ui-line);
+        overflow: auto;
+        padding: 1rem 1rem 2rem;
+        min-height: 0;
+      }
+
+      .stage {
+        overflow: auto;
+        min-height: 0;
+        padding: 1rem 1.1rem 2rem;
+      }
+
+      .hint {
+        color: var(--ui-muted);
+        font-size: 0.8rem;
+        margin: 0 0 0.9rem;
+      }
+
+      .scale-list {
+        display: grid;
+        gap: 0.4rem;
         margin-bottom: 1rem;
       }
 
-      .choice {
+      .scale-btn {
         text-align: left;
-        border: 2px solid #ddd;
-        background: #fff;
-        border-radius: 12px;
-        padding: 0.75rem 0.85rem;
+        border: 1px solid var(--ui-line);
+        background: var(--ui-panel);
+        border-radius: 10px;
+        padding: 0.4rem 0.55rem;
         cursor: pointer;
-        font: inherit;
+        width: 100%;
       }
 
-      .choice:hover {
-        border-color: #999;
+      .scale-btn[aria-pressed="true"] {
+        border-color: var(--ui-ink);
+        box-shadow: 0 0 0 1px var(--ui-ink);
       }
 
-      .choice[aria-pressed="true"] {
-        border-color: #111;
-        box-shadow: 0 0 0 1px #111;
-      }
-
-      .choice .name {
+      .scale-btn .row-name {
+        display: flex;
+        justify-content: space-between;
         font-weight: 700;
-        display: block;
+        font-size: 0.78rem;
+        margin-bottom: 0.35rem;
       }
 
-      .choice .desc {
-        font-size: 0.82rem;
-        color: #555;
-        margin-top: 0.15rem;
+      .scale-btn .row-name em {
+        font-style: normal;
+        color: var(--ui-muted);
+        font-weight: 500;
       }
 
-      label {
+      .mini-ramp {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        height: 0.95rem;
+      }
+
+      .mini-ramp span {
         display: block;
-        font-size: 0.82rem;
+        height: 100%;
+      }
+
+      .mini-ramp span:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+
+      .mini-ramp span:last-child {
+        border-radius: 0 4px 4px 0;
+      }
+
+      .field {
+        margin: 0 0 0.85rem;
+      }
+
+      .field-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+
+      .field-label span {
+        color: var(--ui-muted);
         font-weight: 600;
-        margin: 0.75rem 0 0.35rem;
+      }
+
+      .slider-row {
+        display: grid;
+        grid-template-columns: 1fr 4.4rem;
+        gap: 0.45rem;
+        align-items: center;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--ui-accent);
+      }
+
+      .hue-range {
+        appearance: none;
+        height: 14px;
+        border-radius: 99px;
+        background: linear-gradient(
+          to right,
+          hsl(0 100% 50%),
+          hsl(60 100% 50%),
+          hsl(120 100% 50%),
+          hsl(180 100% 50%),
+          hsl(240 100% 50%),
+          hsl(300 100% 50%),
+          hsl(360 100% 50%)
+        );
+      }
+
+      .hue-range::-webkit-slider-thumb {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid #102a43;
+      }
+
+      .hue-range::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid #102a43;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--ui-line);
+        border-radius: 8px;
+        padding: 0.4rem 0.5rem;
+        background: #fff;
+      }
+
+      .hex-row {
+        display: grid;
+        grid-template-columns: 3rem 1fr auto;
+        gap: 0.45rem;
+        align-items: center;
       }
 
       input[type="color"] {
-        width: 100%;
-        height: 3rem;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        padding: 0.2rem;
-        cursor: pointer;
-      }
-
-      input[type="file"] {
-        font-size: 0.82rem;
-        margin-top: 0.35rem;
-      }
-
-      details {
-        margin: 0.75rem 0;
-        font-size: 0.82rem;
-      }
-
-      summary {
-        cursor: pointer;
-        font-weight: 600;
-        color: #555;
-      }
-
-      select,
-      input[type="number"] {
-        width: 100%;
-        padding: 0.45rem;
-        border: 1px solid #ccc;
+        width: 3rem;
+        height: 2.4rem;
+        padding: 0;
+        border: 1px solid var(--ui-line);
         border-radius: 8px;
-        font: inherit;
-      }
-
-      .nav-row {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: auto;
-        padding-top: 1rem;
-        border-top: 1px solid #ddd;
-      }
-
-      .nav-row button {
-        flex: 1;
-        padding: 0.65rem 0.75rem;
-        border-radius: 10px;
-        border: 1px solid #bbb;
         background: #fff;
-        font-weight: 600;
         cursor: pointer;
-        font-size: 0.9rem;
       }
 
-      .nav-row button.primary {
-        background: #111;
-        color: #fff;
-        border-color: #111;
+      .contrast {
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.35rem 0.5rem;
+        border-radius: 8px;
+        white-space: nowrap;
       }
 
-      .nav-row button:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
+      .contrast.pass {
+        background: #effcf6;
+        color: #147d64;
       }
 
-      .status {
-        font-size: 0.78rem;
-        color: #666;
-        min-height: 1.2rem;
-        margin-top: 0.5rem;
+      .contrast.fail {
+        background: #fff5f5;
+        color: #9b2c2c;
       }
 
-      .export-box {
-        background: #111;
-        color: #eee;
-        border-radius: 10px;
-        padding: 0.75rem;
-        font-family: ui-monospace, monospace;
-        font-size: 0.68rem;
-        max-height: 8rem;
-        overflow: auto;
-        white-space: pre;
+      .check {
+        display: flex;
+        gap: 0.45rem;
+        align-items: flex-start;
+        font-size: 0.8rem;
+        margin: 0.4rem 0 0.9rem;
+      }
+
+      .section-title {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--ui-muted);
+        margin: 1.1rem 0 0.5rem;
+        font-weight: 800;
+      }
+
+      .shade-picks {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 0.25rem;
         margin-bottom: 0.75rem;
       }
 
-      .preview-wrap {
-        overflow: auto;
-        padding: 1.25rem;
-        background: #ccc;
+      .shade-picks button {
+        border: 1px solid var(--ui-line);
+        background: #fff;
+        border-radius: 8px;
+        padding: 0.15rem 0 0.3rem;
+        cursor: pointer;
+        font-size: 0.62rem;
+        font-weight: 700;
+      }
+
+      .shade-picks button .dot {
+        display: block;
+        height: 1.15rem;
+        margin: 0 0.2rem 0.2rem;
+        border-radius: 4px;
+      }
+
+      .shade-picks button[aria-pressed="true"] {
+        border-color: var(--ui-ink);
+        box-shadow: 0 0 0 1px var(--ui-ink);
+      }
+
+      details.advanced {
+        border: 1px solid var(--ui-line);
+        border-radius: 10px;
+        padding: 0.45rem 0.65rem 0.15rem;
+        margin: 0.85rem 0;
+        background: var(--ui-fill);
+      }
+
+      details.advanced summary {
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.78rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .font-option {
+        padding: 0.15rem 0;
+      }
+
+      .type-specimen-mini {
+        border: 1px solid var(--ui-line);
+        border-radius: 10px;
+        padding: 0.7rem 0.8rem;
+        margin-bottom: 0.9rem;
+        background: var(--ui-fill);
+      }
+
+      .export-box {
+        width: 100%;
+        min-height: 14rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        line-height: 1.4;
+        white-space: pre;
+      }
+
+      .status {
+        color: var(--ui-muted);
+        font-size: 0.78rem;
+        min-height: 1.2rem;
+        margin-top: 0.6rem;
+      }
+
+      .stage-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .palette-board {
+        display: grid;
+        gap: 1.1rem;
+      }
+
+      .palette-scale h3 {
+        margin: 0 0 0.45rem;
+        font-size: 0.95rem;
+      }
+
+      .palette-scale p {
+        margin: 0 0 0.55rem;
+        color: var(--ui-muted);
+        font-size: 0.78rem;
+      }
+
+      .swatch-row {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.45rem 0.55rem;
+      }
+
+      .swatch {
+        border: 0;
+        padding: 0;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .swatch .chip {
+        display: block;
+        height: 3.4rem;
+        border-radius: 8px;
+        border: 1px solid rgb(16 42 67 / 8%);
+      }
+
+      .swatch[aria-pressed="true"] .chip {
+        outline: 2px solid var(--ui-ink);
+        outline-offset: 1px;
+      }
+
+      .swatch .meta {
+        display: block;
+        margin-top: 0.3rem;
+        font-size: 0.68rem;
+        line-height: 1.3;
+        color: #334e68;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .swatch .meta b {
+        display: block;
+        font-family: inherit;
+        color: var(--ui-ink);
       }
 
       .preview-frame {
-        max-width: 52rem;
+        max-width: 56rem;
         margin: 0 auto;
-        border-radius: 12px;
+        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 12px 40px rgb(0 0 0 / 15%);
+        border: 1px solid var(--ui-line);
+        background: var(--preview-bg, #f0f4f8);
       }
 
       .preview-root {
-        min-height: 30rem;
-        font-family: var(--font-display);
-        color: var(--color-text);
-        background: var(--color-bg);
-        line-height: var(--leading-body);
+        color: var(--preview-text);
+        font-family: var(--font-ui);
+        background: var(--preview-bg);
+        min-height: 36rem;
       }
 
       .preview-topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--space-3) var(--space-5);
-        background: var(--color-brand);
-        color: var(--color-brand-text);
-        font-family: var(--font-ui);
+        padding: 0.85rem 1.25rem;
+        background: var(--preview-brand);
+        color: var(--preview-brand-text);
         font-size: var(--text-sm);
         font-weight: 600;
       }
 
       .preview-nav {
         display: flex;
-        gap: var(--space-5);
+        gap: 1.1rem;
+        align-items: center;
       }
 
       .preview-nav a {
@@ -278,388 +510,459 @@
 
       .preview-nav a.is-current {
         text-decoration: underline;
-        text-underline-offset: 0.15em;
-      }
-
-      .preview-avatars {
-        position: relative;
-        width: 2.65rem;
-        height: 2rem;
-      }
-
-      .preview-avatars span {
-        position: absolute;
-        width: 2rem;
-        height: 2rem;
-        border-radius: var(--radius-full);
-        background: var(--color-surface);
-        color: var(--color-text);
-        border: 2px solid var(--color-brand-border);
-        display: grid;
-        place-items: center;
-        font-size: var(--text-xs);
-        font-weight: 700;
-      }
-
-      .preview-avatars .back {
-        transform: translateX(0.45rem);
-        z-index: 1;
-      }
-
-      .preview-avatars .front {
-        z-index: 2;
+        text-underline-offset: 0.18em;
       }
 
       .preview-body {
-        padding: var(--space-6) var(--space-5) var(--space-8);
-        max-width: 40rem;
+        padding: 1.5rem 1.35rem 2rem;
+        max-width: 44rem;
         margin: 0 auto;
       }
 
-      .preview-card {
-        position: relative;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-lg);
-        padding: var(--space-6);
-        box-shadow: var(--shadow-sm);
-        font-family: var(--font-ui);
-        margin-bottom: var(--space-5);
+      .kicker {
+        color: var(--preview-primary);
+        font-size: var(--text-sm);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin: 0 0 0.35rem;
       }
 
-      .preview-card h2 {
+      .preview-title {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        line-height: 1.15;
+        letter-spacing: var(--track-display);
+        font-weight: var(--weight-display);
+        margin: 0 0 0.4rem;
+      }
+
+      .preview-lead {
+        color: var(--preview-muted);
+        font-size: var(--text-lg);
+        line-height: var(--leading-body);
+        margin: 0 0 1.25rem;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.7rem;
+        margin-bottom: 1rem;
+      }
+
+      .stat,
+      .card,
+      .alert {
+        background: var(--preview-surface);
+        border: 1px solid var(--preview-border);
+        border-radius: var(--radius-lg);
+      }
+
+      .stat {
+        padding: 0.85rem 0.9rem;
+      }
+
+      .stat .label {
+        color: var(--preview-muted);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .stat .value {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        margin-top: 0.15rem;
+      }
+
+      .card {
+        padding: 1.15rem 1.2rem 1.25rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .card h3 {
         font-family: var(--font-display);
         font-size: var(--text-xl);
-        line-height: var(--leading-tight);
-        margin: 0 0 var(--space-3);
-        padding-right: var(--space-6);
+        margin: 0 0 0.4rem;
+        font-weight: var(--weight-display);
       }
 
-      .preview-card p {
-        margin: 0 0 var(--space-5);
-        font-size: var(--text-base);
+      .card p {
+        margin: 0 0 0.9rem;
+        color: var(--preview-muted);
       }
 
-      .preview-card .close {
-        position: absolute;
-        top: var(--space-4);
-        right: var(--space-4);
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+
+      .preview-root button.cta,
+      .preview-root button.ghost,
+      .preview-root button.danger {
         border: 0;
-        background: transparent;
-        font-size: 1.25rem;
-        color: var(--color-text);
-      }
-
-      .preview-card .cta {
-        display: inline-block;
-        background: var(--color-cta);
-        color: var(--color-cta-text);
         border-radius: var(--radius-sm);
-        padding: var(--space-2) var(--space-5);
+        padding: 0.5rem 0.9rem;
+        font-weight: 650;
         font-size: var(--text-sm);
-        font-weight: 500;
+        cursor: default;
       }
 
-      .preview-page-title {
-        font-size: var(--text-3xl);
-        font-weight: 700;
-        margin: 0 0 var(--space-2);
-        line-height: var(--leading-tight);
+      .preview-root button.cta {
+        background: var(--preview-primary);
+        color: var(--preview-on-primary);
       }
 
-      .preview-muted {
-        color: var(--color-text-muted);
+      .preview-root button.ghost {
+        background: transparent;
+        color: var(--preview-text);
+        box-shadow: inset 0 0 0 1px var(--preview-border);
+      }
+
+      .preview-root button.danger {
+        background: var(--preview-danger);
+        color: #fff;
+      }
+
+      .alerts {
+        display: grid;
+        gap: 0.5rem;
+        margin-top: 0.9rem;
+      }
+
+      .alert {
+        padding: 0.7rem 0.85rem;
+        font-size: var(--text-sm);
+        border: 0;
+      }
+
+      .alert.info {
+        background: var(--preview-primary-soft);
+        color: var(--preview-primary-ink);
+      }
+
+      .alert.ok {
+        background: var(--preview-success-soft);
+        color: var(--preview-success-ink);
+      }
+
+      .alert.warn {
+        background: var(--preview-warning-soft);
+        color: var(--preview-warning-ink);
+      }
+
+      .alert.bad {
+        background: var(--preview-danger-soft);
+        color: var(--preview-danger-ink);
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .form-grid label {
+        display: grid;
+        gap: 0.25rem;
+        font-size: var(--text-sm);
+        font-weight: 650;
+      }
+
+      .form-grid input,
+      .form-grid select {
+        border: 1px solid var(--preview-border);
+        background: var(--preview-surface);
+        color: var(--preview-text);
+        border-radius: var(--radius-sm);
+        padding: 0.5rem 0.6rem;
+      }
+
+      .type-page {
+        background: var(--preview-surface);
+        color: var(--preview-text);
+        border-radius: 16px;
+        padding: 1.5rem 1.6rem 2rem;
+        border: 1px solid var(--ui-line);
+        max-width: 52rem;
+        margin: 0 auto;
+      }
+
+      .type-page .pair {
+        color: var(--preview-muted);
+        font-size: 0.8rem;
+        margin: 0 0 1rem;
+      }
+
+      .type-row {
+        display: grid;
+        grid-template-columns: 5.5rem 1fr;
+        gap: 0.8rem;
+        padding: 0.7rem 0;
+        border-top: 1px solid var(--preview-border);
+        align-items: baseline;
+      }
+
+      .type-row .sz {
+        color: var(--preview-muted);
+        font-size: 0.75rem;
+        font-family: ui-monospace, Menlo, monospace;
+      }
+
+      .type-row .sample-display {
+        font-family: var(--font-display);
+        font-weight: var(--weight-display);
+        letter-spacing: var(--track-display);
+        line-height: 1.2;
+      }
+
+      .type-row .sample-ui {
         font-family: var(--font-ui);
-        font-size: var(--text-base);
+        line-height: var(--leading-body);
       }
 
-      @media (max-width: 800px) {
-        .app {
+      .components {
+        max-width: 52rem;
+        margin: 0 auto;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .comp-block {
+        background: var(--preview-surface);
+        color: var(--preview-text);
+        border: 1px solid var(--preview-border);
+        border-radius: 14px;
+        padding: 1rem 1.1rem;
+      }
+
+      .comp-block h3 {
+        margin: 0 0 0.7rem;
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 960px) {
+        .workspace {
           grid-template-columns: 1fr;
-          grid-template-rows: 1fr 1fr;
+          grid-template-rows: minmax(18rem, 42vh) 1fr;
+        }
+
+        .swatch-row,
+        .stats {
+          grid-template-columns: repeat(5, 1fr);
+        }
+
+        .swatch .chip {
+          height: 2.6rem;
         }
       }
     </style>
   </head>
   <body>
     <div class="app">
-      <aside class="panel">
-        <h1>RUI Studio</h1>
-        <p class="progress" id="progress">Welcome</p>
+      <header class="topbar">
+        <div class="brand">
+          <strong>Design System Studio</strong>
+          <span>Build a palette and type scale, then preview it</span>
+        </div>
+        <nav class="topbar-tabs" id="inspectorTabs">
+          <button type="button" data-tab="color" aria-selected="true">Palette</button>
+          <button type="button" data-tab="type">Type</button>
+          <button type="button" data-tab="space">Spacing</button>
+          <button type="button" data-tab="export">Export</button>
+        </nav>
+        <div class="top-actions">
+          <label class="btn" style="margin: 0; cursor: pointer">
+            Import JSON
+            <input id="importFile" type="file" accept=".json,application/json" hidden />
+          </label>
+          <button type="button" class="primary" id="downloadCss">Download CSS</button>
+        </div>
+      </header>
 
-        <div class="wizard-step" data-step="0" data-active="true">
-          <h2 class="step-title">Welcome</h2>
-          <p class="step-body">
-            This helps you pick colors and fonts for a simple app screen. You make a few choices on the left. The fake app
-            on the right updates as you go.
-          </p>
-          <div class="do-next"><strong>Your job:</strong> click <strong>Start</strong>, then keep clicking <strong>Continue</strong> until you can download a CSS file.</div>
-          <p class="step-body">
-            We already picked good defaults (cream page, soft orange bar — like the plgkit demo). You only need to change
-            things if you want a different look.
-          </p>
-          <div class="book-tip">
-            <strong>Good habit</strong>
-            Design a real piece of the app first (here: the white announcement card), not empty layout shells.
+      <div class="workspace">
+        <aside class="inspector" id="inspector"></aside>
+        <main class="stage">
+          <div class="stage-head">
+            <nav class="stage-tabs" id="stageTabs">
+              <button type="button" data-stage="app" aria-selected="true">App preview</button>
+              <button type="button" data-stage="palette">Color board</button>
+              <button type="button" data-stage="type">Type specimen</button>
+              <button type="button" data-stage="components">Components</button>
+            </nav>
+            <label class="check" style="margin: 0">
+              <input type="checkbox" id="darkPreview" />
+              Dark preview
+            </label>
           </div>
-        </div>
-
-        <div class="wizard-step" data-step="1">
-          <h2 class="step-title">Step 1 — What should it feel like?</h2>
-          <p class="step-body">Tap one button. It sets fonts and how round the corners are.</p>
-          <div class="do-next"><strong>Your job:</strong> pick one option, then click <strong>Continue</strong>.</div>
-          <div class="choice-grid" id="personalityChoices"></div>
-          <div class="book-tip">
-            <strong>Good habit</strong>
-            Fancy serif titles feel “classic.” Plain system fonts feel “app-like.” Neither is wrong — pick a mood.
-          </div>
-        </div>
-
-        <div class="wizard-step" data-step="2">
-          <h2 class="step-title">Step 2 — Pick your main color</h2>
-          <p class="step-body">
-            This is the color of the top bar. Click the big color square and choose something you like. We figure out
-            the page background, text, and borders for you.
-          </p>
-          <div class="do-next"><strong>Your job:</strong> click the color square (or skip if you like what you see).</div>
-          <label for="brandColor">Main color (top bar)</label>
-          <input type="color" id="brandColor" value="#c48855" />
-          <label for="paletteFile">Already have Refactoring UI palette files? (optional)</label>
-          <input type="file" id="paletteFile" accept=".json,application/json" />
-          <p class="step-body" style="font-size: 0.82rem; color: #555">
-            In your book download, open the folder <code>Color Palettes JSON</code> and choose any file like
-            <code>palette-01.json</code>. It never leaves your computer.
-          </p>
-          <div class="book-tip">
-            <strong>Good habit</strong>
-            You need more than one swatch in a real app. Either use a palette file from the book, or let this tool fill in
-            the rest from your one main color.
-          </div>
-        </div>
-
-        <div class="wizard-step" data-step="3">
-          <h2 class="step-title">Step 3 — Text sizes</h2>
-          <p class="skip-note">Most people can leave this alone and just hit Continue.</p>
-          <p class="step-body">
-            Body text starts at 16 pixels. Headlines grow from that in fixed steps so you don’t end up with 47 random font
-            sizes.
-          </p>
-          <label for="baseSize">Size of normal paragraph text</label>
-          <input type="number" id="baseSize" min="15" max="18" value="16" />
-          <label for="scaleRatio">How big headlines get compared to body text</label>
-          <select id="scaleRatio">
-            <option value="1.125">Small jumps (compact)</option>
-            <option value="1.2" selected>Medium jumps (default)</option>
-            <option value="1.25">Big jumps (roomy)</option>
-          </select>
-          <div class="book-tip">
-            <strong>Good habit</strong>
-            Pick sizes from a short list. If every line needs a new size, the page will look messy.
-          </div>
-        </div>
-
-        <div class="wizard-step" data-step="4">
-          <h2 class="step-title">Step 4 — Gaps and padding</h2>
-          <p class="skip-note">Default is fine — click Continue unless you want tighter layouts.</p>
-          <p class="step-body">
-            Padding and gaps snap to a simple grid (8 pixels by default) so spacing looks even.
-          </p>
-          <label for="spaceUnit">Grid size</label>
-          <select id="spaceUnit">
-            <option value="8" selected>8 pixels (recommended)</option>
-            <option value="4">4 pixels (tighter UI)</option>
-          </select>
-          <div class="book-tip">
-            <strong>Good habit</strong>
-            When in doubt, leave more empty space first. You can always tighten later.
-          </div>
-        </div>
-
-        <div class="wizard-step" data-step="5">
-          <h2 class="step-title">Step 5 — Take it to your project</h2>
-          <p class="step-body">
-            Click <strong>Download CSS</strong>. You get a file named <code>tokens.css</code>. Open your project’s main
-            stylesheet (often <code>styles.css</code>) and paste everything in that file at the top.
-          </p>
-          <div class="do-next"><strong>Your job:</strong> download, paste into CSS, reload your app.</div>
-          <div class="export-box" id="exportPreview"></div>
-          <div class="book-tip">
-            <strong>Good habit</strong>
-            Make the important thing stand out by keeping everything else quiet — one main button per card.
-          </div>
-        </div>
-
-        <div class="nav-row">
-          <button type="button" id="backBtn" disabled>Back</button>
-          <button type="button" class="primary" id="nextBtn">Start</button>
-        </div>
-        <p class="status" id="status" aria-live="polite"></p>
-      </aside>
-
-      <main class="preview-wrap">
-        <div class="preview-frame">
-          <div class="preview-root" id="preview">
-            <header class="preview-topbar">
-              <nav class="preview-nav">
-                <a href="#" class="is-current" onclick="return false">Home</a>
-                <a href="#" onclick="return false">Get started</a>
-              </nav>
-              <div class="preview-avatars" aria-hidden="true">
-                <span class="back">2</span>
-                <span class="front">1</span>
-              </div>
-            </header>
-            <div class="preview-body">
-              <article class="preview-card">
-                <button type="button" class="close" aria-hidden="true">×</button>
-                <h2>Supersuit v0 available in beta.</h2>
-                <p>
-                  The people's first supersuit brings you levitation, accelerated movements, and more. Take it to new
-                  heights.
-                </p>
-                <span class="cta">Join the waitlist</span>
-              </article>
-              <h1 class="preview-page-title">Home</h1>
-              <p class="preview-muted">Secondary line (lighter color — not for your main story).</p>
-            </div>
-          </div>
-        </div>
-      </main>
+          <div id="stageBody"></div>
+          <p class="status" id="status" aria-live="polite"></p>
+        </main>
+      </div>
     </div>
 
     <script>
-      const STORAGE_KEY = "rui-studio-v2";
-      const STEPS = 5;
+      const STORAGE_KEY = "rui-studio-v4";
+      const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 
-      const PERSONALITIES = {
-        warm: {
-          name: "Warm (like the demo)",
-          desc: "Cream page, soft orange bar, serif titles.",
-          fontDisplay: "Georgia, 'Iowan Old Style', serif",
-          fontUi: "system-ui, -apple-system, sans-serif",
-          radiusSm: 8,
-          radiusLg: 14,
-          hueBrand: 28,
-          hueNeutral: 35,
-          brandColor: "#c48855",
+      const SCALE_ROLES = {
+        primary: "Actions, links, nav, emphasis",
+        neutral: "Text, surfaces, borders — most of the UI",
+        accent: "Highlights that should stand out from primary",
+        danger: "Destructive actions and errors",
+        warning: "Caution, pending, attention",
+        success: "Positive states and confirmation",
+      };
+
+      const UI_FONTS = [
+        { id: "Inter", google: "Inter:wght@400;500;600;700;800" },
+        { id: "Source Sans 3", google: "Source+Sans+3:wght@400;500;600;700;800" },
+        { id: "IBM Plex Sans", google: "IBM+Plex+Sans:wght@400;500;600;700" },
+        { id: "Lato", google: "Lato:wght@400;700;900" },
+        { id: "Open Sans", google: "Open+Sans:wght@400;500;600;700;800" },
+        { id: "Nunito Sans", google: "Nunito+Sans:wght@400;500;600;700;800" },
+        { id: "DM Sans", google: "DM+Sans:wght@400;500;600;700" },
+        { id: "Work Sans", google: "Work+Sans:wght@400;500;600;700;800" },
+        { id: "Outfit", google: "Outfit:wght@400;500;600;700;800" },
+        { id: "Figtree", google: "Figtree:wght@400;500;600;700;800" },
+        { id: "Plus Jakarta Sans", google: "Plus+Jakarta+Sans:wght@400;500;600;700;800" },
+        { id: "System UI", google: null },
+      ];
+
+      const DISPLAY_FONTS = [
+        { id: "Fraunces", google: "Fraunces:wght@500;600;700" },
+        { id: "Playfair Display", google: "Playfair+Display:wght@500;600;700;800" },
+        { id: "Source Serif 4", google: "Source+Serif+4:wght@500;600;700" },
+        { id: "Newsreader", google: "Newsreader:wght@500;600;700" },
+        { id: "Libre Baskerville", google: "Libre+Baskerville:wght@400;700" },
+        { id: "Instrument Serif", google: "Instrument+Serif:wght@400" },
+        { id: "Space Grotesk", google: "Space+Grotesk:wght@500;600;700" },
+        { id: "Syne", google: "Syne:wght@600;700;800" },
+        { id: "Oswald", google: "Oswald:wght@500;600;700" },
+        { id: "Bricolage Grotesque", google: "Bricolage+Grotesque:wght@500;600;700;800" },
+        { id: "Sora", google: "Sora:wght@500;600;700" },
+        ...UI_FONTS,
+      ];
+
+      const MONO_FONTS = [
+        { id: "IBM Plex Mono", google: "IBM+Plex+Mono:wght@400;500;600" },
+        { id: "JetBrains Mono", google: "JetBrains+Mono:wght@400;500;600;700" },
+        { id: "Source Code Pro", google: "Source+Code+Pro:wght@400;500;600;700" },
+        { id: "ui-monospace", google: null },
+      ];
+
+      const TYPE_SCALES = {
+        rui: {
+          name: "Fixed steps (12–48)",
+          sizes: { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, "2xl": 24, "3xl": 30, "4xl": 36, "5xl": 48 },
         },
-        calm: {
-          name: "Calm office app",
-          desc: "Gray-blue bar, no serif, straighter corners.",
-          fontDisplay: "system-ui, -apple-system, sans-serif",
-          fontUi: "system-ui, -apple-system, sans-serif",
-          radiusSm: 6,
-          radiusLg: 10,
-          hueBrand: 210,
-          hueNeutral: 215,
-          brandColor: "#486581",
+        compact: {
+          name: "Compact UI",
+          sizes: { xs: 11, sm: 12, base: 14, lg: 16, xl: 18, "2xl": 20, "3xl": 24, "4xl": 30, "5xl": 36 },
         },
-        playful: {
-          name: "Bright and friendly",
-          desc: "Pink accent, round corners, casual fonts.",
-          fontDisplay: "Verdana, sans-serif",
-          fontUi: "system-ui, -apple-system, sans-serif",
-          radiusSm: 10,
-          radiusLg: 18,
-          hueBrand: 330,
-          hueNeutral: 330,
-          brandColor: "#da4a91",
+        editorial: {
+          name: "Editorial",
+          sizes: { xs: 12, sm: 14, base: 18, lg: 20, xl: 24, "2xl": 30, "3xl": 36, "4xl": 48, "5xl": 60 },
         },
       };
 
-      let step = 0;
-      let state = loadState();
-      let importedPalette = null;
+      const loadedFonts = new Set();
 
-      const els = {
-        progress: document.getElementById("progress"),
-        backBtn: document.getElementById("backBtn"),
-        nextBtn: document.getElementById("nextBtn"),
-        status: document.getElementById("status"),
-        brandColor: document.getElementById("brandColor"),
-        paletteFile: document.getElementById("paletteFile"),
-        baseSize: document.getElementById("baseSize"),
-        scaleRatio: document.getElementById("scaleRatio"),
-        spaceUnit: document.getElementById("spaceUnit"),
-        preview: document.getElementById("preview"),
-        exportPreview: document.getElementById("exportPreview"),
-        personalityChoices: document.getElementById("personalityChoices"),
-      };
-
-      function defaultState() {
-        return {
-          personality: "warm",
-          hueBrand: 28,
-          hueNeutral: 35,
-          brandColor: "#c48855",
-          fontDisplay: PERSONALITIES.warm.fontDisplay,
-          fontUi: PERSONALITIES.warm.fontUi,
-          baseSize: 16,
-          scaleRatio: 1.2,
-          spaceUnit: 8,
-          radiusSm: 8,
-          radiusLg: 14,
-        };
+      function hueName(h) {
+        const x = ((h % 360) + 360) % 360;
+        if (x < 15 || x >= 345) return "Red";
+        if (x < 40) return "Orange";
+        if (x < 65) return "Yellow";
+        if (x < 90) return "Lime";
+        if (x < 150) return "Green";
+        if (x < 175) return "Teal";
+        if (x < 200) return "Cyan";
+        if (x < 230) return "Blue";
+        if (x < 255) return "Indigo";
+        if (x < 290) return "Violet";
+        if (x < 330) return "Magenta";
+        return "Pink";
       }
 
-      function loadState() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (raw) return { ...defaultState(), ...JSON.parse(raw) };
-        } catch {
-          /* ignore */
+      function clamp(n, a, b) {
+        return Math.min(b, Math.max(a, n));
+      }
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function ease(t) {
+        return t * t * (3 - 2 * t);
+      }
+
+      function circularDelta(from, to) {
+        return ((((to - from) % 360) + 540) % 360) - 180;
+      }
+
+      function rotateToward(from, to, amount) {
+        const d = circularDelta(from, to);
+        if (d === 0 || amount === 0) return from;
+        const mag = Math.min(Math.abs(d), amount) * Math.sign(d);
+        return (from + mag + 360) % 360;
+      }
+
+      function nearest(h, targets) {
+        let best = targets[0];
+        let bestAbs = Infinity;
+        for (const t of targets) {
+          const a = Math.abs(circularDelta(h, t));
+          if (a < bestAbs) {
+            bestAbs = a;
+            best = t;
+          }
         }
-        return defaultState();
+        return best;
       }
 
-      function saveState() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      function hslToRgb(h, s, l) {
+        s /= 100;
+        l /= 100;
+        const c = (1 - Math.abs(2 * l - 1)) * s;
+        const hp = ((h % 360) + 360) % 360 / 60;
+        const x = c * (1 - Math.abs((hp % 2) - 1));
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        if (hp < 1) [r, g, b] = [c, x, 0];
+        else if (hp < 2) [r, g, b] = [x, c, 0];
+        else if (hp < 3) [r, g, b] = [0, c, x];
+        else if (hp < 4) [r, g, b] = [0, x, c];
+        else if (hp < 5) [r, g, b] = [x, 0, c];
+        else [r, g, b] = [c, 0, x];
+        const m = l - c / 2;
+        return [r, g, b].map((v) => Math.round((v + m) * 255));
       }
 
-      function applyPersonality(key) {
-        const p = PERSONALITIES[key];
-        if (!p) return;
-        state.personality = key;
-        state.fontDisplay = p.fontDisplay;
-        state.fontUi = p.fontUi;
-        state.radiusSm = p.radiusSm;
-        state.radiusLg = p.radiusLg;
-        if (!importedPalette) {
-          state.hueBrand = p.hueBrand;
-          state.hueNeutral = p.hueNeutral;
-          state.brandColor = p.brandColor;
-          els.brandColor.value = p.brandColor;
-        }
-        renderPersonalityButtons();
-        render();
-      }
-
-      function renderPersonalityButtons() {
-        els.personalityChoices.innerHTML = Object.entries(PERSONALITIES)
-          .map(
-            ([key, p]) =>
-              `<button type="button" class="choice" data-personality="${key}" aria-pressed="${state.personality === key}">
-                <span class="name">${p.name}</span>
-                <span class="desc">${p.desc}</span>
-              </button>`,
-          )
-          .join("");
-        els.personalityChoices.querySelectorAll("[data-personality]").forEach((btn) => {
-          btn.addEventListener("click", () => applyPersonality(btn.dataset.personality));
-        });
+      function rgbToHex(r, g, b) {
+        return (
+          "#" +
+          [r, g, b]
+            .map((v) => clamp(v, 0, 255).toString(16).padStart(2, "0"))
+            .join("")
+            .toUpperCase()
+        );
       }
 
       function hexToHsl(hex) {
-        const n = hex.replace("#", "");
-        if (n.length !== 6) return { h: 28, s: 50, l: 50 };
+        const n = hex.replace("#", "").trim();
+        if (n.length !== 6 || /[^0-9a-f]/i.test(n)) return null;
         const r = parseInt(n.slice(0, 2), 16) / 255;
         const g = parseInt(n.slice(2, 4), 16) / 255;
         const b = parseInt(n.slice(4, 6), 16) / 255;
         const max = Math.max(r, g, b);
         const min = Math.min(r, g, b);
+        const l = (max + min) / 2;
         let h = 0;
         let s = 0;
-        const l = (max + min) / 2;
         if (max !== min) {
           const d = max - min;
           s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -678,255 +981,1116 @@
         return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
       }
 
-      function hsl(h, s, l) {
-        return `hsl(${h} ${s}% ${l}%)`;
+      function hexToRgb(hex) {
+        const n = hex.replace("#", "");
+        return [parseInt(n.slice(0, 2), 16), parseInt(n.slice(2, 4), 16), parseInt(n.slice(4, 6), 16)];
       }
 
-      function parseRuiPalette(text) {
-        const stripped = text.replace(/^\s*\/\/.*$/gm, "");
-        return JSON.parse(stripped);
+      function relLum(hex) {
+        const [r, g, b] = hexToRgb(hex).map((c) => {
+          c /= 255;
+          return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
       }
 
-      function pickScale(obj, prefix) {
-        const keys = Object.keys(obj).filter((k) => k.startsWith(prefix + "-"));
-        if (!keys.length) return null;
-        const get = (n) => obj[`${prefix}-${n}`];
-        return { get, prefix };
+      function contrastRatio(a, b) {
+        const l1 = relLum(a);
+        const l2 = relLum(b);
+        const hi = Math.max(l1, l2);
+        const lo = Math.min(l1, l2);
+        return (hi + 0.05) / (lo + 0.05);
       }
 
-      function findPrimaryScale(obj) {
-        const prefixes = new Set();
-        for (const key of Object.keys(obj)) {
-          const m = key.match(/^([a-z-]+)-\d{3}$/);
-          if (m && !m[1].includes("grey") && !m[1].includes("gray")) prefixes.add(m[1]);
+      function shadeT(step) {
+        return STEPS.indexOf(step) / (STEPS.length - 1);
+      }
+
+      function generateScale(def) {
+        return STEPS.map((step) => {
+          if (def.overrides && def.overrides[step]) {
+            const o = def.overrides[step];
+            const hex = rgbToHex(...hslToRgb(o.h, o.s, o.l));
+            return { step, h: o.h, s: o.s, l: o.l, hex, override: true };
+          }
+          const t = shadeT(step);
+          let l;
+          if (t <= 0.5) l = lerp(def.light50, def.light500, ease(t / 0.5));
+          else l = lerp(def.light500, def.light900, ease((t - 0.5) / 0.5));
+          const dist = Math.abs(t - 0.5) * 2;
+          let s = def.sat500 - def.satDip * (1 - dist) + def.satBoost * dist ** 1.5;
+          if (t > 0.5) s += def.satBoost * 0.2 * dist;
+          s = clamp(s, 0, 100);
+          l = clamp(l, 0, 100);
+          let h = def.hue;
+          if (t < 0.5) {
+            h = rotateToward(def.hue, nearest(def.hue, [60, 180, 300]), def.hueRotate * (0.5 - t) * 2);
+          } else if (t > 0.5) {
+            h = rotateToward(def.hue, nearest(def.hue, [0, 120, 240]), def.hueRotate * (t - 0.5) * 2);
+          }
+          const hex = rgbToHex(...hslToRgb(h, s, l));
+          return { step, h: Math.round(h), s: Math.round(s), l: Math.round(l), hex, override: false };
+        });
+      }
+
+      function makeScale(partial) {
+        return {
+          name: partial.name,
+          hue: 220,
+          sat500: 64,
+          light500: 48,
+          light50: 96,
+          light900: 16,
+          hueRotate: 10,
+          satBoost: 22,
+          satDip: 8,
+          overrides: {},
+          ...partial,
+        };
+      }
+
+      function defaultState() {
+        return {
+          inspectorTab: "color",
+          stage: "app",
+          selectedScale: "primary",
+          selectedShade: 500,
+          darkPreview: false,
+          linkNeutrals: true,
+          advancedOpen: false,
+          scales: {
+            primary: makeScale({ name: "Primary", hue: 221, sat500: 72, light500: 50, light50: 96, light900: 18 }),
+            neutral: makeScale({
+              name: "Neutrals",
+              hue: 214,
+              sat500: 18,
+              light500: 48,
+              light50: 97,
+              light900: 15,
+              hueRotate: 6,
+              satBoost: 20,
+              satDip: 4,
+            }),
+            accent: makeScale({ name: "Accent", hue: 280, sat500: 58, light500: 48, light50: 96, light900: 18 }),
+            danger: makeScale({ name: "Danger", hue: 4, sat500: 72, light500: 48, light50: 96, light900: 18, hueRotate: 6 }),
+            warning: makeScale({
+              name: "Warning",
+              hue: 38,
+              sat500: 90,
+              light500: 52,
+              light50: 96,
+              light900: 22,
+              hueRotate: 12,
+            }),
+            success: makeScale({ name: "Success", hue: 162, sat500: 64, light500: 38, light50: 96, light900: 16 }),
+          },
+          type: {
+            display: "Fraunces",
+            ui: "Inter",
+            mono: "IBM Plex Mono",
+            weightDisplay: 600,
+            weightUi: 400,
+            scale: "rui",
+            baseSize: 16,
+            leading: 1.5,
+            trackDisplay: -0.02,
+          },
+          space: {
+            unit: 8,
+            radiusSm: 6,
+            radiusLg: 12,
+          },
+        };
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return defaultState();
+          const parsed = JSON.parse(raw);
+          const base = defaultState();
+          return {
+            ...base,
+            ...parsed,
+            scales: { ...base.scales, ...(parsed.scales || {}) },
+            type: { ...base.type, ...(parsed.type || {}) },
+            space: { ...base.space, ...(parsed.space || {}) },
+          };
+        } catch {
+          return defaultState();
         }
-        const list = [...prefixes];
-        const primary = list.find((p) => !p.includes("red") && !p.includes("yellow")) || list[0];
-        return primary ? pickScale(obj, primary) : null;
       }
 
-      function colorsFromImport(obj) {
-        const grey = pickScale(obj, "grey") || pickScale(obj, "gray") || pickScale(obj, "blue-grey");
-        const primary = findPrimaryScale(obj);
-        if (!grey || !primary) return null;
-        return {
-          bg: grey.get("050") || grey.get("100"),
-          surface: "#ffffff",
-          border: grey.get("200"),
-          text: grey.get("900"),
-          textMuted: grey.get("600"),
-          brand: primary.get("500") || primary.get("600"),
-          brandText: grey.get("900"),
-          brandBorder: primary.get("600") || primary.get("500"),
-          cta: grey.get("900"),
-          ctaText: "#ffffff",
-        };
+      let state = loadState();
+      const els = {
+        inspector: document.getElementById("inspector"),
+        stageBody: document.getElementById("stageBody"),
+        status: document.getElementById("status"),
+        importFile: document.getElementById("importFile"),
+        darkPreview: document.getElementById("darkPreview"),
+      };
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       }
 
-      function colorsFromHsl(state) {
-        const hb = state.hueBrand;
-        const hn = state.hueNeutral;
-        return {
-          bg: hsl(hn, 48, 91),
-          surface: hsl(0, 0, 100),
-          border: hsl(hn, 22, 84),
-          text: hsl(hn, 25, 12),
-          textMuted: hsl(hn, 12, 40),
-          brand: hsl(hb, 45, 58),
-          brandText: hsl(hn, 25, 14),
-          brandBorder: hsl(hb, 40, 52),
-          cta: hsl(hn, 25, 12),
-          ctaText: hsl(0, 0, 100),
-        };
-      }
-
-      function typeScale(base, ratio) {
-        const steps = { xs: -2, sm: -1, base: 0, lg: 1, xl: 2, "2xl": 3, "3xl": 4 };
+      function allScales() {
         const out = {};
-        for (const [name, exp] of Object.entries(steps)) {
-          out[name] = (base * ratio ** exp).toFixed(2);
-        }
+        for (const [id, def] of Object.entries(state.scales)) out[id] = generateScale(def);
         return out;
       }
 
-      function spacingScale(unit) {
-        const mult = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12];
+      function fontStack(id) {
+        if (id === "System UI") return 'system-ui, -apple-system, "Segoe UI", sans-serif';
+        if (id === "ui-monospace") return 'ui-monospace, SFMono-Regular, Menlo, monospace';
+        return `"${id}", system-ui, sans-serif`;
+      }
+
+      function ensureFont(id, list) {
+        const rec = list.find((f) => f.id === id);
+        if (!rec || !rec.google || loadedFonts.has(rec.google)) return;
+        loadedFonts.add(rec.google);
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `https://fonts.googleapis.com/css2?family=${rec.google}&display=swap`;
+        document.head.appendChild(link);
+      }
+
+      function typeSizes() {
+        const preset = TYPE_SCALES[state.type.scale] || TYPE_SCALES.rui;
+        const factor = (Number(state.type.baseSize) || 16) / 16;
         const out = {};
-        mult.forEach((m, i) => {
-          out[i] = m * unit;
+        for (const [k, v] of Object.entries(preset.sizes)) out[k] = +(v * factor).toFixed(2);
+        return out;
+      }
+
+      function spacing() {
+        const u = Number(state.space.unit) || 8;
+        const keys = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12];
+        const mult = [0, 0.5, 1, 1.5, 2, 3, 4, 6, 8, 12];
+        const out = {};
+        keys.forEach((k, i) => {
+          out[k] = mult[i] * u;
         });
         return out;
       }
 
-      function buildTokens() {
-        const colors = importedPalette ? colorsFromImport(importedPalette) : colorsFromHsl(state);
-        if (!colors) {
-          importedPalette = null;
-          els.status.textContent = "That file didn’t work. We kept the colors from your main color square.";
-        }
-        const finalColors = colors || colorsFromHsl(state);
-        const ts = typeScale(state.baseSize, state.scaleRatio);
-        const sp = spacingScale(state.spaceUnit);
-        return { colors: finalColors, ts, sp };
+      function pickOnColor(bg) {
+        return contrastRatio(bg, "#FFFFFF") >= 4.5 ? "#FFFFFF" : contrastRatio(bg, "#102A43") >= 3 ? "#102A43" : "#000000";
+      }
+
+      function tokenMap() {
+        const scales = allScales();
+        const dark = state.darkPreview;
+        const n = Object.fromEntries(scales.neutral.map((s) => [s.step, s]));
+        const p = Object.fromEntries(scales.primary.map((s) => [s.step, s]));
+        const d = Object.fromEntries(scales.danger.map((s) => [s.step, s]));
+        const w = Object.fromEntries(scales.warning.map((s) => [s.step, s]));
+        const g = Object.fromEntries(scales.success.map((s) => [s.step, s]));
+        const a = Object.fromEntries(scales.accent.map((s) => [s.step, s]));
+        const ts = typeSizes();
+        const sp = spacing();
+        const brand = p[600].hex;
+        return {
+          scales,
+          ts,
+          sp,
+          preview: {
+            bg: dark ? n[900].hex : n[50].hex,
+            surface: dark ? n[800].hex : "#FFFFFF",
+            text: dark ? n[50].hex : n[900].hex,
+            muted: dark ? n[400].hex : n[600].hex,
+            border: dark ? n[700].hex : n[200].hex,
+            brand,
+            brandText: pickOnColor(brand),
+            primary: p[500].hex,
+            onPrimary: pickOnColor(p[500].hex),
+            primarySoft: p[100].hex,
+            primaryInk: p[800].hex,
+            danger: d[500].hex,
+            dangerSoft: d[100].hex,
+            dangerInk: d[800].hex,
+            warningSoft: w[100].hex,
+            warningInk: w[800].hex,
+            successSoft: g[100].hex,
+            successInk: g[800].hex,
+            accent: a[500].hex,
+          },
+        };
       }
 
       function cssText() {
-        const { colors, ts, sp } = buildTokens();
-        return `:root {
-  /* Paste this whole block at the top of your styles.css */
-  --hue-brand: ${state.hueBrand};
-  --hue-neutral: ${state.hueNeutral};
-
-  --color-bg: ${colors.bg};
-  --color-surface: ${colors.surface};
-  --color-border: ${colors.border};
-  --color-text: ${colors.text};
-  --color-text-muted: ${colors.textMuted};
-  --color-brand: ${colors.brand};
-  --color-brand-text: ${colors.brandText};
-  --color-brand-border: ${colors.brandBorder};
-  --color-cta: ${colors.cta};
-  --color-cta-text: ${colors.ctaText};
-
-  --font-display: ${state.fontDisplay};
-  --font-ui: ${state.fontUi};
-  --text-xs: ${ts.xs}px;
-  --text-sm: ${ts.sm}px;
-  --text-base: ${ts.base}px;
-  --text-lg: ${ts.lg}px;
-  --text-xl: ${ts.xl}px;
-  --text-2xl: ${ts["2xl"]}px;
-  --text-3xl: ${ts["3xl"]}px;
-  --leading-tight: 1.25;
-  --leading-body: 1.5;
-
-  --space-0: ${sp[0]}px;
-  --space-1: ${sp[1]}px;
-  --space-2: ${sp[2]}px;
-  --space-3: ${sp[3]}px;
-  --space-4: ${sp[4]}px;
-  --space-5: ${sp[5]}px;
-  --space-6: ${sp[6]}px;
-  --space-8: ${sp[7]}px;
-  --space-10: ${sp[8]}px;
-  --space-12: ${sp[9]}px;
-
-  --radius-sm: ${state.radiusSm}px;
-  --radius-lg: ${state.radiusLg}px;
-  --radius-full: 999px;
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
-}`;
+        const { scales, ts, sp } = tokenMap();
+        const lines = [":root {"];
+        for (const [id, shades] of Object.entries(scales)) {
+          for (const s of shades) lines.push(`  --color-${id}-${s.step}: ${s.hex};`);
+          lines.push("");
+        }
+        lines.push(`  --font-display: ${fontStack(state.type.display)};`);
+        lines.push(`  --font-ui: ${fontStack(state.type.ui)};`);
+        lines.push(`  --font-mono: ${fontStack(state.type.mono)};`);
+        lines.push(`  --weight-display: ${state.type.weightDisplay};`);
+        lines.push(`  --weight-ui: ${state.type.weightUi};`);
+        lines.push(`  --track-display: ${state.type.trackDisplay}em;`);
+        lines.push(`  --leading-body: ${state.type.leading};`);
+        for (const [k, v] of Object.entries(ts)) lines.push(`  --text-${k}: ${v}px;`);
+        lines.push("");
+        for (const [k, v] of Object.entries(sp)) lines.push(`  --space-${k}: ${v}px;`);
+        lines.push(`  --radius-sm: ${state.space.radiusSm}px;`);
+        lines.push(`  --radius-lg: ${state.space.radiusLg}px;`);
+        lines.push(`  --radius-full: 999px;`);
+        lines.push(`  --shadow-sm: 0 1px 2px hsl(0 0% 0% / 6%), 0 1px 3px hsl(0 0% 0% / 8%);`);
+        lines.push(`  --shadow-md: 0 4px 6px hsl(0 0% 0% / 8%), 0 2px 4px hsl(0 0% 0% / 6%);`);
+        lines.push("}");
+        return lines.join("\n");
       }
 
-      function applyPreview() {
-        const { colors, ts, sp } = buildTokens();
-        const root = els.preview;
-        for (const [k, v] of Object.entries(colors)) {
-          root.style.setProperty(`--color-${k.replace(/([A-Z])/g, (m) => `-${m.toLowerCase()}`)}`, v);
+      function jsonText() {
+        const scales = allScales();
+        const obj = {};
+        for (const [id, shades] of Object.entries(scales)) {
+          const key = state.scales[id].name.toLowerCase().replace(/\s+/g, "-");
+          for (const s of shades) {
+            const step = String(s.step).padStart(3, "0");
+            obj[`${key}-${step}`] = s.hex;
+          }
         }
-        root.style.setProperty("--font-display", state.fontDisplay);
-        root.style.setProperty("--font-ui", state.fontUi);
-        for (const [k, v] of Object.entries(ts)) {
-          root.style.setProperty(`--text-${k}`, `${v}px`);
-        }
-        for (const [k, v] of Object.entries(sp)) {
-          root.style.setProperty(`--space-${k}`, `${v}px`);
-        }
-        root.style.setProperty("--radius-sm", `${state.radiusSm}px`);
-        root.style.setProperty("--radius-lg", `${state.radiusLg}px`);
-        root.style.setProperty("--radius-full", "999px");
-        root.style.setProperty("--shadow-sm", "0 1px 2px rgb(0 0 0 / 6%)");
-        root.style.setProperty("--leading-tight", "1.25");
-        root.style.setProperty("--leading-body", "1.5");
-        els.exportPreview.textContent = cssText();
+        return JSON.stringify(obj, null, 2);
       }
 
-      function render() {
-        els.brandColor.value = state.brandColor;
-        els.baseSize.value = state.baseSize;
-        els.scaleRatio.value = String(state.scaleRatio);
-        els.spaceUnit.value = String(state.spaceUnit);
-        applyPreview();
+      function applyPreviewVars(root, tokens) {
+        if (!root) return;
+        const p = tokens.preview;
+        const set = (k, v) => root.style.setProperty(k, v);
+        set("--preview-bg", p.bg);
+        set("--preview-surface", p.surface);
+        set("--preview-text", p.text);
+        set("--preview-muted", p.muted);
+        set("--preview-border", p.border);
+        set("--preview-brand", p.brand);
+        set("--preview-brand-text", p.brandText);
+        set("--preview-primary", p.primary);
+        set("--preview-on-primary", p.onPrimary);
+        set("--preview-primary-soft", p.primarySoft);
+        set("--preview-primary-ink", p.primaryInk);
+        set("--preview-danger", p.danger);
+        set("--preview-danger-soft", p.dangerSoft);
+        set("--preview-danger-ink", p.dangerInk);
+        set("--preview-warning-soft", p.warningSoft);
+        set("--preview-warning-ink", p.warningInk);
+        set("--preview-success-soft", p.successSoft);
+        set("--preview-success-ink", p.successInk);
+        set("--font-display", fontStack(state.type.display));
+        set("--font-ui", fontStack(state.type.ui));
+        set("--weight-display", state.type.weightDisplay);
+        set("--weight-ui", state.type.weightUi);
+        set("--track-display", `${state.type.trackDisplay}em`);
+        set("--leading-body", state.type.leading);
+        for (const [k, v] of Object.entries(tokens.ts)) set(`--text-${k}`, `${v}px`);
+        set("--radius-sm", `${state.space.radiusSm}px`);
+        set("--radius-lg", `${state.space.radiusLg}px`);
+      }
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      }
+
+      function optionList(list, selected) {
+        return list
+          .map((f) => `<option value="${esc(f.id)}" ${f.id === selected ? "selected" : ""}>${esc(f.id)}</option>`)
+          .join("");
+      }
+
+      function currentScale() {
+        return state.scales[state.selectedScale];
+      }
+
+      function renderInspector() {
+        const tab = state.inspectorTab;
+        if (tab === "color") renderColorInspector();
+        else if (tab === "type") renderTypeInspector();
+        else if (tab === "space") renderSpaceInspector();
+        else renderExportInspector();
+      }
+
+      function miniRamp(id) {
+        const shades = generateScale(state.scales[id]);
+        return `<div class="mini-ramp">${shades.map((s) => `<span style="background:${s.hex}"></span>`).join("")}</div>`;
+      }
+
+      function satBg(def) {
+        return `linear-gradient(to right, hsl(${def.hue} 0% ${def.light500}%), hsl(${def.hue} 100% ${def.light500}%))`;
+      }
+
+      function lightBg(def) {
+        return `linear-gradient(to right, hsl(${def.hue} ${def.sat500}% 0%), hsl(${def.hue} ${def.sat500}% 50%), hsl(${def.hue} ${def.sat500}% 100%))`;
+      }
+
+      function renderColorInspector() {
+        const id = state.selectedScale;
+        const def = currentScale();
+        const shades = generateScale(def);
+        const base = shades.find((s) => s.step === 500);
+        const ratio = contrastRatio(base.hex, "#FFFFFF");
+        const pass = ratio >= 4.5;
+        const override = def.overrides[state.selectedShade];
+        const editing = shades.find((s) => s.step === state.selectedShade) || base;
+        els.inspector.innerHTML = `
+          <p class="hint">Pick a scale, then set hue / saturation / lightness yourself. The ramp is 10 shades (50–900). 500 should work as a button.</p>
+          <div class="scale-list">
+            ${Object.keys(state.scales)
+              .map(
+                (key) => `
+              <button type="button" class="scale-btn" data-select-scale="${key}" aria-pressed="${key === id}">
+                <div class="row-name">${esc(state.scales[key].name)} <em>${hueName(state.scales[key].hue)}</em></div>
+                ${miniRamp(key)}
+              </button>`,
+              )
+              .join("")}
+          </div>
+          <label class="field-label" for="scaleName">Scale name</label>
+          <input type="text" id="scaleName" data-scale-field="name" value="${esc(def.name)}" />
+          <p class="hint" style="margin-top:0.45rem">${esc(SCALE_ROLES[id] || "")}</p>
+
+          <div class="field">
+            <div class="field-label">Hue <span>${Math.round(def.hue)}° · ${hueName(def.hue)}</span></div>
+            <div class="slider-row">
+              <input class="hue-range" type="range" min="0" max="360" step="1" data-scale-field="hue" value="${def.hue}" />
+              <input type="number" min="0" max="360" data-scale-field="hue" value="${def.hue}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Base saturation (500) <span>${Math.round(def.sat500)}%</span></div>
+            <div class="slider-row">
+              <input type="range" min="0" max="100" step="1" data-scale-field="sat500" value="${def.sat500}" style="background:${satBg(def)}; appearance:none; height:12px; border-radius:99px;" />
+              <input type="number" min="0" max="100" data-scale-field="sat500" value="${def.sat500}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Base lightness (500) <span>${Math.round(def.light500)}%</span></div>
+            <div class="slider-row">
+              <input type="range" min="8" max="80" step="1" data-scale-field="light500" value="${def.light500}" style="background:${lightBg(def)}; appearance:none; height:12px; border-radius:99px;" />
+              <input type="number" min="8" max="80" data-scale-field="light500" value="${def.light500}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">500 hex</div>
+            <div class="hex-row">
+              <input type="color" id="baseColor" value="${base.hex.toLowerCase()}" />
+              <input type="text" id="baseHex" value="${base.hex}" spellcheck="false" />
+              <span class="contrast ${pass ? "pass" : "fail"}">White ${ratio.toFixed(1)}:1 ${pass ? "AA" : "fail"}</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Lightest (50) <span>${Math.round(def.light50)}%</span></div>
+            <div class="slider-row">
+              <input type="range" min="80" max="99" step="1" data-scale-field="light50" value="${def.light50}" />
+              <input type="number" min="80" max="99" data-scale-field="light50" value="${def.light50}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Darkest (900) <span>${Math.round(def.light900)}%</span></div>
+            <div class="slider-row">
+              <input type="range" min="4" max="36" step="1" data-scale-field="light900" value="${def.light900}" />
+              <input type="number" min="4" max="36" data-scale-field="light900" value="${def.light900}" />
+            </div>
+          </div>
+
+          <div class="section-title" id="shadeEditor">Tweak one shade</div>
+          <p class="hint">Click a swatch on the color board, or pick a step below. Manual HSL on a shade sticks until you move the main hue/sat/light sliders.</p>
+          <div class="shade-picks">
+            ${shades
+              .map(
+                (s) => `<button type="button" data-pick-shade="${s.step}" aria-pressed="${state.selectedShade === s.step}"><span class="dot" style="background:${s.hex}"></span>${s.step}</button>`,
+              )
+              .join("")}
+          </div>
+          <div class="field">
+            <div class="field-label">Shade ${editing.step} hue <span>${editing.h}°</span></div>
+            <div class="slider-row">
+              <input class="hue-range" type="range" min="0" max="360" data-shade-field="h" value="${editing.h}" />
+              <input type="number" min="0" max="360" data-shade-field="h" value="${editing.h}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Saturation <span>${editing.s}%</span></div>
+            <div class="slider-row">
+              <input type="range" min="0" max="100" data-shade-field="s" value="${editing.s}" />
+              <input type="number" min="0" max="100" data-shade-field="s" value="${editing.s}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Lightness <span>${editing.l}%</span></div>
+            <div class="slider-row">
+              <input type="range" min="0" max="100" data-shade-field="l" value="${editing.l}" />
+              <input type="number" min="0" max="100" data-shade-field="l" value="${editing.l}" />
+            </div>
+          </div>
+          <p class="hint">${override ? "This shade is a manual override." : "Generated from the ramp."} ${editing.hex} · hsl(${editing.h}, ${editing.s}%, ${editing.l}%)</p>
+
+          <details class="advanced" ${state.advancedOpen ? "open" : ""}>
+            <summary>Ramp curve (hue rotation &amp; saturation)</summary>
+            <div class="field">
+              <div class="field-label">Hue rotation <span>${def.hueRotate}°</span></div>
+              <div class="slider-row">
+                <input type="range" min="0" max="30" step="1" data-scale-field="hueRotate" value="${def.hueRotate}" />
+                <input type="number" min="0" max="30" data-scale-field="hueRotate" value="${def.hueRotate}" />
+              </div>
+              <p class="hint">Light shades rotate toward yellow/cyan; dark shades toward red/blue. Keep it under ~30° so it still reads as one color.</p>
+            </div>
+            <div class="field">
+              <div class="field-label">End saturation boost <span>${def.satBoost}</span></div>
+              <div class="slider-row">
+                <input type="range" min="0" max="40" step="1" data-scale-field="satBoost" value="${def.satBoost}" />
+                <input type="number" min="0" max="40" data-scale-field="satBoost" value="${def.satBoost}" />
+              </div>
+            </div>
+            <div class="field">
+              <div class="field-label">Mid saturation dip <span>${def.satDip}</span></div>
+              <div class="slider-row">
+                <input type="range" min="0" max="24" step="1" data-scale-field="satDip" value="${def.satDip}" />
+                <input type="number" min="0" max="24" data-scale-field="satDip" value="${def.satDip}" />
+              </div>
+            </div>
+            <label class="check"><input type="checkbox" id="linkNeutrals" ${state.linkNeutrals ? "checked" : ""} /> Tint neutrals with the primary hue</label>
+            <button type="button" class="btn" id="resetRamp" style="margin-bottom:0.7rem">Reset this ramp (clear shade tweaks)</button>
+          </details>
+        `;
+      }
+
+      function renderTypeInspector() {
+        const t = state.type;
+        els.inspector.innerHTML = `
+          <p class="hint">Two families is enough: one for display/headlines, one for UI and body. Prefer faces with several weights.</p>
+          <div class="type-specimen-mini" style="font-family:${esc(fontStack(t.display))}; font-weight:${t.weightDisplay}">
+            ${esc(t.display)} — The people’s first supersuit
+          </div>
+          <div class="field">
+            <div class="field-label">Display / headlines</div>
+            <select data-type-field="display">${optionList(DISPLAY_FONTS, t.display)}</select>
+          </div>
+          <div class="field">
+            <div class="field-label">Display weight</div>
+            <select data-type-field="weightDisplay">
+              ${[500, 600, 700, 800].map((w) => `<option value="${w}" ${Number(t.weightDisplay) === w ? "selected" : ""}>${w}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Headline tracking</div>
+            <div class="slider-row">
+              <input type="range" min="-0.06" max="0.04" step="0.005" data-type-field="trackDisplay" value="${t.trackDisplay}" />
+              <input type="number" step="0.005" data-type-field="trackDisplay" value="${t.trackDisplay}" />
+            </div>
+          </div>
+          <div class="type-specimen-mini" style="font-family:${esc(fontStack(t.ui))}; font-weight:${t.weightUi}">
+            ${esc(t.ui)} — Body copy and controls stay readable at small sizes.
+          </div>
+          <div class="field">
+            <div class="field-label">UI / body</div>
+            <select data-type-field="ui">${optionList(UI_FONTS, t.ui)}</select>
+          </div>
+          <div class="field">
+            <div class="field-label">Body weight</div>
+            <select data-type-field="weightUi">
+              ${[400, 500, 600].map((w) => `<option value="${w}" ${Number(t.weightUi) === w ? "selected" : ""}>${w}</option>`).join("")}
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Mono</div>
+            <select data-type-field="mono">${optionList(MONO_FONTS, t.mono)}</select>
+          </div>
+          <div class="field">
+            <div class="field-label">Size scale</div>
+            <select data-type-field="scale">
+              ${Object.entries(TYPE_SCALES)
+                .map(([k, v]) => `<option value="${k}" ${t.scale === k ? "selected" : ""}>${esc(v.name)}</option>`)
+                .join("")}
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Base size (body) <span>${t.baseSize}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="14" max="20" step="1" data-type-field="baseSize" value="${t.baseSize}" />
+              <input type="number" min="14" max="20" data-type-field="baseSize" value="${t.baseSize}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Body line height <span>${t.leading}</span></div>
+            <div class="slider-row">
+              <input type="range" min="1.25" max="1.8" step="0.05" data-type-field="leading" value="${t.leading}" />
+              <input type="number" min="1.25" max="1.8" step="0.05" data-type-field="leading" value="${t.leading}" />
+            </div>
+          </div>
+        `;
+      }
+
+      function renderSpaceInspector() {
+        const s = state.space;
+        els.inspector.innerHTML = `
+          <p class="hint">Snap padding and gaps to a small set of values so spacing looks even.</p>
+          <div class="field">
+            <div class="field-label">Spacing grid</div>
+            <select data-space-field="unit">
+              <option value="8" ${Number(s.unit) === 8 ? "selected" : ""}>8px (recommended)</option>
+              <option value="4" ${Number(s.unit) === 4 ? "selected" : ""}>4px (compact UI)</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Small radius (buttons, inputs) <span>${s.radiusSm}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="0" max="16" data-space-field="radiusSm" value="${s.radiusSm}" />
+              <input type="number" min="0" max="16" data-space-field="radiusSm" value="${s.radiusSm}" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Large radius (cards) <span>${s.radiusLg}px</span></div>
+            <div class="slider-row">
+              <input type="range" min="0" max="28" data-space-field="radiusLg" value="${s.radiusLg}" />
+              <input type="number" min="0" max="28" data-space-field="radiusLg" value="${s.radiusLg}" />
+            </div>
+          </div>
+          <p class="hint">0 feels formal. 6–8 is neutral. 16+ feels playful. Don’t mix a lot of different radii.</p>
+        `;
+      }
+
+      function renderExportInspector() {
+        els.inspector.innerHTML = `
+          <p class="hint">Paste the CSS variables at the top of your stylesheet. JSON matches the book-style <code>name-050</code> keys if you want to round-trip a file.</p>
+          <div class="field">
+            <div class="field-label">Format</div>
+            <select id="exportFormat">
+              <option value="css">CSS variables</option>
+              <option value="json">JSON</option>
+            </select>
+          </div>
+          <textarea class="export-box" id="exportBox" readonly></textarea>
+          <div style="display:flex; gap:0.4rem; margin-top:0.6rem">
+            <button type="button" class="btn primary" id="copyExport">Copy</button>
+            <button type="button" class="btn" id="downloadExport">Download</button>
+          </div>
+        `;
+        const box = document.getElementById("exportBox");
+        box.value = cssText();
+      }
+
+      function renderStage() {
+        ensureFont(state.type.display, DISPLAY_FONTS);
+        ensureFont(state.type.ui, UI_FONTS);
+        ensureFont(state.type.mono, MONO_FONTS);
+        const tokens = tokenMap();
+        const stage = state.stage;
+        if (stage === "palette") renderPaletteBoard(tokens);
+        else if (stage === "type") renderTypeStage(tokens);
+        else if (stage === "components") renderComponentStage(tokens);
+        else renderAppStage(tokens);
+      }
+
+      function renderPaletteBoard(tokens) {
+        els.stageBody.innerHTML = `<div class="palette-board">${Object.entries(tokens.scales)
+          .map(([id, shades]) => {
+            const def = state.scales[id];
+            return `
+              <section class="palette-scale">
+                <h3>${esc(def.name)} · ${hueName(def.hue)}</h3>
+                <p>${esc(SCALE_ROLES[id] || "")}</p>
+                <div class="swatch-row">
+                  ${shades
+                    .map(
+                      (s) => `
+                    <button type="button" class="swatch" data-scale="${id}" data-step="${s.step}" aria-pressed="${state.selectedScale === id && state.selectedShade === s.step}">
+                      <span class="chip" style="background:${s.hex}"></span>
+                      <span class="meta"><b>${s.step}</b>${s.hex}<br>hsl(${s.h}, ${s.s}%, ${s.l}%)</span>
+                    </button>`,
+                    )
+                    .join("")}
+                </div>
+              </section>`;
+          })
+          .join("")}</div>`;
+      }
+
+      function renderAppStage(tokens) {
+        els.stageBody.innerHTML = `
+          <div class="preview-frame">
+            <div class="preview-root" id="previewRoot">
+              <header class="preview-topbar">
+                <nav class="preview-nav">
+                  <a href="#" class="is-current" onclick="return false">Home</a>
+                  <a href="#" onclick="return false">Billing</a>
+                  <a href="#" onclick="return false">Docs</a>
+                </nav>
+                <span>Northwind</span>
+              </header>
+              <div class="preview-body">
+                <p class="kicker">Release</p>
+                <h1 class="preview-title">Supersuit v0 is in beta.</h1>
+                <p class="preview-lead">A live check that your palette, type, and spacing work on a real screen — not just a row of swatches.</p>
+                <div class="stats">
+                  <div class="stat"><div class="label">Signups</div><div class="value">1,284</div></div>
+                  <div class="stat"><div class="label">Activation</div><div class="value">62%</div></div>
+                  <div class="stat"><div class="label">Churn</div><div class="value">2.1%</div></div>
+                </div>
+                <article class="card">
+                  <h3>Join the waitlist</h3>
+                  <p>We’ll email you when levitation and accelerated movement ship. One primary action per card.</p>
+                  <div class="form-grid">
+                    <label>Work email<input type="text" value="ada@example.com" readonly /></label>
+                    <label>Plan
+                      <select><option>Studio</option><option>Team</option></select>
+                    </label>
+                  </div>
+                  <div class="actions" style="margin-top:0.85rem">
+                    <button type="button" class="cta">Join the waitlist</button>
+                    <button type="button" class="ghost">Not now</button>
+                  </div>
+                </article>
+                <div class="alerts">
+                  <div class="alert info">Primary 100 background, 800 text — a tinted alert.</div>
+                  <div class="alert ok">Success scale used sparingly for confirmation.</div>
+                  <div class="alert warn">Warning scale for something that needs attention.</div>
+                  <div class="alert bad">Danger scale for a destructive or failed state.</div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        applyPreviewVars(document.getElementById("previewRoot"), tokens);
+      }
+
+      function renderTypeStage(tokens) {
+        const samples = [
+          ["5xl", "Display"],
+          ["4xl", "Page title"],
+          ["3xl", "Section title"],
+          ["2xl", "Card title"],
+          ["xl", "Subtitle"],
+          ["lg", "Lead paragraph"],
+          ["base", "Body / UI"],
+          ["sm", "Labels & meta"],
+          ["xs", "Caption / overline"],
+        ];
+        els.stageBody.innerHTML = `
+          <div class="type-page" id="previewRoot">
+            <p class="pair">${esc(state.type.display)} + ${esc(state.type.ui)} · ${TYPE_SCALES[state.type.scale].name} · base ${state.type.baseSize}px</p>
+            ${samples
+              .map(([k, label], i) => {
+                const cls = i < 5 ? "sample-display" : "sample-ui";
+                const text =
+                  i < 5
+                    ? "The quick bronze fox"
+                    : "Almost everything in an interface is type. Keep the list of sizes short so you are not inventing 17px.";
+                return `<div class="type-row"><div class="sz">${k}<br>${tokens.ts[k]}px<br>${label}</div><div class="${cls}" style="font-size:var(--text-${k})">${text}</div></div>`;
+              })
+              .join("")}
+          </div>`;
+        applyPreviewVars(document.getElementById("previewRoot"), tokens);
+      }
+
+      function renderComponentStage(tokens) {
+        els.stageBody.innerHTML = `
+          <div class="components" id="previewRoot">
+            <div class="comp-block">
+              <h3>Buttons</h3>
+              <div class="actions">
+                <button type="button" class="cta">Primary</button>
+                <button type="button" class="ghost">Secondary</button>
+                <button type="button" class="danger">Delete</button>
+              </div>
+            </div>
+            <div class="comp-block">
+              <h3>Form</h3>
+              <div class="form-grid">
+                <label>Project name<input type="text" value="Northwind" readonly /></label>
+                <label>Environment<select><option>Production</option></select></label>
+              </div>
+            </div>
+            <div class="comp-block">
+              <h3>Alerts</h3>
+              <div class="alerts">
+                <div class="alert info">Info using primary 100 / 800</div>
+                <div class="alert ok">Success using the green scale</div>
+                <div class="alert warn">Warning using the yellow scale</div>
+                <div class="alert bad">Error using the red scale</div>
+              </div>
+            </div>
+            <div class="comp-block">
+              <h3>Accent vs primary</h3>
+              <p style="margin:0; color:var(--preview-muted)">Primary should dominate. Accent (${esc(state.scales.accent.name)}) is for rare emphasis.</p>
+              <p style="margin:0.7rem 0 0; font-weight:700; color:${tokens.preview.accent}">New · using accent 500</p>
+            </div>
+          </div>`;
+        applyPreviewVars(document.getElementById("previewRoot"), tokens);
+      }
+
+      function syncLinkNeutrals() {
+        if (!state.linkNeutrals) return;
+        state.scales.neutral.hue = state.scales.primary.hue;
+      }
+
+      function setScaleField(field, value) {
+        const def = currentScale();
+        const numeric = ["hue", "sat500", "light500", "light50", "light900", "hueRotate", "satBoost", "satDip"];
+        if (numeric.includes(field)) {
+          def[field] = Number(value);
+          def.overrides = {};
+          if (field === "hue" && state.selectedScale === "primary") syncLinkNeutrals();
+        } else {
+          def[field] = value;
+        }
+      }
+
+      function setShadeField(field, value) {
+        const def = currentScale();
+        const shades = generateScale(def);
+        const current = shades.find((s) => s.step === state.selectedShade) || shades[5];
+        const next = { h: current.h, s: current.s, l: current.l, [field]: Number(value) };
+        def.overrides = { ...def.overrides, [state.selectedShade]: next };
+      }
+
+      function syncPairedInputs(source) {
+        const row = source.closest(".slider-row");
+        if (!row) return;
+        row.querySelectorAll("input").forEach((inp) => {
+          if (inp !== source) inp.value = source.value;
+        });
+      }
+
+      function syncColorInspectorChrome() {
+        if (state.inspectorTab !== "color") return;
+        const def = currentScale();
+        const shades = generateScale(def);
+        const base = shades.find((s) => s.step === 500);
+        els.inspector.querySelectorAll("[data-select-scale]").forEach((btn) => {
+          const key = btn.dataset.selectScale;
+          const name = btn.querySelector(".row-name");
+          if (name) {
+            name.innerHTML = `${esc(state.scales[key].name)} <em>${hueName(state.scales[key].hue)}</em>`;
+          }
+          const ramp = btn.querySelector(".mini-ramp");
+          if (ramp) ramp.outerHTML = miniRamp(key);
+        });
+        const labels = {
+          hue: `${Math.round(def.hue)}° · ${hueName(def.hue)}`,
+          sat500: `${Math.round(def.sat500)}%`,
+          light500: `${Math.round(def.light500)}%`,
+          light50: `${Math.round(def.light50)}%`,
+          light900: `${Math.round(def.light900)}%`,
+          hueRotate: `${def.hueRotate}°`,
+          satBoost: `${def.satBoost}`,
+          satDip: `${def.satDip}`,
+        };
+        els.inspector.querySelectorAll("[data-scale-field]").forEach((inp) => {
+          if (document.activeElement === inp) return;
+          if (inp.dataset.scaleField === "name") return;
+          inp.value = def[inp.dataset.scaleField];
+        });
+        els.inspector.querySelectorAll(".field").forEach((field) => {
+          const inp = field.querySelector("[data-scale-field]");
+          const span = field.querySelector(".field-label span");
+          if (inp && span && labels[inp.dataset.scaleField] != null) span.textContent = labels[inp.dataset.scaleField];
+        });
+        const sat = els.inspector.querySelector('[data-scale-field="sat500"][type="range"]');
+        const light = els.inspector.querySelector('[data-scale-field="light500"][type="range"]');
+        if (sat) sat.style.background = satBg(def);
+        if (light) light.style.background = lightBg(def);
+        const color = document.getElementById("baseColor");
+        const hex = document.getElementById("baseHex");
+        if (color && document.activeElement !== color) color.value = base.hex.toLowerCase();
+        if (hex && document.activeElement !== hex) hex.value = base.hex;
+        const badge = els.inspector.querySelector(".contrast");
+        if (badge) {
+          const ratio = contrastRatio(base.hex, "#FFFFFF");
+          const pass = ratio >= 4.5;
+          badge.className = `contrast ${pass ? "pass" : "fail"}`;
+          badge.textContent = `White ${ratio.toFixed(1)}:1 ${pass ? "AA" : "fail"}`;
+        }
+        els.inspector.querySelectorAll("[data-pick-shade]").forEach((btn) => {
+          const step = Number(btn.dataset.pickShade);
+          const s = shades.find((x) => x.step === step);
+          const dot = btn.querySelector(".dot");
+          if (dot && s) dot.style.background = s.hex;
+        });
+        if (!def.overrides[state.selectedShade]) {
+          const editing = shades.find((s) => s.step === state.selectedShade);
+          if (editing) {
+            els.inspector.querySelectorAll("[data-shade-field]").forEach((inp) => {
+              if (document.activeElement === inp) return;
+              inp.value = editing[inp.dataset.shadeField];
+            });
+          }
+        }
+      }
+
+      function livePaint() {
+        syncColorInspectorChrome();
+        if (state.inspectorTab === "export") {
+          const box = document.getElementById("exportBox");
+          const format = document.getElementById("exportFormat")?.value || "css";
+          if (box) box.value = format === "json" ? jsonText() : cssText();
+        }
+        renderStage();
         saveState();
       }
 
-      function showStep(n) {
-        step = n;
-        document.querySelectorAll(".wizard-step").forEach((el) => {
-          el.dataset.active = el.dataset.step === String(n) ? "true" : "false";
-        });
-        const titles = [
-          "Welcome",
-          "Step 1 of 5 — Feel",
-          "Step 2 of 5 — Main color",
-          "Step 3 of 5 — Text (optional)",
-          "Step 4 of 5 — Spacing (optional)",
-          "Step 5 of 5 — Download",
-        ];
-        els.progress.textContent = titles[n] || "";
-        els.backBtn.disabled = n === 0;
-        if (n === 0) els.nextBtn.textContent = "Start";
-        else if (n === STEPS) els.nextBtn.textContent = "Download CSS";
-        else els.nextBtn.textContent = "Continue";
+      function fullColorRefresh() {
+        renderInspector();
+        livePaint();
       }
 
-      els.brandColor.addEventListener("input", () => {
-        importedPalette = null;
-        state.brandColor = els.brandColor.value;
-        const { h } = hexToHsl(state.brandColor);
-        state.hueBrand = h;
-        state.hueNeutral = (h + 7) % 360;
-        render();
-      });
-
-      els.paletteFile.addEventListener("change", async () => {
-        const file = els.paletteFile.files?.[0];
-        if (!file) return;
-        try {
-          const text = await file.text();
-          importedPalette = parseRuiPalette(text);
-          els.status.textContent = `Got it — using colors from ${file.name}. Check the preview on the right.`;
-          render();
-        } catch {
-          importedPalette = null;
-          els.status.textContent = "Couldn’t read that file. Try one named palette-01.json from your book folder.";
-        }
-      });
-
-      ["baseSize", "scaleRatio", "spaceUnit"].forEach((id) => {
-        document.getElementById(id).addEventListener("change", () => {
-          state.baseSize = Number(els.baseSize.value) || 16;
-          state.scaleRatio = Number(els.scaleRatio.value) || 1.2;
-          state.spaceUnit = Number(els.spaceUnit.value) || 8;
-          render();
-        });
-      });
-
-      els.backBtn.addEventListener("click", () => showStep(Math.max(0, step - 1)));
-
-      els.nextBtn.addEventListener("click", async () => {
-        if (step === STEPS) {
-          const blob = new Blob([cssText()], { type: "text/css" });
-          const a = document.createElement("a");
-          a.href = URL.createObjectURL(blob);
-          a.download = "tokens.css";
-          a.click();
-          URL.revokeObjectURL(a.href);
-          try {
-            await navigator.clipboard.writeText(cssText());
-            els.status.textContent = "Saved tokens.css and copied the same text to your clipboard.";
-          } catch {
-            els.status.textContent = "Saved tokens.css to your Downloads folder.";
-          }
+      els.inspector.addEventListener("input", (e) => {
+        const t = e.target;
+        if (t.dataset.scaleField) {
+          setScaleField(t.dataset.scaleField, t.value);
+          syncPairedInputs(t);
+          if (t.dataset.scaleField === "name") return saveState();
+          livePaint();
           return;
         }
-        if (step === 0) applyPersonality(state.personality);
-        showStep(Math.min(STEPS, step + 1));
+        if (t.dataset.shadeField) {
+          setShadeField(t.dataset.shadeField, t.value);
+          syncPairedInputs(t);
+          livePaint();
+          return;
+        }
+        if (t.dataset.typeField) {
+          const key = t.dataset.typeField;
+          state.type[key] = key === "display" || key === "ui" || key === "mono" || key === "scale" ? t.value : Number(t.value);
+          syncPairedInputs(t);
+          livePaint();
+          return;
+        }
+        if (t.dataset.spaceField) {
+          state.space[t.dataset.spaceField] = Number(t.value);
+          syncPairedInputs(t);
+          livePaint();
+        }
       });
 
-      renderPersonalityButtons();
-      applyPersonality(state.personality || "warm");
-      showStep(0);
+      els.inspector.addEventListener("change", (e) => {
+        const t = e.target;
+        if (t.id === "linkNeutrals") {
+          state.linkNeutrals = t.checked;
+          syncLinkNeutrals();
+          fullColorRefresh();
+          return;
+        }
+        if (t.id === "baseColor" || t.id === "baseHex") {
+          const hsl = hexToHsl(t.value);
+          if (!hsl) {
+            els.status.textContent = "Need a 6-digit hex like #2B6CB0.";
+            return;
+          }
+          const def = currentScale();
+          def.hue = hsl.h;
+          def.sat500 = hsl.s;
+          def.light500 = clamp(hsl.l, 8, 80);
+          def.overrides = {};
+          if (state.selectedScale === "primary") syncLinkNeutrals();
+          fullColorRefresh();
+          return;
+        }
+        if (t.id === "exportFormat") {
+          livePaint();
+          return;
+        }
+        if (t.dataset.scaleField || t.dataset.shadeField) {
+          fullColorRefresh();
+          return;
+        }
+        if (t.dataset.typeField || t.dataset.spaceField) {
+          if (t.dataset.typeField) {
+            const key = t.dataset.typeField;
+            state.type[key] = ["display", "ui", "mono", "scale"].includes(key) ? t.value : Number(t.value);
+          }
+          fullColorRefresh();
+        }
+      });
+
+      els.inspector.addEventListener("toggle", (e) => {
+        if (e.target.classList.contains("advanced")) {
+          state.advancedOpen = e.target.open;
+          saveState();
+        }
+      }, true);
+
+      els.inspector.addEventListener("click", (e) => {
+        const scaleBtn = e.target.closest("[data-select-scale]");
+        if (scaleBtn) {
+          state.selectedScale = scaleBtn.dataset.selectScale;
+          state.selectedShade = 500;
+          fullColorRefresh();
+          return;
+        }
+        const shadeBtn = e.target.closest("[data-pick-shade]");
+        if (shadeBtn) {
+          state.selectedShade = Number(shadeBtn.dataset.pickShade);
+          fullColorRefresh();
+          document.getElementById("shadeEditor")?.scrollIntoView({ block: "nearest" });
+          return;
+        }
+        if (e.target.id === "resetRamp") {
+          currentScale().overrides = {};
+          fullColorRefresh();
+          return;
+        }
+        if (e.target.id === "copyExport") {
+          const box = document.getElementById("exportBox");
+          navigator.clipboard.writeText(box.value).then(
+            () => {
+              els.status.textContent = "Copied.";
+            },
+            () => {
+              els.status.textContent = "Could not copy — select the text and copy it yourself.";
+            },
+          );
+          return;
+        }
+        if (e.target.id === "downloadExport") {
+          const format = document.getElementById("exportFormat")?.value || "css";
+          download(format === "json" ? jsonText() : cssText(), format === "json" ? "palette.json" : "tokens.css", format === "json" ? "application/json" : "text/css");
+        }
+      });
+
+      document.getElementById("inspectorTabs").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-tab]");
+        if (!btn) return;
+        state.inspectorTab = btn.dataset.tab;
+        document.querySelectorAll("#inspectorTabs button").forEach((b) => b.setAttribute("aria-selected", b === btn ? "true" : "false"));
+        renderInspector();
+        livePaint();
+      });
+
+      document.getElementById("stageTabs").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-stage]");
+        if (!btn) return;
+        state.stage = btn.dataset.stage;
+        document.querySelectorAll("#stageTabs button").forEach((b) => b.setAttribute("aria-selected", b === btn ? "true" : "false"));
+        renderStage();
+        saveState();
+      });
+
+      els.stageBody.addEventListener("click", (e) => {
+        const swatch = e.target.closest(".swatch");
+        if (!swatch) return;
+        state.selectedScale = swatch.dataset.scale;
+        state.selectedShade = Number(swatch.dataset.step);
+        state.inspectorTab = "color";
+        document.querySelectorAll("#inspectorTabs button").forEach((b) => b.setAttribute("aria-selected", b.dataset.tab === "color" ? "true" : "false"));
+        fullColorRefresh();
+        document.getElementById("shadeEditor")?.scrollIntoView({ block: "nearest" });
+      });
+
+      els.darkPreview.addEventListener("change", () => {
+        state.darkPreview = els.darkPreview.checked;
+        renderStage();
+        saveState();
+      });
+
+      function parseRuiJson(text) {
+        const stripped = text
+          .replace(/^\s*\/\/.*$/gm, "")
+          .replace(/,\s*([}\]])/g, "$1");
+        return JSON.parse(stripped);
+      }
+
+      function importPalette(obj) {
+        const groups = {};
+        for (const [key, hex] of Object.entries(obj)) {
+          const m = String(key).match(/^(.+)-(\d{3}|\d{2})$/);
+          if (!m) continue;
+          const step = Number(m[2] === "050" ? 50 : m[2]);
+          if (!STEPS.includes(step)) continue;
+          const hsl = hexToHsl(String(hex));
+          if (!hsl) continue;
+          groups[m[1]] ||= {};
+          groups[m[1]][step] = { hex: String(hex).toUpperCase(), ...hsl };
+        }
+        const names = Object.keys(groups);
+        if (!names.length) throw new Error("no scales");
+        const isGrey = (n) => /grey|gray|neutral/i.test(n);
+        const isRed = (n) => /red|danger|error/i.test(n);
+        const isYellow = (n) => /yellow|orange|warning|amber/i.test(n);
+        const isGreen = (n) => /green|teal|success|lime/i.test(n);
+        const grey = names.find(isGrey);
+        const red = names.find(isRed);
+        const yellow = names.find(isYellow);
+        const green = names.find(isGreen);
+        const primary = names.find((n) => n !== grey && n !== red && n !== yellow && n !== green) || names[0];
+        const accent = names.find((n) => ![grey, red, yellow, green, primary].includes(n));
+        const mapping = {
+          primary,
+          neutral: grey || primary,
+          accent: accent || primary,
+          danger: red || primary,
+          success: green || primary,
+          warning: yellow || primary,
+        };
+        for (const [role, src] of Object.entries(mapping)) {
+          if (!src || !groups[src]) continue;
+          const g = groups[src];
+          const mid = g[500] || g[400] || Object.values(g)[0];
+          const light = g[50] || g[100];
+          const dark = g[900] || g[800];
+          const overrides = {};
+          for (const step of STEPS) {
+            if (g[step]) overrides[step] = { h: g[step].h, s: g[step].s, l: g[step].l };
+          }
+          state.scales[role] = makeScale({
+            name: src.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+            hue: mid.h,
+            sat500: mid.s,
+            light500: clamp(mid.l, 8, 80),
+            light50: light ? light.l : 96,
+            light900: dark ? dark.l : 16,
+            overrides,
+          });
+        }
+        state.linkNeutrals = false;
+        state.stage = "palette";
+        document.querySelectorAll("#stageTabs button").forEach((b) => b.setAttribute("aria-selected", b.dataset.stage === "palette" ? "true" : "false"));
+      }
+
+      els.importFile.addEventListener("change", async () => {
+        const file = els.importFile.files?.[0];
+        if (!file) return;
+        try {
+          importPalette(parseRuiJson(await file.text()));
+          els.status.textContent = `Loaded ${file.name}. Shades are exact; moving a hue slider rebuilds that ramp.`;
+          fullColorRefresh();
+        } catch {
+          els.status.textContent = "Could not read that file. Use a palette-XX.json from the Color Palettes JSON folder.";
+        }
+        els.importFile.value = "";
+      });
+
+      function download(text, name, type) {
+        const blob = new Blob([text], { type });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = name;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        els.status.textContent = `Saved ${name}.`;
+      }
+
+      document.getElementById("downloadCss").addEventListener("click", () => {
+        download(cssText(), "tokens.css", "text/css");
+      });
+
+      function initTabs() {
+        document.querySelectorAll("#inspectorTabs button").forEach((b) => {
+          b.setAttribute("aria-selected", b.dataset.tab === state.inspectorTab ? "true" : "false");
+        });
+        document.querySelectorAll("#stageTabs button").forEach((b) => {
+          b.setAttribute("aria-selected", b.dataset.stage === state.stage ? "true" : "false");
+        });
+        els.darkPreview.checked = state.darkPreview;
+      }
+
+      ensureFont("Inter", UI_FONTS);
+      initTabs();
+      renderInspector();
+      renderStage();
     </script>
   </body>
 </html>
