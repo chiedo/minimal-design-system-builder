@@ -2,6 +2,8 @@
 
 One HTML file. Open it in a browser. No install.
 
+![Minimal Design System Builder, with a palette editor and a live app preview](screenshot.png)
+
 Live page: https://chiedo.github.io/minimal-design-system-builder/
 
 A builder for a **color palette**, **type roles** (h1–h6, body, UI, caption, mono), **button sizes**, and the rest of a small UI system, with a live app preview. Inspired by the workflow in *Refactoring UI* — not a copy of the book files.
