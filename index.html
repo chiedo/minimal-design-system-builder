@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Design System Studio — palette, type, preview</title>
+    <title>Minimal Design System Builder — palette, type, preview</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <style>
@@ -67,6 +67,7 @@
       .brand strong {
         font-size: 0.95rem;
         letter-spacing: -0.02em;
+        white-space: nowrap;
       }
 
       .brand span {
@@ -110,6 +111,7 @@
       }
 
       .top-actions button,
+      .top-actions a,
       .btn {
         border: 1px solid var(--ui-line);
         background: var(--ui-panel);
@@ -118,6 +120,13 @@
         cursor: pointer;
         font-weight: 600;
         font-size: 0.8rem;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .top-actions a {
+        display: inline-flex;
+        align-items: center;
       }
 
       .btn.primary,
@@ -1155,6 +1164,10 @@
         .swatch .chip {
           height: 2.6rem;
         }
+
+        .brand strong {
+          white-space: normal;
+        }
       }
     </style>
   </head>
@@ -1162,7 +1175,7 @@
     <div class="app">
       <header class="topbar">
         <div class="brand">
-          <strong>Design System Studio</strong>
+          <strong>Minimal Design System Builder</strong>
           <span>Palette, type roles, buttons, and a live UI</span>
         </div>
         <nav class="topbar-tabs" id="inspectorTabs">
@@ -1177,6 +1190,7 @@
             Import JSON
             <input id="importFile" type="file" accept=".json,application/json" hidden />
           </label>
+          <a href="https://github.com/chiedo/minimal-design-system-builder" target="_blank" rel="noopener noreferrer">Open in GitHub</a>
           <button type="button" class="primary" id="downloadCss">Download CSS</button>
         </div>
       </header>

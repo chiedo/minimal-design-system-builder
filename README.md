@@ -1,8 +1,8 @@
-# Design System Studio
+# Minimal Design System Builder
 
 One HTML file. Open it in a browser. No install.
 
-A studio for building a **color palette**, **type roles** (h1–h6, body, UI, caption, mono), **button sizes**, and the rest of a small UI system, with a live app preview. Inspired by the workflow in *Refactoring UI* — not a copy of the book files.
+A builder for a **color palette**, **type roles** (h1–h6, body, UI, caption, mono), **button sizes**, and the rest of a small UI system, with a live app preview. Inspired by the workflow in *Refactoring UI* — not a copy of the book files.
 
 ## Open it
 
