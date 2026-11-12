@@ -1,0 +1,25 @@
+{
+  "name": "Minimal Design System Builder",
+  "short_name": "Design tokens",
+  "description": "Design a color palette, type roles, button sizes, and spacing in the browser, then download CSS tokens.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#eceff3",
+  "theme_color": "#243b53",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
