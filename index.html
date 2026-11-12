@@ -3,9 +3,208 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Design System Studio — palette, type, preview</title>
+    <title>Minimal Design System Builder — free CSS design tokens</title>
+    <meta
+      name="description"
+      content="Design a color palette, type roles, button sizes, and spacing in the browser, preview the UI, and download CSS tokens. Free, one HTML file, no install."
+    />
+    <meta name="author" content="chiedo" />
+    <meta name="application-name" content="Minimal Design System Builder" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="theme-color" content="#243b53" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href="https://chiedo.github.io/minimal-design-system-builder/" />
+    <link rel="author" href="https://github.com/chiedo" />
+    <link rel="me" href="https://github.com/chiedo" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="alternate" type="text/plain" href="llms.txt" title="Plain-text summary for answer engines" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Minimal Design System Builder" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Minimal Design System Builder — free CSS design tokens" />
+    <meta
+      property="og:description"
+      content="Design a color palette, type roles, button sizes, and spacing in the browser, preview the UI, and download CSS tokens. Free, one HTML file, no install."
+    />
+    <meta property="og:url" content="https://chiedo.github.io/minimal-design-system-builder/" />
+    <meta property="og:image" content="https://chiedo.github.io/minimal-design-system-builder/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Minimal Design System Builder, a free browser tool for palette, type, and CSS tokens" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Minimal Design System Builder — free CSS design tokens" />
+    <meta
+      name="twitter:description"
+      content="Design a color palette, type roles, button sizes, and spacing in the browser, preview the UI, and download CSS tokens. Free, one HTML file, no install."
+    />
+    <meta name="twitter:image" content="https://chiedo.github.io/minimal-design-system-builder/og.png" />
+    <meta name="twitter:image:alt" content="Minimal Design System Builder, a free browser tool for palette, type, and CSS tokens" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://chiedo.github.io/minimal-design-system-builder/#website",
+            "name": "Minimal Design System Builder",
+            "url": "https://chiedo.github.io/minimal-design-system-builder/",
+            "description": "Design a color palette, type roles, button sizes, and spacing in the browser, preview the UI, and download CSS tokens. Free, one HTML file, no install.",
+            "inLanguage": "en",
+            "publisher": {
+              "@type": "Person",
+              "name": "chiedo",
+              "url": "https://github.com/chiedo"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://chiedo.github.io/minimal-design-system-builder/#webpage",
+            "url": "https://chiedo.github.io/minimal-design-system-builder/",
+            "name": "Minimal Design System Builder — free CSS design tokens",
+            "description": "Design a color palette, type roles, button sizes, and spacing in the browser, preview the UI, and download CSS tokens. Free, one HTML file, no install.",
+            "isPartOf": { "@id": "https://chiedo.github.io/minimal-design-system-builder/#website" },
+            "about": { "@id": "https://chiedo.github.io/minimal-design-system-builder/#app" },
+            "inLanguage": "en",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://chiedo.github.io/minimal-design-system-builder/og.png",
+              "width": 1200,
+              "height": 630
+            },
+            "speakable": {
+              "@type": "SpeakableSpecification",
+              "cssSelector": ["#about-lead", "#about h2", "#about h3", "#faq p"]
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://chiedo.github.io/minimal-design-system-builder/#app",
+            "name": "Minimal Design System Builder",
+            "url": "https://chiedo.github.io/minimal-design-system-builder/",
+            "description": "A free, single-file browser tool for designing a color palette, type roles, button sizes, and spacing, then downloading them as CSS custom properties.",
+            "applicationCategory": "DesignApplication",
+            "applicationSubCategory": "Design system builder",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript. Works in Chrome, Edge, and Firefox.",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "codeRepository": "https://github.com/chiedo/minimal-design-system-builder",
+            "sameAs": ["https://github.com/chiedo/minimal-design-system-builder"],
+            "screenshot": "https://chiedo.github.io/minimal-design-system-builder/og.png",
+            "featureList": [
+              "Six-scale color palette with per-shade HSL overrides",
+              "Type roles for H1 through H6, body, UI, caption, and mono",
+              "Small, medium, and large button sizes",
+              "Spacing, radius, shadow, border, focus, icon, and opacity tokens",
+              "Live app preview with a dark theme",
+              "CSS custom property and JSON export"
+            ],
+            "author": {
+              "@type": "Person",
+              "name": "chiedo",
+              "url": "https://github.com/chiedo"
+            },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://chiedo.github.io/minimal-design-system-builder/#faq",
+            "url": "https://chiedo.github.io/minimal-design-system-builder/#about",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is Minimal Design System Builder?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Minimal Design System Builder is a free design tool that runs as one HTML file in the browser. You set a color palette, type roles, button sizes, and spacing, check them on a live preview, and download CSS custom properties. Nothing is installed and nothing is uploaded."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Minimal Design System Builder need an install or an account?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Open the page in Chrome, Edge, or Firefox. There is no account. Edits stay in this browser's local storage, and an imported palette file stays on your computer."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What can I design with it?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A six-scale color palette, type roles for H1 through H6 plus body, UI, caption, and mono, three button sizes, and spacing, radius, shadow, border, focus, icon, and opacity tokens."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I export CSS tokens?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Adjust the tokens, then choose Download CSS or open Export and copy CSS or JSON. Paste tokens.css at the top of your stylesheet and use the custom properties, including a dark theme under [data-theme=dark]."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I import an existing color palette?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Import JSON reads a palette file in the browser, including palette-XX.json from the Refactoring UI Color Palettes ZIP. The file is not uploaded."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Minimal Design System Builder free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The builder and the source code are free to use. The source is on GitHub."
+                }
+              }
+            ]
+          },
+          {
+            "@type": "HowTo",
+            "name": "How to export CSS design tokens",
+            "description": "Build a small design system in the browser and download it as CSS custom properties.",
+            "step": [
+              {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Open the builder",
+                "text": "Open Minimal Design System Builder in Chrome, Edge, or Firefox. There is no install."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Edit the tokens",
+                "text": "Set the palette, type roles, button sizes, and spacing. The preview updates as you edit."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Download or copy",
+                "text": "Choose Download CSS, or open Export and copy CSS or JSON."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Paste the CSS",
+                "text": "Paste tokens.css at the top of your stylesheet and use the custom properties."
+              }
+            ]
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         --ui-bg: #eceff3;
@@ -24,7 +223,7 @@
       html,
       body {
         margin: 0;
-        height: 100%;
+        min-height: 100%;
       }
 
       body {
@@ -43,9 +242,36 @@
       }
 
       .app {
-        height: 100%;
+        height: 100vh;
+        height: 100dvh;
         display: grid;
         grid-template-rows: auto 1fr;
+      }
+
+      .skip {
+        position: absolute;
+        left: 0.6rem;
+        top: 0.6rem;
+        transform: translateY(-200%);
+        background: var(--ui-accent);
+        color: #fff;
+        padding: 0.45rem 0.75rem;
+        border-radius: 8px;
+        z-index: 5;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .skip:focus {
+        transform: none;
+      }
+
+      .noscript {
+        margin: 0;
+        padding: 0.7rem 1rem;
+        background: var(--ui-accent);
+        color: #fff;
+        text-align: center;
       }
 
       .topbar {
@@ -64,14 +290,25 @@
         min-width: 12rem;
       }
 
-      .brand strong {
+      .brand h1 {
+        margin: 0;
         font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.25;
         letter-spacing: -0.02em;
+        white-space: nowrap;
       }
 
-      .brand span {
+      .brand p {
+        margin: 0;
         color: var(--ui-muted);
         font-size: 0.75rem;
+        max-width: 22rem;
+      }
+
+      .brand a {
+        color: var(--ui-ink);
+        font-weight: 600;
       }
 
       .topbar-tabs,
@@ -110,6 +347,7 @@
       }
 
       .top-actions button,
+      .top-actions a,
       .btn {
         border: 1px solid var(--ui-line);
         background: var(--ui-panel);
@@ -118,6 +356,13 @@
         cursor: pointer;
         font-weight: 600;
         font-size: 0.8rem;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .top-actions a {
+        display: inline-flex;
+        align-items: center;
       }
 
       .btn.primary,
@@ -843,7 +1088,9 @@
       .preview-root .t-mono, .preview-root code, #previewRoot .t-mono, #previewRoot code { font-family: var(--font-mono); font-size: var(--size-mono); font-weight: var(--weight-mono); line-height: var(--leading-mono); letter-spacing: var(--track-mono); color: var(--ink-mono); }
 
       .preview-root h1, .preview-root h2, .preview-root h3, .preview-root h4, .preview-root h5, .preview-root h6,
-      #previewRoot h1, #previewRoot h2, #previewRoot h3, #previewRoot h4, #previewRoot h5, #previewRoot h6 {
+      .preview-root .t-h1, .preview-root .t-h2, .preview-root .t-h3, .preview-root .t-h4, .preview-root .t-h5, .preview-root .t-h6,
+      #previewRoot h1, #previewRoot h2, #previewRoot h3, #previewRoot h4, #previewRoot h5, #previewRoot h6,
+      #previewRoot .t-h1, #previewRoot .t-h2, #previewRoot .t-h3, #previewRoot .t-h4, #previewRoot .t-h5, #previewRoot .t-h6 {
         margin: 0 0 0.35em;
       }
 
@@ -1135,6 +1382,73 @@
         align-items: baseline;
       }
 
+      .discover {
+        background: var(--ui-panel);
+        border-top: 1px solid var(--ui-line);
+        color: var(--ui-ink);
+        padding: 2.5rem 1.25rem 3rem;
+      }
+
+      .discover-inner {
+        max-width: 46rem;
+        margin: 0 auto;
+      }
+
+      .discover h2 {
+        margin: 1.6rem 0 0.45rem;
+        font-size: 1.2rem;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+
+      .discover h2:first-child {
+        margin-top: 0;
+      }
+
+      .discover h3 {
+        margin: 1.15rem 0 0.3rem;
+        font-size: 0.98rem;
+        line-height: 1.3;
+      }
+
+      .discover p,
+      .discover li {
+        margin: 0.35rem 0;
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+
+      .discover ul,
+      .discover ol {
+        margin: 0.4rem 0 0;
+        padding-left: 1.2rem;
+      }
+
+      .discover li + li {
+        margin-top: 0.45rem;
+      }
+
+      .discover a {
+        color: var(--ui-ink);
+        font-weight: 600;
+      }
+
+      .discover code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.86em;
+      }
+
+      #faq article {
+        padding: 0.85rem 0;
+        border-top: 1px solid var(--ui-line);
+      }
+
+      .discover-links {
+        margin-top: 1.4rem;
+        color: var(--ui-muted);
+        font-size: 0.85rem;
+      }
+
       @media (max-width: 960px) {
         .preview-shell, .two-col {
           grid-template-columns: 1fr;
@@ -1155,17 +1469,29 @@
         .swatch .chip {
           height: 2.6rem;
         }
+
+        .brand h1 {
+          white-space: normal;
+        }
+
+        .discover {
+          padding: 1.5rem 1rem 2.5rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="app">
+    <a class="skip" href="#preview">Skip to preview</a>
+    <noscript>
+      <p class="noscript">JavaScript is off, so the live editor will not run. The guide below still explains what Minimal Design System Builder does and how to export CSS tokens.</p>
+    </noscript>
+    <div class="app" id="builder">
       <header class="topbar">
         <div class="brand">
-          <strong>Design System Studio</strong>
-          <span>Palette, type roles, buttons, and a live UI</span>
+          <h1>Minimal Design System Builder</h1>
+          <p>Palette, type, buttons, and CSS tokens. <a href="#about">How it works</a></p>
         </div>
-        <nav class="topbar-tabs" id="inspectorTabs">
+        <nav class="topbar-tabs" id="inspectorTabs" aria-label="Token controls">
           <button type="button" data-tab="color" aria-selected="true">Palette</button>
           <button type="button" data-tab="type">Type</button>
           <button type="button" data-tab="buttons">Buttons</button>
@@ -1178,14 +1504,15 @@
             <input id="importFile" type="file" accept=".json,application/json" hidden />
           </label>
           <button type="button" class="primary" id="downloadCss">Download CSS</button>
+          <a href="https://github.com/chiedo/minimal-design-system-builder" target="_blank" rel="noopener noreferrer">Open in GitHub</a>
         </div>
       </header>
 
       <div class="workspace">
-        <aside class="inspector" id="inspector"></aside>
-        <main class="stage">
+        <aside class="inspector" id="inspector" aria-label="Token editor"></aside>
+        <main class="stage" id="preview">
           <div class="stage-head">
-            <nav class="stage-tabs" id="stageTabs">
+            <nav class="stage-tabs" id="stageTabs" aria-label="Preview">
               <button type="button" data-stage="app" aria-selected="true">App preview</button>
               <button type="button" data-stage="palette">Color board</button>
               <button type="button" data-stage="type">Type specimen</button>
@@ -1201,6 +1528,62 @@
         </main>
       </div>
     </div>
+
+    <section class="discover" id="about" aria-labelledby="about-heading">
+      <div class="discover-inner">
+        <h2 id="about-heading">What is Minimal Design System Builder?</h2>
+        <p id="about-lead">Minimal Design System Builder is a free design tool that runs as one HTML file in the browser. You set a color palette, type roles, button sizes, and spacing, check them on a live preview, and download CSS custom properties. Nothing is installed and nothing is uploaded.</p>
+
+        <h2>What can you design?</h2>
+        <ul>
+          <li><strong>Color palette.</strong> Primary, neutral, accent, danger, warning, and success. Set hue, saturation, lightness, the light and dark edges, optional hue rotation, and a manual HSL value for any shade.</li>
+          <li><strong>Type roles.</strong> Display, UI, and mono families, plus a role for H1 through H6, body, UI, caption, and mono. Each role has a font, weight, size step, line height, tracking, and ink color.</li>
+          <li><strong>Buttons.</strong> Small, medium, and large. Each size has its own type step, vertical padding, horizontal padding, and icon size. Hierarchy is primary, secondary, tertiary, and danger. Inputs share the selected control height.</li>
+          <li><strong>Space.</strong> A spacing scale, roundness for boxes and the nav header, a separate button radius, five shadow elevations, border widths, a focus ring, icon sizes, opacity, and max-widths.</li>
+          <li><strong>Preview.</strong> An app screen, a color board, a type specimen, and a component sheet. Dark preview exports as a <code>data-theme="dark"</code> block in the CSS.</li>
+        </ul>
+
+        <h2 id="export-steps">How do you export CSS tokens?</h2>
+        <ol>
+          <li>Open Minimal Design System Builder in Chrome, Edge, or Firefox. There is no install.</li>
+          <li>Set the palette, type roles, button sizes, and spacing. The preview updates as you edit.</li>
+          <li>Choose Download CSS, or open Export and copy CSS or JSON.</li>
+          <li>Paste <code>tokens.css</code> at the top of your stylesheet and use the custom properties.</li>
+        </ol>
+
+        <h2>Questions</h2>
+        <div id="faq">
+          <article>
+            <h3>Does Minimal Design System Builder need an install or an account?</h3>
+            <p>No. Open the page in Chrome, Edge, or Firefox. There is no account. Edits stay in this browser's local storage, and an imported palette file stays on your computer.</p>
+          </article>
+          <article>
+            <h3>What can I design with it?</h3>
+            <p>A six-scale color palette, type roles for H1 through H6 plus body, UI, caption, and mono, three button sizes, and spacing, radius, shadow, border, focus, icon, and opacity tokens.</p>
+          </article>
+          <article>
+            <h3>How do I export CSS tokens?</h3>
+            <p>Adjust the tokens, then choose Download CSS or open Export and copy CSS or JSON. Paste tokens.css at the top of your stylesheet and use the custom properties, including a dark theme under [data-theme=dark].</p>
+          </article>
+          <article>
+            <h3>Can I import an existing color palette?</h3>
+            <p>Yes. Import JSON reads a palette file in the browser, including palette-XX.json from the Refactoring UI Color Palettes ZIP. The file is not uploaded.</p>
+          </article>
+          <article>
+            <h3>Is Minimal Design System Builder free?</h3>
+            <p>Yes. The builder and the source code are free to use. The source is on GitHub.</p>
+          </article>
+        </div>
+
+        <p class="discover-links">
+          <a href="#builder">Back to the builder</a>
+          ·
+          <a href="https://github.com/chiedo/minimal-design-system-builder">Source on GitHub</a>
+          ·
+          <a href="llms.txt">Plain-text summary</a>
+        </p>
+      </div>
+    </section>
 
     <script>
       const STORAGE_KEY = "rui-studio-v5";
@@ -2437,17 +2820,17 @@
                   <a href="#" onclick="return false">${iconSvg("search", "sm")} Search</a>
                 </aside>
                 <div class="preview-main">
-                  <h5>Release</h5>
-                  <h1>Supersuit v0 is in beta.</h1>
+                  <p class="t-h5">Release</p>
+                  <p class="t-h1">Supersuit v0 is in beta.</p>
                   <p>A live check that palette, type roles, button sizes, and spacing work on a real screen — not just a row of swatches.</p>
                   <div class="stats">
-                    <div class="stat"><div class="t-caption">Signups</div><h3 style="margin:0">1,284</h3></div>
-                    <div class="stat"><div class="t-caption">Activation</div><h3 style="margin:0">62%</h3></div>
-                    <div class="stat"><div class="t-caption">Churn</div><h3 style="margin:0">2.1%</h3></div>
+                    <div class="stat"><div class="t-caption">Signups</div><div class="t-h3" style="margin:0">1,284</div></div>
+                    <div class="stat"><div class="t-caption">Activation</div><div class="t-h3" style="margin:0">62%</div></div>
+                    <div class="stat"><div class="t-caption">Churn</div><div class="t-h3" style="margin:0">2.1%</div></div>
                   </div>
                   <div class="two-col">
                     <article class="card">
-                      <h2>Join the waitlist</h2>
+                      <p class="t-h2">Join the waitlist</p>
                       <p>We’ll email you when levitation ships. One primary action per card. Inputs share the ${cs} control height.</p>
                       <div class="form-grid">
                         <label>Work email<input class="control ${cs}" type="text" value="ada@example.com" /></label>
@@ -2462,7 +2845,7 @@
                       </div>
                     </article>
                     <article class="card">
-                      <h3>Activity</h3>
+                      <p class="t-h3">Activity</p>
                       <table class="data-table">
                         <thead><tr><th>Person</th><th>Status</th></tr></thead>
                         <tbody>
@@ -2478,10 +2861,10 @@
                       </div>
                     </article>
                   </div>
-                  <h2>How the suit works</h2>
-                  <h3>Installation</h3>
+                  <p class="t-h2">How the suit works</p>
+                  <p class="t-h3">Installation</p>
                   <p>Start with a feature, not a layout. Paste the exported tokens at the top of your stylesheet, then pick sizes from the scale instead of inventing 17px.</p>
-                  <h4>Configuration</h4>
+                  <p class="t-h4">Configuration</p>
                   <p class="t-caption">Meta line using the caption role — weight and color, not a new size.</p>
                   <p><code>@northwind/kit@0.9.0</code></p>
                   <div class="alerts">
@@ -2492,11 +2875,11 @@
                   </div>
                   <div class="empty" style="margin-top:1rem">
                     ${iconSvg("search", "lg")}
-                    <h3>No deployments yet</h3>
+                    <p class="t-h3">No deployments yet</p>
                     <p>Empty states still use the type roles and a single primary button.</p>
                     <button type="button" class="btn-ds md primary">Create deployment</button>
                   </div>
-                  <h6 style="margin-top:1.2rem">Button sizes on this page</h6>
+                  <p class="t-h6" style="margin-top:1.2rem">Button sizes on this page</p>
                   <div class="btn-grid">
                     <button type="button" class="btn-ds sm primary">Small</button>
                     <button type="button" class="btn-ds md primary">Medium</button>

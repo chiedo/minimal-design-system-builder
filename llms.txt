@@ -1,0 +1,36 @@
+# Minimal Design System Builder
+
+> Free, single-file browser tool for designing a small UI system: a color palette, type roles, button sizes, and spacing, with a live preview and CSS custom-property export. No install. Nothing is uploaded.
+
+Open https://chiedo.github.io/minimal-design-system-builder/ in Chrome, Edge, or Firefox. Edits stay in that browser's local storage. The source is https://github.com/chiedo/minimal-design-system-builder.
+
+## What it does
+
+- Color scales: primary, neutral, accent, danger, warning, and success. Hue, saturation, lightness, light and dark edges, optional hue rotation, and per-shade HSL overrides.
+- Type roles: H1 through H6, body, UI, caption, and mono. Font, weight, size step, line height, tracking, and ink.
+- Buttons: small, medium, and large, each with its own type step, padding, and icon size. Primary, secondary, tertiary, and danger. Inputs share the selected control height.
+- Space: spacing scale, roundness, a separate button radius, five shadows, borders, focus ring, icon sizes, opacity, and max-widths.
+- Preview: app screen, color board, type specimen, and components, plus a dark preview exported as a data-theme="dark" block.
+- Export: tokens.css and JSON. Paste the CSS at the top of a stylesheet.
+
+## How to export CSS tokens
+
+1. Open the page in Chrome, Edge, or Firefox. There is no install.
+2. Set the palette, type roles, button sizes, and spacing. The preview updates as you edit.
+3. Choose Download CSS, or open Export and copy CSS or JSON.
+4. Paste tokens.css at the top of your stylesheet and use the custom properties.
+
+## Facts
+
+- Price: free
+- Install: none
+- Account: none
+- Data: stays in the browser. An imported palette file is not uploaded.
+- Import: JSON, including palette-XX.json from the Refactoring UI Color Palettes ZIP
+- Author: chiedo (https://github.com/chiedo)
+- Inspired by the workflow in Refactoring UI. Not a copy of the book files.
+
+## Links
+
+- [Open the builder](https://chiedo.github.io/minimal-design-system-builder/): the tool
+- [Source](https://github.com/chiedo/minimal-design-system-builder): repository
